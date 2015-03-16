@@ -1,5 +1,5 @@
 //
-//  Task.swift
+//  LevelUpDates.swift
 //  Ding
 //
 //  Created by Philip Deisinger on 3/16/15.
@@ -9,11 +9,10 @@
 import Foundation
 import CoreData
 
-class Task: NSManagedObject {
+class LevelUpDates: NSManagedObject {
 
-    @NSManaged var accomplishedDate: NSDate
-    @NSManaged var exp: NSNumber
-    @NSManaged var taskname: String
+    @NSManaged var date: NSDate
+    @NSManaged var level: NSNumber
     @NSManaged var skill: Ding.Skill
 
 }

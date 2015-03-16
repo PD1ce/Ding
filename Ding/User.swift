@@ -1,6 +1,6 @@
 //
 //  User.swift
-//  User
+//  Ding
 //
 //  Created by Philip Deisinger on 3/16/15.
 //  Copyright (c) 2015 PDice. All rights reserved.
@@ -11,11 +11,11 @@ import CoreData
 
 class User: NSManagedObject {
 
-    @NSManaged var username: String
-    @NSManaged var password: String
     @NSManaged var email: String
-    @NSManaged var totalLevel: NSNumber
+    @NSManaged var password: String
     @NSManaged var tasksCompleted: NSNumber
+    @NSManaged var totalLevel: NSNumber
+    @NSManaged var username: String
     @NSManaged var skills: NSOrderedSet
 
 }

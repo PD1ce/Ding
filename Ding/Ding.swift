@@ -11,11 +11,11 @@ import CoreData
 
 class Ding: NSManagedObject {
 
-    @NSManaged var skillname: String
-    @NSManaged var level: NSNumber
-    @NSManaged var expNeeded: NSNumber
-    @NSManaged var expTotal: NSNumber
-    @NSManaged var user: Ding.User
-    @NSManaged var tasks: NSOrderedSet
+    @NSManaged var email: String
+    @NSManaged var password: String
+    @NSManaged var tasksCompleted: NSNumber
+    @NSManaged var totalLevel: NSNumber
+    @NSManaged var username: String
+    @NSManaged var skills: NSOrderedSet
 
 }

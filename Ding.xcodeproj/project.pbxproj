@@ -14,9 +14,10 @@
 		4A14BEA61AB73DC400F4A659 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA51AB73DC400F4A659 /* Images.xcassets */; };
 		4A14BEA91AB73DC400F4A659 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */; };
 		4A14BEB51AB73DC400F4A659 /* DingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEB41AB73DC400F4A659 /* DingTests.swift */; };
-		4A14BEBF1AB74A4100F4A659 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEBE1AB74A4100F4A659 /* User.swift */; };
-		4A14BEC11AB74AAC00F4A659 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEC01AB74AAC00F4A659 /* Task.swift */; };
-		4A14BEC31AB74AFC00F4A659 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEC21AB74AFC00F4A659 /* Skill.swift */; };
+		4A14BEC51AB74CD800F4A659 /* LevelUpDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEC41AB74CD800F4A659 /* LevelUpDates.swift */; };
+		4A14BEC71AB74D1900F4A659 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEC61AB74D1900F4A659 /* Skill.swift */; };
+		4A14BEC91AB74D3C00F4A659 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEC81AB74D3C00F4A659 /* Task.swift */; };
+		4A14BECB1AB74D5400F4A659 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BECA1AB74D5400F4A659 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,9 +42,10 @@
 		4A14BEAE1AB73DC400F4A659 /* DingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A14BEB31AB73DC400F4A659 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A14BEB41AB73DC400F4A659 /* DingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DingTests.swift; sourceTree = "<group>"; };
-		4A14BEBE1AB74A4100F4A659 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		4A14BEC01AB74AAC00F4A659 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		4A14BEC21AB74AFC00F4A659 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		4A14BEC41AB74CD800F4A659 /* LevelUpDates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUpDates.swift; sourceTree = "<group>"; };
+		4A14BEC61AB74D1900F4A659 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		4A14BEC81AB74D3C00F4A659 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		4A14BECA1AB74D5400F4A659 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,9 +93,10 @@
 				4A14BEA51AB73DC400F4A659 /* Images.xcassets */,
 				4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */,
 				4A14BE9D1AB73DC400F4A659 /* Ding.xcdatamodeld */,
-				4A14BEC21AB74AFC00F4A659 /* Skill.swift */,
-				4A14BEC01AB74AAC00F4A659 /* Task.swift */,
-				4A14BEBE1AB74A4100F4A659 /* User.swift */,
+				4A14BECA1AB74D5400F4A659 /* User.swift */,
+				4A14BEC81AB74D3C00F4A659 /* Task.swift */,
+				4A14BEC61AB74D1900F4A659 /* Skill.swift */,
+				4A14BEC41AB74CD800F4A659 /* LevelUpDates.swift */,
 				4A14BE991AB73DC400F4A659 /* Supporting Files */,
 			);
 			path = Ding;
@@ -225,11 +228,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A14BEA11AB73DC400F4A659 /* HomeViewController.swift in Sources */,
-				4A14BEC11AB74AAC00F4A659 /* Task.swift in Sources */,
+				4A14BEC71AB74D1900F4A659 /* Skill.swift in Sources */,
 				4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */,
-				4A14BEC31AB74AFC00F4A659 /* Skill.swift in Sources */,
+				4A14BECB1AB74D5400F4A659 /* User.swift in Sources */,
+				4A14BEC91AB74D3C00F4A659 /* Task.swift in Sources */,
+				4A14BEC51AB74CD800F4A659 /* LevelUpDates.swift in Sources */,
 				4A14BE9F1AB73DC400F4A659 /* Ding.xcdatamodeld in Sources */,
-				4A14BEBF1AB74A4100F4A659 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +425,7 @@
 				4A14BEBA1AB73DC400F4A659 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		4A14BEBB1AB73DC400F4A659 /* Build configuration list for PBXNativeTarget "DingTests" */ = {
 			isa = XCConfigurationList;
@@ -429,6 +434,7 @@
 				4A14BEBD1AB73DC400F4A659 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
