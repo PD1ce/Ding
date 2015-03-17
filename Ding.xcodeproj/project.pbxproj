@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A13A62C1AB75A40001B30B1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */; };
 		4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BE9B1AB73DC400F4A659 /* AppDelegate.swift */; };
 		4A14BE9F1AB73DC400F4A659 /* Ding.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BE9D1AB73DC400F4A659 /* Ding.xcdatamodeld */; };
 		4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEA01AB73DC400F4A659 /* LoginViewController.swift */; };
@@ -14,10 +15,8 @@
 		4A14BEA61AB73DC400F4A659 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA51AB73DC400F4A659 /* Images.xcassets */; };
 		4A14BEA91AB73DC400F4A659 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */; };
 		4A14BEB51AB73DC400F4A659 /* DingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEB41AB73DC400F4A659 /* DingTests.swift */; };
-		4A14BEC51AB74CD800F4A659 /* LevelUpDates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEC41AB74CD800F4A659 /* LevelUpDates.swift */; };
-		4A14BEC71AB74D1900F4A659 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEC61AB74D1900F4A659 /* Skill.swift */; };
-		4A14BEC91AB74D3C00F4A659 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEC81AB74D3C00F4A659 /* Task.swift */; };
-		4A14BECB1AB74D5400F4A659 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BECA1AB74D5400F4A659 /* User.swift */; };
+		4A3D9B581AB890EB00C9CF1D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D9B571AB890EB00C9CF1D /* User.swift */; };
+		4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4A14BE961AB73DC400F4A659 /* Ding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A14BE9A1AB73DC400F4A659 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A14BE9B1AB73DC400F4A659 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -42,10 +42,8 @@
 		4A14BEAE1AB73DC400F4A659 /* DingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A14BEB31AB73DC400F4A659 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A14BEB41AB73DC400F4A659 /* DingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DingTests.swift; sourceTree = "<group>"; };
-		4A14BEC41AB74CD800F4A659 /* LevelUpDates.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LevelUpDates.swift; sourceTree = "<group>"; };
-		4A14BEC61AB74D1900F4A659 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
-		4A14BEC81AB74D3C00F4A659 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		4A14BECA1AB74D5400F4A659 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4A3D9B571AB890EB00C9CF1D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,15 +86,12 @@
 			isa = PBXGroup;
 			children = (
 				4A14BE9B1AB73DC400F4A659 /* AppDelegate.swift */,
-				4A14BEA01AB73DC400F4A659 /* LoginViewController.swift */,
-				4A14BEA21AB73DC400F4A659 /* Main.storyboard */,
+				4A3D9B561AB88A8A00C9CF1D /* ViewControllers */,
+				4A3D9B551AB88A8200C9CF1D /* Classes */,
+				4A14BE9D1AB73DC400F4A659 /* Ding.xcdatamodeld */,
 				4A14BEA51AB73DC400F4A659 /* Images.xcassets */,
 				4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */,
-				4A14BE9D1AB73DC400F4A659 /* Ding.xcdatamodeld */,
-				4A14BECA1AB74D5400F4A659 /* User.swift */,
-				4A14BEC81AB74D3C00F4A659 /* Task.swift */,
-				4A14BEC61AB74D1900F4A659 /* Skill.swift */,
-				4A14BEC41AB74CD800F4A659 /* LevelUpDates.swift */,
+				4A14BEA21AB73DC400F4A659 /* Main.storyboard */,
 				4A14BE991AB73DC400F4A659 /* Supporting Files */,
 			);
 			path = Ding;
@@ -125,6 +120,24 @@
 				4A14BEB31AB73DC400F4A659 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4A3D9B551AB88A8200C9CF1D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				4A3D9B571AB890EB00C9CF1D /* User.swift */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		4A3D9B561AB88A8A00C9CF1D /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */,
+				4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */,
+				4A14BEA01AB73DC400F4A659 /* LoginViewController.swift */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,12 +240,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
-				4A14BEC71AB74D1900F4A659 /* Skill.swift in Sources */,
+				4A3D9B581AB890EB00C9CF1D /* User.swift in Sources */,
 				4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */,
-				4A14BECB1AB74D5400F4A659 /* User.swift in Sources */,
-				4A14BEC91AB74D3C00F4A659 /* Task.swift in Sources */,
-				4A14BEC51AB74CD800F4A659 /* LevelUpDates.swift in Sources */,
+				4A13A62C1AB75A40001B30B1 /* HomeViewController.swift in Sources */,
 				4A14BE9F1AB73DC400F4A659 /* Ding.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,7 +274,8 @@
 				4A14BEA31AB73DC400F4A659 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
+			path = Ding;
+			sourceTree = SOURCE_ROOT;
 		};
 		4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
