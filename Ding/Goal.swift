@@ -17,8 +17,8 @@ class Goal: NSManagedObject {
     @NSManaged var goalName: String
     @NSManaged var id: NSNumber
     @NSManaged var startDate: NSDate
-    @NSManaged var skillGoals: NSOrderedSet
-    @NSManaged var taskGoals: NSOrderedSet
+    @NSManaged var skillGoals: NSSet
+    @NSManaged var taskGoals: NSSet
     @NSManaged var user: Ding.User
 
 }

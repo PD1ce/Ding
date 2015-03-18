@@ -20,7 +20,7 @@ class SkillCard : UIView {
         layer.cornerRadius = 5.0
         layer.borderWidth = 2.0
         layer.borderColor = mainColor.CGColor
-        
+        backgroundColor = UIColor(white: 1.0, alpha: 1.0)
         
     }
     

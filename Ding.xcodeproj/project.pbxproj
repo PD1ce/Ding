@@ -17,14 +17,16 @@
 		4A14BEB51AB73DC400F4A659 /* DingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEB41AB73DC400F4A659 /* DingTests.swift */; };
 		4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */; };
 		4A599A2E1AB920FB00BA8951 /* SkillCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A2D1AB920FB00BA8951 /* SkillCard.swift */; };
-		4A599A321AB928E400BA8951 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A311AB928E300BA8951 /* User.swift */; };
 		4A599A341AB9293100BA8951 /* TaskGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A331AB9293100BA8951 /* TaskGoal.swift */; };
 		4A599A361AB9296700BA8951 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A351AB9296700BA8951 /* Task.swift */; };
 		4A599A381AB9297D00BA8951 /* SkillGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A371AB9297D00BA8951 /* SkillGoal.swift */; };
-		4A599A3B1AB929F300BA8951 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A3A1AB929F300BA8951 /* Skill.swift */; };
 		4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */; };
-		4A599A411AB92A4600BA8951 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A401AB92A4600BA8951 /* Goal.swift */; };
 		4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A421AB92A5D00BA8951 /* Achievement.swift */; };
+		4AF658B21AB93583004D94D2 /* SkillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B11AB93583004D94D2 /* SkillsViewController.swift */; };
+		4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */; };
+		4AF658B61AB93A3C004D94D2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B51AB93A3C004D94D2 /* User.swift */; };
+		4AF658B81AB93A5D004D94D2 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B71AB93A5D004D94D2 /* Skill.swift */; };
+		4AF658BA1AB93A7C004D94D2 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B91AB93A7C004D94D2 /* Goal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,14 +54,16 @@
 		4A14BEB41AB73DC400F4A659 /* DingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DingTests.swift; sourceTree = "<group>"; };
 		4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		4A599A2D1AB920FB00BA8951 /* SkillCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillCard.swift; sourceTree = "<group>"; };
-		4A599A311AB928E300BA8951 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
 		4A599A331AB9293100BA8951 /* TaskGoal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskGoal.swift; sourceTree = "<group>"; };
 		4A599A351AB9296700BA8951 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		4A599A371AB9297D00BA8951 /* SkillGoal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillGoal.swift; sourceTree = "<group>"; };
-		4A599A3A1AB929F300BA8951 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
 		4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LevelUpDate.swift; path = ../LevelUpDate.swift; sourceTree = "<group>"; };
-		4A599A401AB92A4600BA8951 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		4A599A421AB92A5D00BA8951 /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		4AF658B11AB93583004D94D2 /* SkillsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillsViewController.swift; sourceTree = "<group>"; };
+		4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSkillViewController.swift; sourceTree = "<group>"; };
+		4AF658B51AB93A3C004D94D2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4AF658B71AB93A5D004D94D2 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		4AF658B91AB93A7C004D94D2 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -153,6 +157,8 @@
 				4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */,
 				4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */,
 				4A14BEA01AB73DC400F4A659 /* LoginViewController.swift */,
+				4AF658B11AB93583004D94D2 /* SkillsViewController.swift */,
+				4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -161,13 +167,13 @@
 			isa = PBXGroup;
 			children = (
 				4A599A421AB92A5D00BA8951 /* Achievement.swift */,
-				4A599A401AB92A4600BA8951 /* Goal.swift */,
+				4AF658B91AB93A7C004D94D2 /* Goal.swift */,
 				4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */,
-				4A599A3A1AB929F300BA8951 /* Skill.swift */,
+				4AF658B71AB93A5D004D94D2 /* Skill.swift */,
 				4A599A371AB9297D00BA8951 /* SkillGoal.swift */,
 				4A599A351AB9296700BA8951 /* Task.swift */,
 				4A599A331AB9293100BA8951 /* TaskGoal.swift */,
-				4A599A311AB928E300BA8951 /* User.swift */,
+				4AF658B51AB93A3C004D94D2 /* User.swift */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -274,17 +280,19 @@
 			files = (
 				4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */,
 				4A599A381AB9297D00BA8951 /* SkillGoal.swift in Sources */,
-				4A599A411AB92A4600BA8951 /* Goal.swift in Sources */,
 				4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */,
+				4AF658B61AB93A3C004D94D2 /* User.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
 				4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */,
-				4A599A3B1AB929F300BA8951 /* Skill.swift in Sources */,
+				4AF658B81AB93A5D004D94D2 /* Skill.swift in Sources */,
+				4AF658BA1AB93A7C004D94D2 /* Goal.swift in Sources */,
 				4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */,
-				4A599A321AB928E400BA8951 /* User.swift in Sources */,
 				4A13A62C1AB75A40001B30B1 /* HomeViewController.swift in Sources */,
 				4A599A2E1AB920FB00BA8951 /* SkillCard.swift in Sources */,
 				4A599A361AB9296700BA8951 /* Task.swift in Sources */,
+				4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */,
 				4A14BE9F1AB73DC400F4A659 /* Ding.xcdatamodeld in Sources */,
+				4AF658B21AB93583004D94D2 /* SkillsViewController.swift in Sources */,
 				4A599A341AB9293100BA8951 /* TaskGoal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

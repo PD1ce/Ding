@@ -19,8 +19,8 @@ class Skill: NSManagedObject {
     @NSManaged var skillName: String
     @NSManaged var skillType: NSNumber
     @NSManaged var startDate: NSDate
-    @NSManaged var levelUpDates: NSOrderedSet
-    @NSManaged var tasks: NSOrderedSet
+    @NSManaged var levelUpDates: NSSet
+    @NSManaged var tasks: NSSet
     @NSManaged var user: Ding.User
 
 }

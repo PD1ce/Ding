@@ -12,7 +12,7 @@ import UIKit
 class HomeViewController : UIViewController {
     
     var user: User!
-    var skills: [Skill]!
+    var skills: NSMutableArray!
     var tasks: [Task]!
     var goals: [Goal]!
     var achievements: [Achievement]!
@@ -37,6 +37,9 @@ class HomeViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        skills = NSMutableArray(array: user.skills.allObjects)
+        //skills = user.skills.mutableCopy() as NSMutableArray
         
         let headerView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
         headerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
@@ -135,22 +138,25 @@ class HomeViewController : UIViewController {
         // Height of containers will be dynamic based on number of skills
         skillsContainer = UIScrollView(frame: CGRect(x: 0, y: skillsTab.frame.height, width: mainContainerView.frame.width, height: mainContainerView.frame.height - skillsTab.frame.height))
         skillsContainer.contentSize = CGSize(width: skillsContainer.frame.width, height: 1000)
-        skillsContainer.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        skillsContainer.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         skillsContainer.layer.borderWidth = 5.0
         skillsContainer.layer.borderColor = skillsColor.CGColor
+        
+        
+        
         //Tasks Container
         tasksContainer = UIScrollView(frame: CGRect(x: 0, y: skillsTab.frame.height, width: mainContainerView.frame.width, height: mainContainerView.frame.height - skillsTab.frame.height))
-        tasksContainer.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        tasksContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         tasksContainer.layer.borderWidth = 5.0
         tasksContainer.layer.borderColor = tasksColor.CGColor
         //Goals Container
         goalsContainer = UIScrollView(frame: CGRect(x: 0, y: skillsTab.frame.height, width: mainContainerView.frame.width, height: mainContainerView.frame.height - skillsTab.frame.height))
-        goalsContainer.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        goalsContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         goalsContainer.layer.borderWidth = 5.0
         goalsContainer.layer.borderColor = goalsColor.CGColor
         //Achievements Container
         achievementsContainer = UIScrollView(frame: CGRect(x: 0, y: skillsTab.frame.height, width: mainContainerView.frame.width, height: mainContainerView.frame.height - skillsTab.frame.height))
-        achievementsContainer.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        achievementsContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         achievementsContainer.layer.borderWidth = 5.0
         achievementsContainer.layer.borderColor = achievementsColor.CGColor
         
@@ -176,12 +182,102 @@ class HomeViewController : UIViewController {
         println("Skills Container Height: \(skillsContainer.frame.height)")
         
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        //Fetch Skills, Populate Skills
+        skills = NSMutableArray(array: user.skills.allObjects)
+        var position = 0, columnOne = true
+        var row = 0
+        for skill in skills {
+            row = position / 2
+            if columnOne { // First Column
+                //Add Gesture Recognizers to tap and go to skill
+                let skillCard = SkillCard(frame: CGRect(x: 8, y: CGFloat(row * 128), width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill)
+                let skillNameLabel = UILabel(frame: CGRect(x: 36, y: 0, width: skillCard.frame.width - 36, height: 36))
+                skillNameLabel.layer.borderColor = UIColor(white: 0.0, alpha: 1.0).CGColor
+                skillNameLabel.layer.borderWidth = 1.0
+                skillNameLabel.layer.cornerRadius = 5.0
+                skillNameLabel.text = skillCard.skill.skillName
+                skillNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+                skillNameLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+                skillNameLabel.font = UIFont(name: "Helvetica", size: 16.0)
+                skillCard.addSubview(skillNameLabel)
+                skillsContainer.addSubview(skillCard)
+            } else { // Second Column
+                let skillCard = SkillCard(frame: CGRect(x: skillsContainer.frame.width / 2 + 16, y: CGFloat(row * 128), width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill)
+                let skillNameLabel = UILabel(frame: CGRect(x: 36, y: 0, width: skillCard.frame.width - 36, height: 36))
+                skillNameLabel.layer.borderColor = UIColor(white: 0.0, alpha: 1.0).CGColor
+                skillNameLabel.layer.borderWidth = 1.0
+                skillNameLabel.layer.cornerRadius = 5.0
+                skillNameLabel.text = skillCard.skill.skillName
+                skillNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+                skillNameLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+                skillNameLabel.font = UIFont(name: "Helvetica", size: 16.0)
+                skillCard.addSubview(skillNameLabel)
+                skillsContainer.addSubview(skillCard)
+            }
+            columnOne = !columnOne
+            position++
+        }
+        
+        /// Add a new Skill, last card ///
+        if columnOne {
+            row = position / 2
+            let newSkillCard = UIView(frame: CGRect(x: 8, y: CGFloat(row * 128), width: skillsContainer.frame.width / 2 - 12, height: 128))
+            let skillNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: newSkillCard.frame.width, height: 36))
+            newSkillCard.layer.cornerRadius = 5.0
+            newSkillCard.layer.borderWidth = 2.0
+            newSkillCard.layer.borderColor = skillsColor.CGColor
+            newSkillCard.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+            skillNameLabel.layer.borderColor = UIColor(white: 0.0, alpha: 1.0).CGColor
+            skillNameLabel.layer.borderWidth = 1.0
+            skillNameLabel.layer.cornerRadius = 5.0
+            skillNameLabel.text = "New!"
+            skillNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            skillNameLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+            skillNameLabel.font = UIFont(name: "Helvetica", size: 12.0)
+            newSkillCard.addSubview(skillNameLabel)
+            skillsContainer.addSubview(newSkillCard)
+            let tapNewSkill = UITapGestureRecognizer(target: self, action: "newSkillTapped:")
+            newSkillCard.addGestureRecognizer(tapNewSkill)
+        } else {
+            row = position / 2
+            let newSkillCard = UIView(frame: CGRect(x: skillsContainer.frame.width / 2 + 16, y: CGFloat(row * 128), width: skillsContainer.frame.width / 2 - 12, height: 128))
+            let skillNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: newSkillCard.frame.width, height: 36))
+            newSkillCard.layer.cornerRadius = 5.0
+            newSkillCard.layer.borderWidth = 2.0
+            newSkillCard.layer.borderColor = skillsColor.CGColor
+            newSkillCard.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+            skillNameLabel.layer.borderColor = UIColor(white: 0.0, alpha: 1.0).CGColor
+            skillNameLabel.layer.borderWidth = 1.0
+            skillNameLabel.layer.cornerRadius = 5.0
+            skillNameLabel.text = "New!"
+            skillNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            skillNameLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+            skillNameLabel.font = UIFont(name: "Helvetica", size: 12.0)
+            newSkillCard.addSubview(skillNameLabel)
+            skillsContainer.addSubview(newSkillCard)
+            let tapNewSkill = UITapGestureRecognizer(target: self, action: "newSkillTapped:")
+            newSkillCard.addGestureRecognizer(tapNewSkill)
+        }
+        
+        
+        
+    }
+    
     @IBAction func logoutTapped(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func logoutButtonTapped() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func newSkillTapped(gr: UITapGestureRecognizer) {
+        let createSkillVC = storyboard?.instantiateViewControllerWithIdentifier("CreateSkillViewController") as CreateSkillViewController
+        createSkillVC.user = user
+        //createSkillVC.parentVC = self
+        presentViewController(createSkillVC, animated: true, completion: nil)
     }
     
     func skillsTabTapped() {
