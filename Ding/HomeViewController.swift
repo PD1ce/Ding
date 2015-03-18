@@ -26,10 +26,21 @@ class HomeViewController : UIViewController {
     var goalsContainer: UIScrollView!
     var achievementsContainer: UIScrollView!
     
-    let tasksCurren
+    var tasksCurrent: UIButton!
+    var tasksSort: UIButton!
+    var tasksSearch: UIButton!
+    var tasksCompleted: UIButton!
+    var tasksSelectedButton: UIButton!
+    
+    var tasksCurrentContainer: UIScrollView!
+    var tasksSortContainer: UIScrollView!
+    var tasksSearchContainer: UIScrollView!
+    var tasksCompletedContainer: UIScrollView!
     
     var mainContainerView: UIView!
     
+    let whiteColor = UIColor(white: 1.0, alpha: 1.0)
+    let blackColor = UIColor(white: 0.0, alpha: 1.0)
     let goldColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
     let skillsColor = UIColor(red: 51/255, green: 255/255, blue: 204/255, alpha: 1.0)
     let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
@@ -159,6 +170,85 @@ class HomeViewController : UIViewController {
         tasksContainer.layer.borderWidth = 5.0
         tasksContainer.layer.borderColor = tasksColor.CGColor
         
+        //Current Tasks Button
+        tasksCurrent = UIButton(frame: CGRect(x: 5, y: 5, width: (tasksContainer.frame.width - 10) / 4, height: 25))
+        tasksCurrent.addTarget(self, action: "tasksCurrentTapped", forControlEvents: .TouchUpInside)
+        tasksCurrent.setTitle("Current", forState: .Normal)
+        tasksCurrent.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        tasksCurrent.backgroundColor = tasksColor
+        tasksCurrent.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        tasksCurrent.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        tasksCurrent.layer.borderWidth = 2.0
+        tasksCurrent.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Current Tasks Container - Populate on ViewWillAppear or ButtonPress
+        tasksCurrentContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 750)
+        tasksCurrentContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        tasksContainer.addSubview(tasksCurrentContainer)
+        tasksContainer.addSubview(tasksCurrent)
+
+        //Sort Tasks Button
+        tasksSort = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width, y: 5, width: (tasksContainer.frame.width - 10) / 4, height: 25))
+        tasksSort.addTarget(self, action: "tasksSortTapped", forControlEvents: .TouchUpInside)
+        tasksSort.setTitle("Sort", forState: .Normal)
+        tasksSort.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        tasksSort.backgroundColor = tasksColor
+        tasksSort.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        tasksSort.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        tasksSort.layer.borderWidth = 2.0
+        tasksSort.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Sort Tasks Container - Populate on ViewWillAppear or ButtonPress
+        tasksSortContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksSortContainer.contentSize = CGSize(width: tasksSortContainer.frame.width, height: 750)
+        tasksSortContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        tasksContainer.addSubview(tasksSortContainer)
+        tasksContainer.addSubview(tasksSort)
+        
+        //Search Tasks Button
+        tasksSearch = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width * 2, y: 5, width: (tasksContainer.frame.width - 10) / 4, height: 25))
+        tasksSearch.addTarget(self, action: "tasksSearchTapped", forControlEvents: .TouchUpInside)
+        tasksSearch.setTitle("Search", forState: .Normal)
+        tasksSearch.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        tasksSearch.backgroundColor = tasksColor
+        tasksSearch.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        tasksSearch.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        tasksSearch.layer.borderWidth = 2.0
+        tasksSearch.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Search Tasks Container - Populate on ViewWillAppear or ButtonPress
+        tasksSearchContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksSearchContainer.contentSize = CGSize(width: tasksSearchContainer.frame.width, height: 750)
+        tasksSearchContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        tasksContainer.addSubview(tasksSearchContainer)
+        tasksContainer.addSubview(tasksSearch)
+        
+        //Completed Tasks Button
+        tasksCompleted = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width * 3, y: 5, width: (tasksContainer.frame.width - 10) / 4, height: 25))
+        tasksCompleted.addTarget(self, action: "tasksCompletedTapped", forControlEvents: .TouchUpInside)
+        tasksCompleted.setTitle("Completed", forState: .Normal)
+        tasksCompleted.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        tasksCompleted.backgroundColor = tasksColor
+        tasksCompleted.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        tasksCompleted.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        tasksCompleted.layer.borderWidth = 2.0
+        tasksCompleted.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Completed Tasks Container - Populate on ViewWillAppear or ButtonPress
+        tasksCompletedContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksCompletedContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 750)
+        tasksCompletedContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        tasksContainer.addSubview(tasksCompletedContainer)
+        tasksContainer.addSubview(tasksCompleted)
+        //Set selected
+        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+        tasksSelectedButton = tasksCurrent
+        
+        println("tasks Container Min X: \(tasksContainer.frame.minX)")
+        println("tasks Container Min Y: \(tasksContainer.frame.minY)")
+        println("tasks Container Max X: \(tasksContainer.frame.maxX)")
+        println("tasks Container Max Y: \(tasksContainer.frame.maxY)")
+        println("tasks Container Width: \(tasksContainer.frame.width)")
+        println("tasks Container Height: \(tasksContainer.frame.height)")
+        
+
         
         
         
@@ -195,6 +285,19 @@ class HomeViewController : UIViewController {
 //        println("Skills Container Height: \(skillsContainer.frame.height)")
         
         
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        
+        //Set Task back
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksCurrent
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -387,21 +490,100 @@ class HomeViewController : UIViewController {
     func newSkillTapped(gr: UITapGestureRecognizer) {
         let createSkillVC = storyboard?.instantiateViewControllerWithIdentifier("CreateSkillViewController") as CreateSkillViewController
         createSkillVC.user = user
+        createSkillVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         //createSkillVC.parentVC = self
+        self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         presentViewController(createSkillVC, animated: true, completion: nil)
     }
     
+    //Main Container Tabs
     func skillsTabTapped() {
         mainContainerView.bringSubviewToFront(skillsContainer)
         
+        //Set Tasks Back
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksCurrent
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+        
     }
     func tasksTabTapped() {
+        tasksSelectedButton = tasksCurrent
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
         mainContainerView.bringSubviewToFront(tasksContainer)
     }
     func goalsTabTapped() {
         mainContainerView.bringSubviewToFront(goalsContainer)
+        
+        //Set Tasks Back
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksCurrent
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
     }
     func achievementsTabTapped() {
         mainContainerView.bringSubviewToFront(achievementsContainer)
+        
+        //Set Tasks Back
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksCurrent
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+    }
+    
+    //Task Container Buttons
+    func tasksCurrentTapped() {
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksCurrent
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+    }
+    func tasksSortTapped() {
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksSort
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksSortContainer)
+    }
+    func tasksSearchTapped() {
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksSearch
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksSearchContainer)
+    }
+    func tasksCompletedTapped() {
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksCompleted
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksCompletedContainer)
     }
 }

@@ -158,10 +158,10 @@
 			isa = PBXGroup;
 			children = (
 				4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */,
+				4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */,
 				4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */,
 				4A14BEA01AB73DC400F4A659 /* LoginViewController.swift */,
 				4AF658B11AB93583004D94D2 /* SkillsViewController.swift */,
-				4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
