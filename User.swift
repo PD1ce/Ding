@@ -12,14 +12,16 @@ import CoreData
 class User: NSManagedObject {
 
     @NSManaged var email: String
+    @NSManaged var firstName: String
+    @NSManaged var id: NSNumber
     @NSManaged var password: String
+    @NSManaged var startDate: NSDate
     @NSManaged var tasksCompleted: NSNumber
     @NSManaged var totalLevel: NSNumber
     @NSManaged var userName: String
-    @NSManaged var firstName: String
-    @NSManaged var id: NSNumber
-    @NSManaged var startDate: NSDate
-    @NSManaged var skills: NSOrderedSet
+    @NSManaged var totalExp: NSNumber
     @NSManaged var goals: NSOrderedSet
+    @NSManaged var skills: NSOrderedSet
+    @NSManaged var achievements: NSOrderedSet
 
 }

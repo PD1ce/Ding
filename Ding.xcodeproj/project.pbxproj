@@ -15,8 +15,16 @@
 		4A14BEA61AB73DC400F4A659 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA51AB73DC400F4A659 /* Images.xcassets */; };
 		4A14BEA91AB73DC400F4A659 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */; };
 		4A14BEB51AB73DC400F4A659 /* DingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEB41AB73DC400F4A659 /* DingTests.swift */; };
-		4A3D9B581AB890EB00C9CF1D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D9B571AB890EB00C9CF1D /* User.swift */; };
 		4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */; };
+		4A599A2E1AB920FB00BA8951 /* SkillCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A2D1AB920FB00BA8951 /* SkillCard.swift */; };
+		4A599A321AB928E400BA8951 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A311AB928E300BA8951 /* User.swift */; };
+		4A599A341AB9293100BA8951 /* TaskGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A331AB9293100BA8951 /* TaskGoal.swift */; };
+		4A599A361AB9296700BA8951 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A351AB9296700BA8951 /* Task.swift */; };
+		4A599A381AB9297D00BA8951 /* SkillGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A371AB9297D00BA8951 /* SkillGoal.swift */; };
+		4A599A3B1AB929F300BA8951 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A3A1AB929F300BA8951 /* Skill.swift */; };
+		4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */; };
+		4A599A411AB92A4600BA8951 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A401AB92A4600BA8951 /* Goal.swift */; };
+		4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A421AB92A5D00BA8951 /* Achievement.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +50,16 @@
 		4A14BEAE1AB73DC400F4A659 /* DingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A14BEB31AB73DC400F4A659 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A14BEB41AB73DC400F4A659 /* DingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DingTests.swift; sourceTree = "<group>"; };
-		4A3D9B571AB890EB00C9CF1D /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
+		4A599A2D1AB920FB00BA8951 /* SkillCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillCard.swift; sourceTree = "<group>"; };
+		4A599A311AB928E300BA8951 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = ../User.swift; sourceTree = "<group>"; };
+		4A599A331AB9293100BA8951 /* TaskGoal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskGoal.swift; sourceTree = "<group>"; };
+		4A599A351AB9296700BA8951 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		4A599A371AB9297D00BA8951 /* SkillGoal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillGoal.swift; sourceTree = "<group>"; };
+		4A599A3A1AB929F300BA8951 /* Skill.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LevelUpDate.swift; path = ../LevelUpDate.swift; sourceTree = "<group>"; };
+		4A599A401AB92A4600BA8951 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
+		4A599A421AB92A5D00BA8951 /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,8 +102,9 @@
 			isa = PBXGroup;
 			children = (
 				4A14BE9B1AB73DC400F4A659 /* AppDelegate.swift */,
-				4A3D9B561AB88A8A00C9CF1D /* ViewControllers */,
 				4A3D9B551AB88A8200C9CF1D /* Classes */,
+				4A599A391AB9299E00BA8951 /* ManagedObjects */,
+				4A3D9B561AB88A8A00C9CF1D /* ViewControllers */,
 				4A14BE9D1AB73DC400F4A659 /* Ding.xcdatamodeld */,
 				4A14BEA51AB73DC400F4A659 /* Images.xcassets */,
 				4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */,
@@ -125,7 +142,7 @@
 		4A3D9B551AB88A8200C9CF1D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4A3D9B571AB890EB00C9CF1D /* User.swift */,
+				4A599A2D1AB920FB00BA8951 /* SkillCard.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -138,6 +155,21 @@
 				4A14BEA01AB73DC400F4A659 /* LoginViewController.swift */,
 			);
 			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		4A599A391AB9299E00BA8951 /* ManagedObjects */ = {
+			isa = PBXGroup;
+			children = (
+				4A599A421AB92A5D00BA8951 /* Achievement.swift */,
+				4A599A401AB92A4600BA8951 /* Goal.swift */,
+				4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */,
+				4A599A3A1AB929F300BA8951 /* Skill.swift */,
+				4A599A371AB9297D00BA8951 /* SkillGoal.swift */,
+				4A599A351AB9296700BA8951 /* Task.swift */,
+				4A599A331AB9293100BA8951 /* TaskGoal.swift */,
+				4A599A311AB928E300BA8951 /* User.swift */,
+			);
+			name = ManagedObjects;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -241,11 +273,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */,
+				4A599A381AB9297D00BA8951 /* SkillGoal.swift in Sources */,
+				4A599A411AB92A4600BA8951 /* Goal.swift in Sources */,
+				4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
-				4A3D9B581AB890EB00C9CF1D /* User.swift in Sources */,
+				4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */,
+				4A599A3B1AB929F300BA8951 /* Skill.swift in Sources */,
 				4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */,
+				4A599A321AB928E400BA8951 /* User.swift in Sources */,
 				4A13A62C1AB75A40001B30B1 /* HomeViewController.swift in Sources */,
+				4A599A2E1AB920FB00BA8951 /* SkillCard.swift in Sources */,
+				4A599A361AB9296700BA8951 /* Task.swift in Sources */,
 				4A14BE9F1AB73DC400F4A659 /* Ding.xcdatamodeld in Sources */,
+				4A599A341AB9293100BA8951 /* TaskGoal.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
