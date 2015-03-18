@@ -37,6 +37,7 @@ class CreateSkillViewController : UIViewController {
         let managedContext = user.managedObjectContext!
         let skill = NSEntityDescription.insertNewObjectForEntityForName("Skill", inManagedObjectContext: managedContext) as Skill
         skill.skillName = "Guitar"
+        skill.level = 1
         let userSkills = user.skills.mutableCopy() as NSMutableSet
         userSkills.addObject(skill)
         user.skills = userSkills

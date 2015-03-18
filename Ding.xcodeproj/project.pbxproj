@@ -16,6 +16,7 @@
 		4A14BEA91AB73DC400F4A659 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */; };
 		4A14BEB51AB73DC400F4A659 /* DingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEB41AB73DC400F4A659 /* DingTests.swift */; };
 		4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */; };
+		4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F33301AB9E3920047D9F0 /* TaskCard.swift */; };
 		4A599A2E1AB920FB00BA8951 /* SkillCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A2D1AB920FB00BA8951 /* SkillCard.swift */; };
 		4A599A341AB9293100BA8951 /* TaskGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A331AB9293100BA8951 /* TaskGoal.swift */; };
 		4A599A361AB9296700BA8951 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A351AB9296700BA8951 /* Task.swift */; };
@@ -53,6 +54,7 @@
 		4A14BEB31AB73DC400F4A659 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A14BEB41AB73DC400F4A659 /* DingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DingTests.swift; sourceTree = "<group>"; };
 		4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
+		4A3F33301AB9E3920047D9F0 /* TaskCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCard.swift; sourceTree = "<group>"; };
 		4A599A2D1AB920FB00BA8951 /* SkillCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillCard.swift; sourceTree = "<group>"; };
 		4A599A331AB9293100BA8951 /* TaskGoal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskGoal.swift; sourceTree = "<group>"; };
 		4A599A351AB9296700BA8951 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				4A599A2D1AB920FB00BA8951 /* SkillCard.swift */,
+				4A3F33301AB9E3920047D9F0 /* TaskCard.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -283,6 +286,7 @@
 				4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */,
 				4AF658B61AB93A3C004D94D2 /* User.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
+				4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */,
 				4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */,
 				4AF658B81AB93A5D004D94D2 /* Skill.swift in Sources */,
 				4AF658BA1AB93A7C004D94D2 /* Goal.swift in Sources */,
