@@ -41,15 +41,17 @@ class LoginViewController: UIViewController {
         passwordTextField.textAlignment = NSTextAlignment(rawValue: 1)!
         passwordTextField.secureTextEntry = true
         view.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha:1)
-        titleLabel = UILabel(frame: CGRect(x: 0, y: 20, width: view.bounds.width, height: 24.0))
+        titleLabel = UILabel(frame: CGRect(x: 0, y: 30, width: view.bounds.width, height: 36.0))
         titleLabel.text = "DING!"
-        titleLabel.font = UIFont(name: "Helvetica", size: 24.0)
+        titleLabel.font = UIFont(name: "Helvetica", size: 36.0)
         titleLabel.textColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
         titleLabel.textAlignment = NSTextAlignment(rawValue: 1)!
         view.addSubview(fullLoadView)
         view.addSubview(titleLabel)
         view.userInteractionEnabled = true
         /************************/
+        
+        
         
         
         

@@ -23,6 +23,7 @@
 		4A599A381AB9297D00BA8951 /* SkillGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A371AB9297D00BA8951 /* SkillGoal.swift */; };
 		4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */; };
 		4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A421AB92A5D00BA8951 /* Achievement.swift */; };
+		4A8959DD1ABA2A6000AB1812 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */; };
 		4AF658B21AB93583004D94D2 /* SkillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B11AB93583004D94D2 /* SkillsViewController.swift */; };
 		4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */; };
 		4AF658B61AB93A3C004D94D2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B51AB93A3C004D94D2 /* User.swift */; };
@@ -61,6 +62,7 @@
 		4A599A371AB9297D00BA8951 /* SkillGoal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillGoal.swift; sourceTree = "<group>"; };
 		4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LevelUpDate.swift; path = ../LevelUpDate.swift; sourceTree = "<group>"; };
 		4A599A421AB92A5D00BA8951 /* Achievement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Achievement.swift; sourceTree = "<group>"; };
+		4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4AF658B11AB93583004D94D2 /* SkillsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillsViewController.swift; sourceTree = "<group>"; };
 		4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSkillViewController.swift; sourceTree = "<group>"; };
 		4AF658B51AB93A3C004D94D2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 				4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */,
 				4A14BEA01AB73DC400F4A659 /* LoginViewController.swift */,
 				4AF658B11AB93583004D94D2 /* SkillsViewController.swift */,
+				4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -284,6 +287,7 @@
 				4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */,
 				4A599A381AB9297D00BA8951 /* SkillGoal.swift in Sources */,
 				4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */,
+				4A8959DD1ABA2A6000AB1812 /* SplashViewController.swift in Sources */,
 				4AF658B61AB93A3C004D94D2 /* User.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
 				4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */,

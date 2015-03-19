@@ -310,6 +310,9 @@ class HomeViewController : UIViewController {
             if columnOne { // First Column
                 //Add Gesture Recognizers to tap and go to skill
                 let skillCard = SkillCard(frame: CGRect(x: 8, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill)
+                let tapGR = UITapGestureRecognizer(target: self, action: "skillCardTapped:")
+                skillCard.addGestureRecognizer(tapGR)
+                
                 let skillIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
                 skillIcon.layer.borderColor = UIColor(white: 0.0, alpha: 1.0).CGColor
                 skillIcon.layer.borderWidth = 1.0
@@ -370,6 +373,9 @@ class HomeViewController : UIViewController {
                 skillsContainer.addSubview(skillCard)
             } else { // Second Column
                 let skillCard = SkillCard(frame: CGRect(x: skillsContainer.frame.width / 2 + 4, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill)
+                let tapGR = UITapGestureRecognizer(target: self, action: "skillCardTapped:")
+                skillCard.addGestureRecognizer(tapGR)
+                
                 let skillIcon = UIImageView(frame: CGRect(x: 0, y: 0, width: 48, height: 48))
                 skillIcon.layer.borderColor = UIColor(white: 0.0, alpha: 1.0).CGColor
                 skillIcon.layer.borderWidth = 1.0
@@ -485,6 +491,14 @@ class HomeViewController : UIViewController {
     
     func logoutButtonTapped() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func skillCardTapped(gr: UITapGestureRecognizer) {
+        let skillTapped = (gr.view as SkillCard).skill
+        let skillsVC = storyboard?.instantiateViewControllerWithIdentifier("SkillsViewController") as SkillsViewController
+        skillsVC.user = user
+        skillsVC.skill = skillTapped
+        presentViewController(skillsVC, animated: true, completion: nil)
     }
     
     func newSkillTapped(gr: UITapGestureRecognizer) {

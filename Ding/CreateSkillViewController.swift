@@ -37,10 +37,10 @@ class CreateSkillViewController : UIViewController {
         
         let headerView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
         headerView.backgroundColor = skillsColor
-        let logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 44))
-        logoutButton.setTitle("< Back", forState: .Normal)
-        logoutButton.setTitleColor(whiteColor, forState: .Normal)
-        logoutButton.addTarget(self, action: "backButtonTapped", forControlEvents: .TouchUpInside)
+        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 44))
+        backButton.setTitle("< Back", forState: .Normal)
+        backButton.setTitleColor(whiteColor, forState: .Normal)
+        backButton.addTarget(self, action: "backButtonTapped", forControlEvents: .TouchUpInside)
         let headerLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
         headerLabel.font = UIFont(name: "Helvetica", size: 24.0)
         headerLabel.textColor = whiteColor
@@ -48,7 +48,7 @@ class CreateSkillViewController : UIViewController {
         headerLabel.text = "New Skill"
         
         headerView.addSubview(headerLabel)
-        headerView.addSubview(logoutButton)
+        headerView.addSubview(backButton)
         view.addSubview(headerView)
         
         newSkillContainer = UIView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: view.frame.height - 80))
@@ -67,11 +67,11 @@ class CreateSkillViewController : UIViewController {
         newSkillOriginalButton.layer.borderColor = skillsColor.CGColor
         // Original Container
         newSkillOriginalContainer = UIView(frame: CGRect(x: 13, y: newSkillOriginalButton.frame.height, width: newSkillContainer.frame.width - 10, height: newSkillContainer.frame.height - 49))
-        skillNameTextField = UITextField(frame: CGRect(x: newSkillOriginalContainer.frame.width / 4, y: 40, width: newSkillOriginalContainer.frame.width / 2, height: 40))
+        skillNameTextField = UITextField(frame: CGRect(x: newSkillContainer.frame.width / 4 - 10, y: 40, width: newSkillContainer.frame.width / 2, height: 40))
         skillNameTextField.borderStyle = UITextBorderStyle.RoundedRect
         skillNameTextField.placeholder = "Skill Name"
         skillNameTextField.textAlignment = NSTextAlignment(rawValue: 1)!
-        skillDescTextField = UITextField(frame: CGRect(x: newSkillOriginalContainer.frame.width / 5, y: 120, width: newSkillOriginalContainer.frame.width * 0.6, height: 40))
+        skillDescTextField = UITextField(frame: CGRect(x: newSkillContainer.frame.width / 5 - 10, y: 120, width: newSkillContainer.frame.width * 0.6, height: 40))
         skillDescTextField.borderStyle = UITextBorderStyle.RoundedRect
         skillDescTextField.placeholder = "Skill Description"
         skillDescTextField.textAlignment = NSTextAlignment(rawValue: 1)!
@@ -122,6 +122,7 @@ class CreateSkillViewController : UIViewController {
         user.skills = userSkills
         if saveContext() {
             println("Skill Created")
+            dismissViewControllerAnimated(true, completion: nil)
         } else {
             println("Error Saving!")
         }
