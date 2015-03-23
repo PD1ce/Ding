@@ -35,10 +35,6 @@ class SplashViewController : UIViewController {
         view.addSubview(nLetter)
         view.addSubview(gLetter)
         view.addSubview(eLetter)
-        
-        
-        
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -83,7 +79,7 @@ class SplashViewController : UIViewController {
                 self.eLetter.frame = CGRect(x: self.view.frame.width / 2 + 64, y: 40, width: 72, height: 72)
                 }, completion: {
                     (value: Bool) in
-                    UIView.animateWithDuration(3, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
+                    UIView.animateWithDuration(1, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
                         self.view.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
                         }, completion: {
                             (value: Bool) in

@@ -89,8 +89,6 @@ class CreateSkillViewController : UIViewController {
         newSkillTemplateButton.layer.borderWidth = 5.0
         newSkillTemplateButton.layer.borderColor = skillsColor.CGColor
         
-        
-        
         let createSkillButton = UIButton(frame: CGRect(x: newSkillOriginalContainer.frame.width / 4, y: newSkillOriginalContainer.frame.height - 60, width: newSkillOriginalContainer.frame.width / 2, height: 30))
         createSkillButton.setTitle("Create", forState: .Normal)
         createSkillButton.titleLabel?.textColor = UIColor(white: 0.0, alpha: 1.0)
@@ -115,7 +113,7 @@ class CreateSkillViewController : UIViewController {
         skill.skillName = skillNameTextField.text
         skill.skillDescription = skillDescTextField.text
         skill.level = 1
-        skill.expNeeded = 100
+        skill.expNeeded = 50
         skill.expTotal = 100
         let userSkills = user.skills.mutableCopy() as NSMutableSet
         userSkills.addObject(skill)
