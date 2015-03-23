@@ -26,6 +26,7 @@
         <relationship name="skill" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Skill" inverseName="levelUpDates" inverseEntity="Skill" syncable="YES"/>
     </entity>
     <entity name="Skill" representedClassName="Ding.Skill" syncable="YES">
+        <attribute name="expCurrent" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="expNeeded" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="expTotal" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -73,12 +74,12 @@
         <relationship name="skills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Skill" inverseName="user" inverseEntity="Skill" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Achievement" positionX="-45" positionY="90" width="128" height="148"/>
+        <element name="Achievement" positionX="-45" positionY="90" width="128" height="150"/>
         <element name="Goal" positionX="-54" positionY="54" width="128" height="178"/>
         <element name="LevelUpDate" positionX="-27" positionY="72" width="128" height="88"/>
-        <element name="Skill" positionX="-54" positionY="-9" width="128" height="210"/>
+        <element name="Skill" positionX="-54" positionY="-9" width="128" height="223"/>
         <element name="SkillGoal" positionX="-54" positionY="81" width="128" height="88"/>
-        <element name="Task" positionX="-36" positionY="9" width="128" height="163"/>
+        <element name="Task" positionX="-36" positionY="9" width="128" height="165"/>
         <element name="TaskGoal" positionX="-45" positionY="90" width="128" height="88"/>
         <element name="User" positionX="-63" positionY="-18" width="128" height="225"/>
     </elements>

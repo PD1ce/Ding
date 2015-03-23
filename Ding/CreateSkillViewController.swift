@@ -23,6 +23,8 @@ class CreateSkillViewController : UIViewController {
     
     var skillNameTextField: UITextField!
     var skillDescTextField: UITextField!
+    var skillLevelTextField: UITextField!
+    var skillExpTextField: UITextField!
     //Needed
     //var skillCategoryTextField: UITextField!
     
@@ -78,6 +80,17 @@ class CreateSkillViewController : UIViewController {
         newSkillOriginalContainer.addSubview(skillNameTextField)
         newSkillOriginalContainer.addSubview(skillDescTextField)
         
+        //Test Purposes: Level + EXP
+        skillLevelTextField = UITextField(frame: CGRect(x: newSkillContainer.frame.width / 5 - 10, y: 200, width: newSkillContainer.frame.width * 0.6, height: 40))
+        skillLevelTextField.borderStyle = UITextBorderStyle.RoundedRect
+        skillLevelTextField.placeholder = "Skill Level"
+        skillLevelTextField.textAlignment = NSTextAlignment(rawValue: 1)!
+        skillExpTextField = UITextField(frame: CGRect(x: newSkillContainer.frame.width / 5 - 10, y: 280, width: newSkillContainer.frame.width * 0.6, height: 40))
+        skillExpTextField.borderStyle = UITextBorderStyle.RoundedRect
+        skillExpTextField.placeholder = "Skill Exp"
+        skillExpTextField.textAlignment = NSTextAlignment(rawValue: 1)!
+        newSkillOriginalContainer.addSubview(skillLevelTextField)
+        newSkillOriginalContainer.addSubview(skillExpTextField)
         
         //Template Button
         newSkillTemplateButton = UIButton(frame: CGRect(x: newSkillContainer.frame.width / 2 - 2.5, y: 0, width: newSkillContainer.frame.width / 2 + 2.5, height: 44))
@@ -112,9 +125,9 @@ class CreateSkillViewController : UIViewController {
         let skill = NSEntityDescription.insertNewObjectForEntityForName("Skill", inManagedObjectContext: managedContext) as Skill
         skill.skillName = skillNameTextField.text
         skill.skillDescription = skillDescTextField.text
-        skill.level = 1
-        skill.expNeeded = 50
-        skill.expTotal = 100
+        skill.level = skillLevelTextField.text.toInt()!
+        skill.expCurrent = skillExpTextField.text.toInt()!
+        skill.expTotal = (Int(skill.level) * 100)
         let userSkills = user.skills.mutableCopy() as NSMutableSet
         userSkills.addObject(skill)
         user.skills = userSkills
