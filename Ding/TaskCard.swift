@@ -23,6 +23,15 @@ class TaskCard : UIView {
         backgroundColor = UIColor(white: 1.0, alpha: 1.0)
         
     }
+    //Used for creation of new task cards
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layer.cornerRadius = 10.0
+        layer.borderWidth = 2.0
+        layer.borderColor = mainColor.CGColor
+        backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        
+    }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)

@@ -15,6 +15,7 @@ class SkillsViewController : UIViewController {
     var user: User!
     var skill: Skill!
     var tasks: NSMutableArray!
+    var completedTasks: NSMutableArray!
     
     var detailsContainer: UIView!
     var realWidth: Float!
@@ -22,8 +23,10 @@ class SkillsViewController : UIViewController {
     
     var expBarEmpty: UIView!
     var expBarFull: UIView!
-    
+    var oldExp: Int! // Used to update the number in animations
     var headerView: UIView!
+    
+    var totalLevelLabel: UILabel!
     
     var tasksContainer: UIView!
     var tasksCurrentContainer: UIScrollView!
@@ -52,6 +55,13 @@ class SkillsViewController : UIViewController {
         view.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         
         tasks = NSMutableArray(array: skill.tasks.allObjects)
+        completedTasks = NSMutableArray()
+        for task in tasks {
+            if (task as Task).completed == 1 {
+                completedTasks.addObject(task)
+                tasks.removeObject(task)
+            }
+        }
         
         detailsContainer = UIView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: 112))
         detailsContainer.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
@@ -88,7 +98,7 @@ class SkillsViewController : UIViewController {
         skillNameLabel.text = "Level: \(skill.level)"
         //skillNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
         skillNameLabel.backgroundColor = UIColor(white: 0.9, alpha: 1.0) // Test
-        let totalLevelLabel = UILabel(frame: CGRect(x: skillContainerView.frame.width + 8, y: skillNameLabel.frame.height + 16, width: detailsContainer.frame.width - skillContainerView.frame.width - 16, height: skillContainerView.frame.height / 2 - 12))
+        totalLevelLabel = UILabel(frame: CGRect(x: skillContainerView.frame.width + 8, y: skillNameLabel.frame.height + 16, width: detailsContainer.frame.width - skillContainerView.frame.width - 16, height: skillContainerView.frame.height / 2 - 12))
         totalLevelLabel.font = UIFont(name: "Helvetica", size: 18.0)
         totalLevelLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         
@@ -255,7 +265,7 @@ class SkillsViewController : UIViewController {
             row++
         }
         //Display New Task Creation
-        createTaskCard = UIView(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
+        createTaskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
         let taskNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: createTaskCard.frame.width, height: 72))
         createTaskCard.layer.cornerRadius = 10.0
         createTaskCard.layer.borderWidth = 2.0
@@ -302,11 +312,9 @@ class SkillsViewController : UIViewController {
         
     }
     
+    
     func updateTasks() {
-        println("UpdateTasks fired")
-        //Refresh subviews
         for view in tasksCurrentContainer.subviews {
-            println("VIEW!")
             view.removeFromSuperview()
         }
         for view in tasksCompletedContainer.subviews {
@@ -391,10 +399,119 @@ class SkillsViewController : UIViewController {
         tasksCurrentContainer.addSubview(createTaskCard)
     }
     
+    func refreshTasks() {
+        updateTasks()
+        
+    }
+    
+    /* Complete Alert and Actions! */
     func completeButtonTapped(button: UIButton) {
         let taskCard = button.superview as TaskCard
-        println("Complete Task: \(taskCard.task.taskName)")
+        
+        let alert = UIAlertController(title: "Complete Task", message: "Did you complete this task?", preferredStyle: UIAlertControllerStyle.Alert)
+        let confirmButton = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler:
+        {(action) -> Void in
+            self.completeConfirmed(taskCard)
+        })
+        let cancelButton = UIAlertAction(title: "No", style: UIAlertActionStyle.Cancel, handler: {
+            action -> Void in
+        })
+        alert.addAction(confirmButton)
+        alert.addAction(cancelButton)
+        presentViewController(alert, animated: true, completion: nil)
+        
     }
+    func completeConfirmed(taskCard: TaskCard){
+        let task = taskCard.task
+        task.completed = 1
+        oldExp = Int(skill.expCurrent)
+        println("Current Skill EXP: \(skill.expCurrent)")
+        println("Task EXP Gained: \(task.exp)")
+        skill.expCurrent = Int(self.skill.expCurrent) + Int(task.exp)
+        println("New Skill EXP: \(skill.expCurrent)")
+        completedTasks.addObject(task)
+        tasks.removeObject(task)
+        
+   
+        if saveContext() {
+            // Save worked
+            // Reload the task view and make sure it appears in completed
+            var removedTaskCardFound = false
+            for tCard in tasksCurrentContainer.subviews {
+                if tCard.isKindOfClass(TaskCard) {
+                    let tCardObject = tCard as TaskCard
+                    if removedTaskCardFound {
+                        UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
+                            tCardObject.center.y = tCardObject.center.y - 76
+                        }, completion: {
+                            (value: Bool) in
+                        })
+                    }
+                    
+                    if (tCard as TaskCard) == taskCard {
+                        removedTaskCardFound = true
+                        UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
+                            taskCard.alpha = 0.0
+                        }, completion: {
+                            (value: Bool) in
+                                taskCard.removeFromSuperview()
+                                removedTaskCardFound = true
+                        })
+                    }
+                }
+                // The TaskCard Creation object, should be subclassed to TaskCard! Much easier
+                /*
+                if tCard.isKindOfClass(UIView) {
+                    let viewObject = tCard as UIView
+                    if removedTaskCardFound {
+                        UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
+                            viewObject.center.y = viewObject.center.y - 72
+                        }, completion: {
+                            (value: Bool) in
+                        })
+                    }
+                }
+                */
+            } // end for
+            
+            // Timer should take 2 seconds, so interval should be relative to experience gained
+            // First number is seconds it will take, not entirely accurate because of interval
+            let interval = 2 / Float(task.exp)
+            let timer = NSTimer(timeInterval: NSTimeInterval(interval), target: self, selector: "updateExpLabel:", userInfo: nil, repeats: true)
+            NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
+            // Now Animate the new exp value and the expbar!
+            expBarEmpty.backgroundColor = tasksColor
+            UIView.animateWithDuration(2.0, delay: 0.0, options: nil, animations: {
+                let expRatio = CGFloat(self.skill.expCurrent) / CGFloat(self.skill.expTotal)
+                let newWidth = CGFloat(CGFloat(self.expBarEmpty.frame.width) * expRatio)
+                self.expBarFull.frame = CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY, width: newWidth, height: self.expBarFull.frame.height)
+                self.expBarEmpty.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+            
+            
+        } else {
+            // Did not save!
+        }
+        
+    }
+    
+    func updateExpLabel(timer: NSTimer) {
+        let exp = 2 / Float(timer.timeInterval)
+        var increment = Int(exp / 50)
+        if increment == 0 {
+            increment = 1
+        }
+        oldExp = oldExp + increment
+        totalLevelLabel.text = "Exp: \(oldExp) / \(skill.expTotal)"
+        if oldExp >= Int(skill.expCurrent) {
+            totalLevelLabel.text = "Exp: \(skill.expCurrent) / \(skill.expTotal)"
+            timer.invalidate()
+        }
+    }
+    
     func deleteButtonTapped(button: UIButton) {
         let taskCard = button.superview as TaskCard
         println("Delete Task: \(taskCard.task.taskName)")
@@ -460,6 +577,26 @@ class SkillsViewController : UIViewController {
         tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = whiteColor
         tasksContainer.bringSubviewToFront(tasksCompletedContainer)
+    }
+    
+    func saveContext() -> Bool {
+        let managedContext = skill.managedObjectContext!
+        /*
+        let task = NSEntityDescription.insertNewObjectForEntityForName("Task", inManagedObjectContext: managedContext) as Task
+        //Set Task Details
+        task.taskName = taskNameTF.text
+        task.exp = taskExpTF.text.toInt()!
+        task.difficulty = Float(taskDifficultyTF.text.toInt()!)
+        */
+        
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+            return false
+        }
+        
+        return true
     }
     
     class TaskLabel : UILabel {
