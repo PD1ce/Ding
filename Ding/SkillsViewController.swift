@@ -161,11 +161,11 @@ class SkillsViewController : UIViewController {
         
         // Current Tasks Container - Populate on ViewWillAppear or ButtonPress
         tasksCurrentContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 40))
-        tasksCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 750)
+        tasksCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 2000)
         tasksCurrentContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         // Completed Tasks Container
         tasksCompletedContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 40))
-        tasksCompletedContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 750)
+        tasksCompletedContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 2000)
         tasksCompletedContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         
         
@@ -200,14 +200,64 @@ class SkillsViewController : UIViewController {
         //Display Skill's Tasks
         var row = 0
         for task in tasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 72) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
+            taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
+            let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
+            taskNameLabel.text = taskCard.task.taskName
+            taskNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskNameLabel.backgroundColor = whiteColor
+            taskNameLabel.layer.borderWidth = 2.0
+            taskNameLabel.layer.borderColor = tasksColor.CGColor
+            let taskExpLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskExpLabel.text = "Exp: \(taskCard.task.exp)"
+            taskExpLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskExpLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskExpLabel.backgroundColor = whiteColor
+            taskExpLabel.layer.borderWidth = 2.0
+            taskExpLabel.layer.borderColor = tasksColor.CGColor
+            let taskDifficultyLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.525), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskDifficultyLabel.text = "Diff: \(taskCard.task.difficulty)"
+            taskDifficultyLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskDifficultyLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskDifficultyLabel.backgroundColor = whiteColor
+            taskDifficultyLabel.layer.borderWidth = 2.0
+            taskDifficultyLabel.layer.borderColor = tasksColor.CGColor
+            
+            //Complete or Delete Buttons
+            let completeButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: 0, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            completeButton.setTitle("!", forState: .Normal)
+            completeButton.setTitleColor(whiteColor, forState: .Normal)
+            completeButton.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            //completeButton.layer.cornerRadius = 10.0
+            completeButton.addTarget(self, action: "completeButtonTapped:", forControlEvents: .TouchUpInside)
+            completeButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            completeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let deleteButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            deleteButton.setTitle("X", forState: .Normal)
+            deleteButton.setTitleColor(whiteColor, forState: .Normal)
+            deleteButton.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            //deleteButton.layer.cornerRadius = 10.0
+            deleteButton.addTarget(self, action: "deleteButtonTapped:", forControlEvents: .TouchUpInside)
+            deleteButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            deleteButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let buttonDivider = UIView(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2 - 2, width: CGFloat(taskCard.frame.width * 0.15), height: 4))
+            buttonDivider.backgroundColor = tasksColor
+            
+            taskCard.addSubview(taskNameLabel)
+            taskCard.addSubview(taskExpLabel)
+            taskCard.addSubview(taskDifficultyLabel)
+            taskCard.addSubview(completeButton)
+            taskCard.addSubview(deleteButton)
+            taskCard.addSubview(buttonDivider)
+            
             row++
         }
         //Display New Task Creation
-        createTaskCard = UIView(frame: CGRect(x: 4, y: CGFloat(row * 72) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
+        createTaskCard = UIView(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
         let taskNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: createTaskCard.frame.width, height: 72))
-        createTaskCard.layer.cornerRadius = 5.0
+        createTaskCard.layer.cornerRadius = 10.0
         createTaskCard.layer.borderWidth = 2.0
         createTaskCard.layer.borderColor = tasksColor.CGColor
         createTaskCard.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
@@ -232,11 +282,12 @@ class SkillsViewController : UIViewController {
         self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.8, alpha: 1.0)
         UIView.animateWithDuration(2.0, animations: {
             self.expBarFull.frame = CGRect(x: self.expBarEmpty.frame.minX, y: self.expBarEmpty.frame.minY, width: CGFloat(self.realWidth), height: self.expBarEmpty.frame.height)
-            self.expBarFull.backgroundColor = UIColor(red: 0.645, green: 0.8, blue: 0.2, alpha: 1)
+            self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1)
             }, completion: {
                 (value: Bool) in
         })
     }
+    
     
     override func viewDidDisappear(animated: Bool) {
         //Set Task back
@@ -251,12 +302,111 @@ class SkillsViewController : UIViewController {
         
     }
     
+    func updateTasks() {
+        println("UpdateTasks fired")
+        //Refresh subviews
+        for view in tasksCurrentContainer.subviews {
+            println("VIEW!")
+            view.removeFromSuperview()
+        }
+        for view in tasksCompletedContainer.subviews {
+            view.removeFromSuperview()
+        }
+        
+        //Display Skill's Tasks
+        var row = 0
+        for task in tasks {
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
+            taskCard.backgroundColor = tasksColor
+            tasksCurrentContainer.addSubview(taskCard)
+            let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
+            taskNameLabel.text = taskCard.task.taskName
+            taskNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskNameLabel.backgroundColor = whiteColor
+            taskNameLabel.layer.borderWidth = 2.0
+            taskNameLabel.layer.borderColor = tasksColor.CGColor
+            let taskExpLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskExpLabel.text = "Exp: \(taskCard.task.exp)"
+            taskExpLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskExpLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskExpLabel.backgroundColor = whiteColor
+            taskExpLabel.layer.borderWidth = 2.0
+            taskExpLabel.layer.borderColor = tasksColor.CGColor
+            let taskDifficultyLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.525), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskDifficultyLabel.text = "Diff: \(taskCard.task.difficulty)"
+            taskDifficultyLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskDifficultyLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskDifficultyLabel.backgroundColor = whiteColor
+            taskDifficultyLabel.layer.borderWidth = 2.0
+            taskDifficultyLabel.layer.borderColor = tasksColor.CGColor
+            
+            //Complete or Delete Buttons
+            let completeButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: 0, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            completeButton.setTitle("!", forState: .Normal)
+            completeButton.setTitleColor(whiteColor, forState: .Normal)
+            completeButton.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            //completeButton.layer.cornerRadius = 10.0
+            completeButton.addTarget(self, action: "completeButtonTapped:", forControlEvents: .TouchUpInside)
+            completeButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            completeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let deleteButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            deleteButton.setTitle("X", forState: .Normal)
+            deleteButton.setTitleColor(whiteColor, forState: .Normal)
+            deleteButton.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            //deleteButton.layer.cornerRadius = 10.0
+            deleteButton.addTarget(self, action: "deleteButtonTapped:", forControlEvents: .TouchUpInside)
+            deleteButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            deleteButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let buttonDivider = UIView(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2 - 2, width: CGFloat(taskCard.frame.width * 0.15), height: 4))
+            buttonDivider.backgroundColor = tasksColor
+            
+            taskCard.addSubview(taskNameLabel)
+            taskCard.addSubview(taskExpLabel)
+            taskCard.addSubview(taskDifficultyLabel)
+            taskCard.addSubview(completeButton)
+            taskCard.addSubview(deleteButton)
+            taskCard.addSubview(buttonDivider)
+            
+            row++
+        }
+        //Display New Task Creation
+        createTaskCard = UIView(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
+        let taskNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: createTaskCard.frame.width, height: 72))
+        createTaskCard.layer.cornerRadius = 10.0
+        createTaskCard.layer.borderWidth = 2.0
+        createTaskCard.layer.borderColor = tasksColor.CGColor
+        createTaskCard.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        //taskNameLabel.layer.borderWidth = 1.0
+        //taskNameLabel.layer.cornerRadius = 5.0
+        taskNameLabel.text = "Create a new Task"
+        taskNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+        taskNameLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
+        taskNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
+        createTaskCard.addSubview(taskNameLabel)
+        let tapGR = UITapGestureRecognizer(target: self, action: "createTaskTapped")
+        createTaskCard.addGestureRecognizer(tapGR)
+        
+        
+        tasksCurrentContainer.addSubview(createTaskCard)
+    }
+    
+    func completeButtonTapped(button: UIButton) {
+        let taskCard = button.superview as TaskCard
+        println("Complete Task: \(taskCard.task.taskName)")
+    }
+    func deleteButtonTapped(button: UIButton) {
+        let taskCard = button.superview as TaskCard
+        println("Delete Task: \(taskCard.task.taskName)")
+    }
+    
     func backButtonTapped() {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     func createTaskTapped() {
         let createTaskVC = CreateTaskViewController(skill: self.skill)
+        createTaskVC.parentVC = self
         presentViewController(createTaskVC, animated: true, completion: nil)
         //let taskPresentationController = TaskPresentationController()
         //let taskPresentationAnimationController = TaskPresentationAnimationController(isPresenting: true)
@@ -310,5 +460,9 @@ class SkillsViewController : UIViewController {
         tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = whiteColor
         tasksContainer.bringSubviewToFront(tasksCompletedContainer)
+    }
+    
+    class TaskLabel : UILabel {
+        
     }
 }

@@ -8,14 +8,19 @@
 
 import Foundation
 import UIKit
-
+import CoreData
 //PeteC Github
 class CreateTaskViewController : UIViewController, UIViewControllerTransitioningDelegate {
     
     var skill: Skill!
+    var parentVC: SkillsViewController!
     
     var cancelButton: UIButton!
     var createButton: UIButton!
+    
+    var taskNameTF: UITextField!
+    var taskExpTF: UITextField!
+    var taskDifficultyTF: UITextField!
     
     let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
@@ -51,6 +56,21 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
         view.layer.borderWidth = 5.0
         view.layer.borderColor = tasksColor.CGColor
         
+        //TextFields
+        taskNameTF = UITextField(frame: CGRect(x: view.frame.width / 5 - 5, y: 50, width: view.frame.width * 0.6, height: 40))
+        taskNameTF.borderStyle = UITextBorderStyle.RoundedRect
+        taskNameTF.placeholder = "Task Name"
+        taskNameTF.textAlignment = NSTextAlignment(rawValue: 1)!
+        taskExpTF = UITextField(frame: CGRect(x: view.frame.width / 5 - 5, y: 100, width: view.frame.width * 0.6, height: 40))
+        taskExpTF.borderStyle = UITextBorderStyle.RoundedRect
+        taskExpTF.placeholder = "Task Exp"
+        taskExpTF.textAlignment = NSTextAlignment(rawValue: 1)!
+        taskDifficultyTF = UITextField(frame: CGRect(x: view.frame.width / 5 - 5, y: 150, width: view.frame.width * 0.6, height: 40))
+        taskDifficultyTF.borderStyle = UITextBorderStyle.RoundedRect
+        taskDifficultyTF.placeholder = "Task Difficulty"
+        taskDifficultyTF.textAlignment = NSTextAlignment(rawValue: 1)!
+        
+        //Buttons
         cancelButton = UIButton(frame: CGRect(x: 5, y: view.frame.height - 55, width: view.frame.width / 2 - 5, height: 50))
         cancelButton.addTarget(self, action: "cancelButtonTapped", forControlEvents: .TouchUpInside)
         cancelButton.setTitle("Cancel", forState: .Normal)
@@ -69,6 +89,10 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
         createButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
         createButton.layer.borderWidth = 2.0
         createButton.layer.borderColor = whiteColor.CGColor
+        
+        view.addSubview(taskNameTF)
+        view.addSubview(taskExpTF)
+        view.addSubview(taskDifficultyTF)
         view.addSubview(cancelButton)
         view.addSubview(createButton)
         
@@ -80,8 +104,40 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
         dismissViewControllerAnimated(true, completion: nil)
     }
     func createButtonTapped() {
-        dismissViewControllerAnimated(true, completion: nil)
+        
+        if taskNameTF.text != "" && taskExpTF.text != "" && taskDifficultyTF.text != "" {
+            if saveContext() {
+                parentVC.updateTasks()
+                dismissViewControllerAnimated(true, completion: nil)
+            } else {
+                //Error
+            }
+
+        } else {
+            // Error
+        }
     }
+    
+    func saveContext() -> Bool {
+        let managedContext = skill.managedObjectContext!
+        let task = NSEntityDescription.insertNewObjectForEntityForName("Task", inManagedObjectContext: managedContext) as Task
+        //Set Task Details
+        task.taskName = taskNameTF.text
+        task.exp = taskExpTF.text.toInt()!
+        task.difficulty = Float(taskDifficultyTF.text.toInt()!)
+        
+        let skillTasks = skill.tasks.mutableCopy() as NSMutableSet
+        skillTasks.addObject(task)
+        skill.tasks = skillTasks
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+            return false
+        }
+        
+        return true
+    }
+    
     
     // ---- UIViewControllerTransitioningDelegate methods
     

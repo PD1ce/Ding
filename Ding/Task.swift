@@ -2,7 +2,7 @@
 //  Task.swift
 //  Ding
 //
-//  Created by Philip Deisinger on 3/17/15.
+//  Created by Philip Deisinger on 3/23/15.
 //  Copyright (c) 2015 PDice. All rights reserved.
 //
 
@@ -18,6 +18,7 @@ class Task: NSManagedObject {
     @NSManaged var taskDescription: String
     @NSManaged var taskName: String
     @NSManaged var taskType: NSNumber
+    @NSManaged var difficulty: NSNumber
     @NSManaged var skill: Ding.Skill
 
 }

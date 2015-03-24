@@ -53,6 +53,7 @@ class HomeViewController : UIViewController {
         
         // Need tasks and Goals
         skills = NSMutableArray(array: user.skills.allObjects)
+        tasks = NSMutableArray()
         for skill in skills {
             let moreTasks = NSMutableArray(array: (skill as Skill).tasks.allObjects)
             for task in moreTasks {
@@ -241,14 +242,14 @@ class HomeViewController : UIViewController {
         tasksContainer.bringSubviewToFront(tasksCurrentContainer)
         tasksSelectedButton = tasksCurrent
         
-        
+        /*
         println("tasks CuContainer Min X: \(tasksCurrentContainer.frame.minX)")
         println("tasks CuContainer Min Y: \(tasksCurrentContainer.frame.minY)")
         println("tasks CuContainer Max X: \(tasksCurrentContainer.frame.maxX)")
         println("tasks CuContainer Max Y: \(tasksCurrentContainer.frame.maxY)")
         println("tasks CuContainer Width: \(tasksCurrentContainer.frame.width)")
         println("tasks CuContainer Height: \(tasksCurrentContainer.frame.height)")
-        
+        */
 
         
         
