@@ -23,7 +23,12 @@ class SkillsViewController : UIViewController {
     
     var expBarEmpty: UIView!
     var expBarFull: UIView!
+    
     var oldExp: Int! // Used to update the number in animations
+    var currentExpBeforeLevel: Int!
+    var totalExpBeforeLevel: Int!
+    var oldSkillLevel: Int!
+    
     var headerView: UIView!
     var expBarContainer: UIView!
     
@@ -33,6 +38,9 @@ class SkillsViewController : UIViewController {
     var tasksContainer: UIView!
     var tasksCurrentContainer: UIScrollView!
     var tasksCompletedContainer: UIScrollView!
+    
+    var maskView: UIView!
+    var congratsView: UIView!
     
     var tasksCurrent: UIButton!
     var tasksCompleted: UIButton!
@@ -45,6 +53,7 @@ class SkillsViewController : UIViewController {
     let skillsColor = UIColor(red: 51/255, green: 255/255, blue: 204/255, alpha: 1.0)
     let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
+    let blackColor = UIColor(white: 0.0, alpha: 1.0)
     let goldColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
     
     
@@ -94,7 +103,7 @@ class SkillsViewController : UIViewController {
         skillImageView.layer.cornerRadius = skillImageView.frame.width / 2
         skillContainerView.addSubview(skillImageView)
         
-        let skillNameLabel = UILabel(frame: CGRect(x: skillContainerView.frame.width + 8, y: 8, width: detailsContainer.frame.width - skillContainerView.frame.width - 16, height: skillContainerView.frame.height / 2 - 12))
+        skillNameLabel = UILabel(frame: CGRect(x: skillContainerView.frame.width + 8, y: 8, width: detailsContainer.frame.width - skillContainerView.frame.width - 16, height: skillContainerView.frame.height / 2 - 12))
         skillNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
         skillNameLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         skillNameLabel.text = "Level: \(skill.level)"
@@ -424,11 +433,17 @@ class SkillsViewController : UIViewController {
         presentViewController(alert, animated: true, completion: nil)
         
     }
+    
+    //PDAlert: Dear god man, clean this mess up
     func completeConfirmed(taskCard: TaskCard){
         let task = taskCard.task
         task.completed = 1
         ////Must take into account levelup!
         oldExp = Int(skill.expCurrent)
+        currentExpBeforeLevel = Int(skill.expCurrent)
+        totalExpBeforeLevel = Int(skill.expTotal)
+        oldSkillLevel = Int(skill.level)
+        
         skill.expCurrent = Int(self.skill.expCurrent) + Int(task.exp)
         completedTasks.addObject(task)
         currentTasks.removeObject(task)
@@ -467,7 +482,13 @@ class SkillsViewController : UIViewController {
                 //Level Up
                 levelUp = true
             }
-            
+            var firstAnimationDuration = 2.0
+            var firstAnimationOptions = UIViewAnimationOptions.CurveEaseInOut
+            if levelUp {
+                firstAnimationDuration = 2.0
+                firstAnimationOptions = UIViewAnimationOptions.CurveEaseIn
+            }
+            /////////////////////////////////////////////////////
             
             // Timer should take 2 seconds, so interval should be relative to experience gained
             // First number is seconds it will take, not entirely accurate because of interval
@@ -476,13 +497,8 @@ class SkillsViewController : UIViewController {
             NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
             // Now Animate the new exp value and the expbar!
             expBarEmpty.backgroundColor = tasksColor
-            let expBarShine = UIView(frame: CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY - 4, width: 20, height: self.expBarFull.frame.height + 8))
-            expBarShine.backgroundColor = UIColor(red: 1.0, green: 0.65, blue: 0.2, alpha: 1.0)
-            expBarShine.layer.cornerRadius = 2.0
-            expBarShine.layer.zPosition = -1
-            expBarContainer.addSubview(expBarShine)
             //Animations
-            UIView.animateWithDuration(2.0, delay: 0.0, options: nil, animations: {
+            UIView.animateWithDuration(firstAnimationDuration, delay: 0.0, options: firstAnimationOptions, animations: {
                 let expRatio = CGFloat(self.skill.expCurrent) / CGFloat(self.skill.expTotal)
                 let newWidth = CGFloat(CGFloat(self.expBarEmpty.frame.width) * expRatio)
                 if levelUp {
@@ -492,38 +508,135 @@ class SkillsViewController : UIViewController {
                 }
                
                 self.expBarEmpty.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
-                //Shine
-                expBarShine.frame = CGRect(x: self.expBarEmpty.frame.maxX - 20, y: self.expBarFull.frame.minY - 2, width: 20, height: self.expBarFull.frame.height + 4)
-                expBarShine.backgroundColor = UIColor(red: 1.0, green: 0.65, blue: 0.2, alpha: 0.0)
+                
+                //Completion of first animation
                 }, completion: {
                     (value: Bool) in
-                    expBarShine.removeFromSuperview()
-                    
                     //////// If skill Leveled Up, Time to do lots of stuff!///////
                     if levelUp {
+                        //Probably should do a big alert/modal popup
+                        /* Change skill Level and needed Exp */
+                        
+                        self.skill.expCurrent = expForNextLevel
                         self.skill.level = Int(self.skill.level) + 1
+                        self.skill.expTotal = Int(Int(self.skill.level) * 100)
+                        ///////////////////////////////////////
                         self.expBarFull.frame = CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY, width: 0, height: self.expBarFull.frame.height)
                         //Now add more Exp
+                        self.skillNameLabel.text = "Level: \(self.skill.level)"
+                        self.expBarEmpty.backgroundColor = self.goldColor
+                        self.tasksCurrentContainer.backgroundColor = self.goldColor
+                        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+                            let expRatio = CGFloat(self.skill.expCurrent) / CGFloat(self.skill.expTotal)
+                            let newWidth = CGFloat(CGFloat(self.expBarEmpty.frame.width) * expRatio)
+                            self.expBarFull.frame = CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY, width: newWidth, height: self.expBarFull.frame.height)
+                            self.expBarEmpty.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+                            self.tasksCurrentContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+                            }, completion: {
+                                (value: Bool) in
+                                //Final Touches if needed
+                                
+                        })
+                        
+                        //Save Context
+                        if self.saveContext() {
+                            // Good
+                        } else {
+                            // Bad
+                        }
+                        
                     }
             })
+            
+            //Independent level up animations: Fire as soon as task is complete
+            if levelUp {
+                let backgroundShine = UIView(frame: CGRect(x: self.view.frame.minX - self.view.frame.width, y: self.view.frame.minY, width: self.view.frame.width, height: self.view.frame.height))
+                backgroundShine.layer.zPosition = -1
+                backgroundShine.backgroundColor = self.goldColor
+                backgroundShine.alpha = 0.0
+                self.view.addSubview(backgroundShine)
+                
+                let backgroundShineFollow = UIView(frame: self.view.frame)
+                backgroundShineFollow.backgroundColor = self.goldColor
+                backgroundShineFollow.layer.zPosition = -2
+
+                let containerShine = UIView(frame: CGRect(x: self.view.frame.minX - self.view.frame.width - 8, y: self.view.frame.minY, width: self.view.frame.width - 16, height: self.view.frame.height))
+                containerShine.backgroundColor = self.goldColor
+                containerShine.layer.zPosition = -2
+                containerShine.alpha = 0.0
+                
+                tasksCurrentContainer.addSubview(containerShine)
+                
+                //Animate from offscreen to middle
+                UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
+                    backgroundShine.alpha = 1.0
+                    backgroundShine.frame = CGRect(x: self.view.frame.minX, y: self.view.frame.minY, width: self.view.frame.width, height: self.view.frame.height)
+                    containerShine.alpha = 1.0
+                    containerShine.frame = CGRect(x: self.tasksCurrentContainer.frame.minX - 8, y: self.view.frame.minY, width: self.view.frame.width - 16, height: self.view.frame.height)
+                    }, completion: {
+                        (value: Bool) in
+                        //Animate from middle to offscreen
+                        self.view.addSubview(backgroundShineFollow)
+                        backgroundShine.removeFromSuperview()
+                        UIView.animateWithDuration(2.0, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
+                            backgroundShineFollow.alpha = 0.0
+                            backgroundShine.alpha = 0.0
+                            backgroundShine.frame = CGRect(x: self.view.frame.maxX, y: self.view.frame.minY, width: self.view.frame.width, height: self.view.frame.height)
+                            containerShine.alpha = 0.0
+                            }, completion: {
+                                (value: Bool) in
+                                //backgroundShine.removeFromSuperview()
+                                backgroundShineFollow.removeFromSuperview()
+                                containerShine.removeFromSuperview()
+                                ///// View to Congratulate! /////
+                                self.displayLevelUp()
+                        })
+                        
+                        
+                })
+            }
+            
+            
+            
+            
         } else {
             // Did not save!
         }
         
     }
     
+    //PDAlert: Dear god man, clean this mess up
     func updateExpLabel(timer: NSTimer) {
+        //Level up may not be necessary, probably not
+        var leveledUp = false
         let exp = 2 / Float(timer.timeInterval)
         var increment = Int(exp / 50)
         if increment == 0 {
             increment = 1
         }
         oldExp = oldExp + increment
+        if oldSkillLevel < Int(skill.level) {
+            leveledUp = true
+        }
+        
+        if leveledUp {
+            oldSkillLevel = Int(skill.level)
+            oldExp = 0
+            leveledUp = false
+        }
+        
+        if oldExp >= Int(skill.expTotal) {
+            oldExp = 0
+        }
+        
         totalLevelLabel.text = "Exp: \(oldExp) / \(skill.expTotal)"
         if oldExp >= Int(skill.expCurrent) {
             totalLevelLabel.text = "Exp: \(skill.expCurrent) / \(skill.expTotal)"
             timer.invalidate()
         }
+    
+        
+       
     }
     
     func deleteButtonTapped(button: UIButton) {
@@ -538,12 +651,88 @@ class SkillsViewController : UIViewController {
     func createTaskTapped() {
         let createTaskVC = CreateTaskViewController(skill: self.skill)
         createTaskVC.parentVC = self
-        presentViewController(createTaskVC, animated: true, completion: {
-            println("Create Task Tapped")
-        })
+        presentViewController(createTaskVC, animated: true, completion: nil)
         //let taskPresentationController = TaskPresentationController()
         //let taskPresentationAnimationController = TaskPresentationAnimationController(isPresenting: true)
         
+    }
+    
+    //Figure out button blocks to make this less annoying
+    func displayLevelUp() {
+        maskView = UIView(frame: view.frame)
+        maskView.backgroundColor = whiteColor
+        maskView.alpha = 0.0
+        maskView.layer.zPosition = 4
+        maskView.userInteractionEnabled = true
+        
+        congratsView = UIView(frame: CGRect(x: 50, y: 50, width: view.frame.width - 100, height: view.frame.height - 100))
+        congratsView.layer.zPosition = 5
+        congratsView.backgroundColor = whiteColor
+        congratsView.layer.cornerRadius = 10.0
+        congratsView.layer.borderWidth = 5.0
+        congratsView.layer.borderColor = skillsColor.CGColor
+        congratsView.alpha = 0.0
+        congratsView.userInteractionEnabled = false
+        
+        let levelUpTitle = UILabel(frame: CGRect(x: 0, y: 0, width: congratsView.frame.width, height: congratsView.frame.height / 10 + 10))
+        levelUpTitle.text = "Level Up!"
+        levelUpTitle.font = UIFont(name: "Helvetica", size: 44.0)
+        levelUpTitle.textAlignment = NSTextAlignment.Center
+        levelUpTitle.textColor = goldColor
+        
+        let levelUpLabel = UILabel(frame: CGRect(x: 0, y: congratsView.frame.height / 10, width: congratsView.frame.width, height: congratsView.frame.height / 10 + 20))
+        levelUpLabel.text = "Congratulations on reaching Level:"
+        levelUpLabel.font = UIFont(name: "Helvetica", size: 14.0)
+        levelUpLabel.textAlignment = NSTextAlignment.Center
+        levelUpLabel.textColor = blackColor
+        
+        //This will be a cool Image view of the number!
+        let newLevelLabel = UILabel(frame: CGRect(x: 0, y: congratsView.frame.height / 5, width: congratsView.frame.width, height: congratsView.frame.height / 2))
+        newLevelLabel.text = "\(skill.level)"
+        newLevelLabel.font = UIFont(name: "Helvetica", size: 225.0)
+        newLevelLabel.textAlignment = NSTextAlignment.Center
+        newLevelLabel.textColor = goldColor
+        
+        let dismissButton = UIButton(frame: CGRect(x: congratsView.frame.width / 4, y: congratsView.frame.height - congratsView.frame.height / 5, width: congratsView.frame.width / 2, height: congratsView.frame.height / 5 - 20))
+        dismissButton.backgroundColor = whiteColor
+        dismissButton.layer.borderColor = skillsColor.CGColor
+        dismissButton.layer.borderWidth = 2.0
+        dismissButton.setTitle("Okay!", forState: .Normal)
+        dismissButton.setTitleColor(goldColor, forState: .Normal)
+        dismissButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        dismissButton.titleLabel?.font = UIFont(name: "Helvetica", size: 36.0)
+        dismissButton.addTarget(self, action: "dismissMe", forControlEvents: .TouchUpInside)
+        
+        //Shouldn't need to remove these subviews on cleanup
+        congratsView.addSubview(levelUpTitle)
+        congratsView.addSubview(levelUpLabel)
+        congratsView.addSubview(newLevelLabel)
+        congratsView.addSubview(dismissButton)
+        
+        view.addSubview(maskView)
+        view.addSubview(congratsView)
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
+            self.congratsView.alpha = 1.0
+            self.maskView.alpha = 0.5
+            }, completion: {
+                (value: Bool) in
+                self.congratsView.userInteractionEnabled = true
+        })
+        
+        //This might not be viable
+        
+        
+    }
+    
+    func dismissMe() {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
+            self.congratsView.alpha = 0.0
+            self.maskView.alpha = 0.0
+            }, completion: {
+                (value: Bool) in
+                self.congratsView.removeFromSuperview()
+                self.maskView.removeFromSuperview()
+        })
     }
     
     //Task Container Buttons

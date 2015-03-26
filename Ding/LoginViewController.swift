@@ -14,46 +14,96 @@ class LoginViewController: UIViewController {
     var user: User!
     var titleLabel: UILabel!
     let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-    @IBOutlet weak var userNameTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var passwordLabel: UILabel!
-    @IBOutlet weak var incorrectLabel: UILabel!
     
-    @IBOutlet weak var emptyLoadView: UIView!
+    let goldColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
+    let whiteColor = UIColor(white: 1.0, alpha: 1.0)
+    
+    var userNameTextField: UITextField!
+    var passwordTextField: UITextField!
+    var usernameLabel: UILabel!
+    var passwordLabel: UILabel!
+    var incorrectLabel: UILabel!
+    
+    var emptyLoadView: UIView!
     var fullLoadView: UIView!
     
-    @IBOutlet weak var loginButton: UIButton!
+    var loginButton: UIButton!
+    var createAccountButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        /* Styling and creation */
-        fullLoadView = UIView(frame: CGRect(x: self.emptyLoadView.frame.minX, y: emptyLoadView.frame.minY, width: 0.0, height: emptyLoadView.frame.height))
+        
+        //** Load up labels and fields **//
+        //PDAlert: All of these need to be converted to dynamic frame
+        usernameLabel = UILabel(frame: CGRect(x: 16, y: 126, width: 79, height: 21))
+        usernameLabel.text = "Username"
+        usernameLabel.font = UIFont(name: "Helvetica", size: 12.0)
+        usernameLabel.textAlignment = NSTextAlignment.Left
+        usernameLabel.textColor = goldColor
+        passwordLabel = UILabel(frame: CGRect(x: 192, y: 126, width: 79, height: 21))
+        passwordLabel.text = "Password"
+        passwordLabel.font = UIFont(name: "Helvetica", size: 12.0)
+        passwordLabel.textAlignment = NSTextAlignment.Left
+        passwordLabel.textColor = goldColor
+        
+        userNameTextField = UITextField(frame: CGRect(x: 16, y: 155, width: 167, height: 30))
+        userNameTextField.textAlignment = NSTextAlignment.Center
+        userNameTextField.borderStyle = UITextBorderStyle.RoundedRect
+        userNameTextField.textColor = goldColor
+        userNameTextField.font = UIFont(name: "Helvetica", size: 16.0)
+        passwordTextField = UITextField(frame: CGRect(x: 192, y: 155, width: 167, height: 30))
+        passwordTextField.textAlignment = NSTextAlignment.Center
+        passwordTextField.borderStyle = UITextBorderStyle.RoundedRect
+        passwordTextField.textColor = goldColor
+        passwordTextField.font = UIFont(name: "Helvetica", size: 16.0)
+        passwordTextField.secureTextEntry = true
+        
+        incorrectLabel = UILabel(frame: CGRect(x: 16, y: 237, width: 343, height: 21))
+        incorrectLabel.textAlignment = NSTextAlignment.Center
+        incorrectLabel.font = UIFont(name: "Helvetica", size: 16.0)
+        incorrectLabel.textColor = goldColor
+        
+        emptyLoadView = UIView(frame: CGRect(x: 16, y: 292, width: 343, height: 32))
         emptyLoadView.layer.zPosition = 2
         emptyLoadView.layer.cornerRadius = 10.0
-        loginButton.setTitleColor(UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1), forState: .Normal)
-        usernameLabel.textColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
-        passwordLabel.textColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
-        userNameTextField.textColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
-        passwordTextField.textColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
-        userNameTextField.textAlignment = NSTextAlignment(rawValue: 1)!
-        passwordTextField.textAlignment = NSTextAlignment(rawValue: 1)!
-        passwordTextField.secureTextEntry = true
-        view.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha:1)
+        emptyLoadView.backgroundColor = whiteColor
+        fullLoadView = UIView(frame: CGRect(x: self.emptyLoadView.frame.minX, y: emptyLoadView.frame.minY, width: 0.0, height: emptyLoadView.frame.height))
+
         titleLabel = UILabel(frame: CGRect(x: 0, y: 30, width: view.bounds.width, height: 36.0))
         titleLabel.text = "DING!"
         titleLabel.font = UIFont(name: "Helvetica", size: 36.0)
         titleLabel.textColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
         titleLabel.textAlignment = NSTextAlignment(rawValue: 1)!
-        view.addSubview(fullLoadView)
+        
+        loginButton = UIButton(frame: CGRect(x: 155, y: 193, width: 64, height: 36))
+        loginButton.titleLabel?.font = UIFont(name: "Helvetica", size: 18.0)
+        loginButton.setTitleColor(goldColor, forState: .Normal)
+        loginButton.setTitle("Login", forState: .Normal)
+        loginButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        loginButton.addTarget(self, action: "loginButtonTapped", forControlEvents: .TouchUpInside)
+        
+        createAccountButton = UIButton(frame: CGRect(x: 125, y: 370, width:124, height: 36))
+        createAccountButton.titleLabel?.font = UIFont(name: "Helvetica", size: 18.0)
+        createAccountButton.setTitleColor(goldColor, forState: .Normal)
+        createAccountButton.setTitle("Create Account", forState: .Normal)
+        createAccountButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        createAccountButton.addTarget(self, action: "createAccountButtonTapped", forControlEvents: .TouchUpInside)
+
         view.addSubview(titleLabel)
+        view.addSubview(usernameLabel)
+        view.addSubview(passwordLabel)
+        view.addSubview(userNameTextField)
+        view.addSubview(passwordTextField)
+        view.addSubview(incorrectLabel)
+        view.addSubview(emptyLoadView)
+        view.addSubview(fullLoadView)
+        view.addSubview(loginButton)
+        view.addSubview(createAccountButton)
+        
+        view.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha:1)
         view.userInteractionEnabled = true
         /************************/
-        
-        
-        
-        
         
     }
 
@@ -70,7 +120,7 @@ class LoginViewController: UIViewController {
         view.userInteractionEnabled = true
     }
 
-    @IBAction func loginButtonTapped(sender: AnyObject) {
+    func loginButtonTapped() {
         //Chain this in 1.2
         //Make it so "" is not legal
         if let userName = userNameTextField.text {
@@ -111,7 +161,7 @@ class LoginViewController: UIViewController {
         }
     }
     
-    @IBAction func createAccountButtonTapped(sender: AnyObject) {
+    func createAccountButtonTapped() {
         let createAccountViewController = storyboard?.instantiateViewControllerWithIdentifier("CreateAccountViewController") as CreateAccountViewController
         createAccountViewController.appDelegate = appDelegate
         presentViewController(createAccountViewController, animated: true, completion: nil)
