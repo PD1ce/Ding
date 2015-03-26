@@ -14,7 +14,7 @@ class SkillsViewController : UIViewController {
     
     var user: User!
     var skill: Skill!
-    var tasks: NSMutableArray!
+    var currentTasks: NSMutableArray!
     var completedTasks: NSMutableArray!
     
     var detailsContainer: UIView!
@@ -25,7 +25,9 @@ class SkillsViewController : UIViewController {
     var expBarFull: UIView!
     var oldExp: Int! // Used to update the number in animations
     var headerView: UIView!
+    var expBarContainer: UIView!
     
+    var skillNameLabel: UILabel! // These names should be changed
     var totalLevelLabel: UILabel!
     
     var tasksContainer: UIView!
@@ -54,12 +56,12 @@ class SkillsViewController : UIViewController {
         
         view.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         
-        tasks = NSMutableArray(array: skill.tasks.allObjects)
+        currentTasks = NSMutableArray(array: skill.tasks.allObjects)
         completedTasks = NSMutableArray()
-        for task in tasks {
+        for task in currentTasks {
             if (task as Task).completed == 1 {
                 completedTasks.addObject(task)
-                tasks.removeObject(task)
+                currentTasks.removeObject(task)
             }
         }
         
@@ -107,7 +109,7 @@ class SkillsViewController : UIViewController {
         totalLevelLabel.text = "Exp: \(expCurrent) / \(skill.expTotal)"
         totalLevelLabel.backgroundColor = UIColor(white: 0.9, alpha: 1.0) // Test
         
-        let expBarContainer = UIView(frame: CGRect(x: 8, y: 20 + headerView.frame.height + 8 + detailsContainer.frame.height, width: detailsContainer.frame.width, height: detailsContainer.frame.height / 2))
+        expBarContainer = UIView(frame: CGRect(x: 8, y: 20 + headerView.frame.height + 8 + detailsContainer.frame.height, width: detailsContainer.frame.width, height: detailsContainer.frame.height / 2))
         expBarContainer.backgroundColor = whiteColor
         expBarEmpty = UIView(frame: CGRect(x: 8, y: 8, width: expBarContainer.frame.width - 16, height: expBarContainer.frame.height - 16))
         expBarEmpty.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
@@ -209,7 +211,7 @@ class SkillsViewController : UIViewController {
         
         //Display Skill's Tasks
         var row = 0
-        for task in tasks {
+        for task in currentTasks {
             let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
             taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
@@ -289,7 +291,7 @@ class SkillsViewController : UIViewController {
     override func viewDidAppear(animated: Bool) {
         currentExp = Float(skill.expCurrent)
         realWidth = currentExp / Float(skill.expTotal) * Float(expBarEmpty.frame.width)
-        self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.0, blue: 0.8, alpha: 1.0)
+        self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
         UIView.animateWithDuration(2.0, animations: {
             self.expBarFull.frame = CGRect(x: self.expBarEmpty.frame.minX, y: self.expBarEmpty.frame.minY, width: CGFloat(self.realWidth), height: self.expBarEmpty.frame.height)
             self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1)
@@ -314,6 +316,7 @@ class SkillsViewController : UIViewController {
     
     
     func updateTasks() {
+        //println("update tasks called!")
         for view in tasksCurrentContainer.subviews {
             view.removeFromSuperview()
         }
@@ -323,7 +326,7 @@ class SkillsViewController : UIViewController {
         
         //Display Skill's Tasks
         var row = 0
-        for task in tasks {
+        for task in currentTasks {
             let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
             taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
@@ -379,7 +382,7 @@ class SkillsViewController : UIViewController {
             row++
         }
         //Display New Task Creation
-        createTaskCard = UIView(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
+        createTaskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
         let taskNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: createTaskCard.frame.width, height: 72))
         createTaskCard.layer.cornerRadius = 10.0
         createTaskCard.layer.borderWidth = 2.0
@@ -424,18 +427,14 @@ class SkillsViewController : UIViewController {
     func completeConfirmed(taskCard: TaskCard){
         let task = taskCard.task
         task.completed = 1
+        ////Must take into account levelup!
         oldExp = Int(skill.expCurrent)
-        println("Current Skill EXP: \(skill.expCurrent)")
-        println("Task EXP Gained: \(task.exp)")
         skill.expCurrent = Int(self.skill.expCurrent) + Int(task.exp)
-        println("New Skill EXP: \(skill.expCurrent)")
         completedTasks.addObject(task)
-        tasks.removeObject(task)
+        currentTasks.removeObject(task)
         
-   
         if saveContext() {
-            // Save worked
-            // Reload the task view and make sure it appears in completed
+            // Reload the task view and make sure it appears in completedol tooo
             var removedTaskCardFound = false
             for tCard in tasksCurrentContainer.subviews {
                 if tCard.isKindOfClass(TaskCard) {
@@ -447,7 +446,6 @@ class SkillsViewController : UIViewController {
                             (value: Bool) in
                         })
                     }
-                    
                     if (tCard as TaskCard) == taskCard {
                         removedTaskCardFound = true
                         UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
@@ -459,20 +457,17 @@ class SkillsViewController : UIViewController {
                         })
                     }
                 }
-                // The TaskCard Creation object, should be subclassed to TaskCard! Much easier
-                /*
-                if tCard.isKindOfClass(UIView) {
-                    let viewObject = tCard as UIView
-                    if removedTaskCardFound {
-                        UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
-                            viewObject.center.y = viewObject.center.y - 72
-                        }, completion: {
-                            (value: Bool) in
-                        })
-                    }
-                }
-                */
             } // end for
+            
+            //////////////// Check for levelup! /////////////////
+            var levelUp = false
+            var expForNextLevel = Int(skill.expCurrent) - Int(skill.expTotal)
+            var newExp = oldExp + Int(task.exp)
+            if newExp >= Int(skill.expTotal) {
+                //Level Up
+                levelUp = true
+            }
+            
             
             // Timer should take 2 seconds, so interval should be relative to experience gained
             // First number is seconds it will take, not entirely accurate because of interval
@@ -481,17 +476,36 @@ class SkillsViewController : UIViewController {
             NSRunLoop.currentRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
             // Now Animate the new exp value and the expbar!
             expBarEmpty.backgroundColor = tasksColor
+            let expBarShine = UIView(frame: CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY - 4, width: 20, height: self.expBarFull.frame.height + 8))
+            expBarShine.backgroundColor = UIColor(red: 1.0, green: 0.65, blue: 0.2, alpha: 1.0)
+            expBarShine.layer.cornerRadius = 2.0
+            expBarShine.layer.zPosition = -1
+            expBarContainer.addSubview(expBarShine)
+            //Animations
             UIView.animateWithDuration(2.0, delay: 0.0, options: nil, animations: {
                 let expRatio = CGFloat(self.skill.expCurrent) / CGFloat(self.skill.expTotal)
                 let newWidth = CGFloat(CGFloat(self.expBarEmpty.frame.width) * expRatio)
-                self.expBarFull.frame = CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY, width: newWidth, height: self.expBarFull.frame.height)
+                if levelUp {
+                    self.expBarFull.frame = CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY, width: self.expBarEmpty.frame.width, height: self.expBarFull.frame.height)
+                } else {
+                     self.expBarFull.frame = CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY, width: newWidth, height: self.expBarFull.frame.height)
+                }
+               
                 self.expBarEmpty.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+                //Shine
+                expBarShine.frame = CGRect(x: self.expBarEmpty.frame.maxX - 20, y: self.expBarFull.frame.minY - 2, width: 20, height: self.expBarFull.frame.height + 4)
+                expBarShine.backgroundColor = UIColor(red: 1.0, green: 0.65, blue: 0.2, alpha: 0.0)
                 }, completion: {
                     (value: Bool) in
+                    expBarShine.removeFromSuperview()
                     
+                    //////// If skill Leveled Up, Time to do lots of stuff!///////
+                    if levelUp {
+                        self.skill.level = Int(self.skill.level) + 1
+                        self.expBarFull.frame = CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY, width: 0, height: self.expBarFull.frame.height)
+                        //Now add more Exp
+                    }
             })
-            
-            
         } else {
             // Did not save!
         }
@@ -524,7 +538,9 @@ class SkillsViewController : UIViewController {
     func createTaskTapped() {
         let createTaskVC = CreateTaskViewController(skill: self.skill)
         createTaskVC.parentVC = self
-        presentViewController(createTaskVC, animated: true, completion: nil)
+        presentViewController(createTaskVC, animated: true, completion: {
+            println("Create Task Tapped")
+        })
         //let taskPresentationController = TaskPresentationController()
         //let taskPresentationAnimationController = TaskPresentationAnimationController(isPresenting: true)
         
@@ -581,14 +597,6 @@ class SkillsViewController : UIViewController {
     
     func saveContext() -> Bool {
         let managedContext = skill.managedObjectContext!
-        /*
-        let task = NSEntityDescription.insertNewObjectForEntityForName("Task", inManagedObjectContext: managedContext) as Task
-        //Set Task Details
-        task.taskName = taskNameTF.text
-        task.exp = taskExpTF.text.toInt()!
-        task.difficulty = Float(taskDifficultyTF.text.toInt()!)
-        */
-        
         
         var error: NSError?
         if !managedContext.save(&error) {

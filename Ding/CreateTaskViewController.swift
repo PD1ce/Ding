@@ -107,6 +107,7 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
         
         if taskNameTF.text != "" && taskExpTF.text != "" && taskDifficultyTF.text != "" {
             if saveContext() {
+                //UPDATE TASKS IS CALLED AND WORKS!
                 parentVC.updateTasks()
                 dismissViewControllerAnimated(true, completion: nil)
             } else {
@@ -126,14 +127,25 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
         task.exp = taskExpTF.text.toInt()!
         task.difficulty = Float(taskDifficultyTF.text.toInt()!)
         
+        
+        //PDAlert: Go over all this! Might be duplicates/leaks
         let skillTasks = skill.tasks.mutableCopy() as NSMutableSet
         skillTasks.addObject(task)
         skill.tasks = skillTasks
+        var tempParentArray = NSMutableArray()
+        for tempTask in skillTasks {
+            //println("Task name: \((tempTask as Task).taskName) + \((tempTask as Task).completed)")
+            if (tempTask as Task).completed == 0 {
+                tempParentArray.addObject(tempTask as Task)
+            }
+        }
+        parentVC.currentTasks = tempParentArray
         var error: NSError?
         if !managedContext.save(&error) {
             println("Could not save \(error), \(error?.userInfo)")
             return false
         }
+        
         
         return true
     }
