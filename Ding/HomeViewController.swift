@@ -126,7 +126,7 @@ class HomeViewController : UIViewController {
         
         let mainYPos = 20 + headerView.frame.height + 8 + userContainerView.frame.height + 8
         mainContainerView = UIView(frame: CGRect(x: 8, y: mainYPos, width: view.frame.width - 16, height: view.frame.height - mainYPos - 8))
-        mainContainerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        mainContainerView.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         
         view.addSubview(mainContainerView)
         
@@ -542,11 +542,70 @@ class HomeViewController : UIViewController {
     
     //Go to ProfileVC After tapping User Image
     func profileTapped() {
+        view.userInteractionEnabled = false
         let profileVC = ProfileViewController()
         profileVC.user = user
         profileVC.parentVC = self
-        presentViewController(profileVC, animated: true, completion: nil)
+        
+        //Skills Tab
+        UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseIn, animations: {
+            self.skillsTab.frame = CGRect(x: self.skillsTab.frame.minX, y: self.skillsTab.frame.maxY, width: self.skillsTab.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+                self.skillsTab.setTitle("", forState: .Normal)
+        })
+        //Tasks Tab
+        UIView.animateWithDuration(0.2, delay: 0.1, options: .CurveEaseIn, animations: {
+            self.tasksTab.frame = CGRect(x: self.tasksTab.frame.minX, y: self.tasksTab.frame.maxY, width: self.tasksTab.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+                self.tasksTab.setTitle("", forState: .Normal)
+        })
+        //Goals Tab
+        UIView.animateWithDuration(0.2, delay: 0.2, options: .CurveEaseIn, animations: {
+            self.goalsTab.frame = CGRect(x: self.goalsTab.frame.minX, y: self.goalsTab.frame.maxY, width: self.goalsTab.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+                self.goalsTab.setTitle("", forState: .Normal)
+        })
+        //Achievements Tab
+        UIView.animateWithDuration(0.2, delay: 0.3, options: .CurveEaseIn, animations: {
+            self.achievementsTab.frame = CGRect(x: self.achievementsTab.frame.minX, y: self.achievementsTab.frame.maxY, width: self.achievementsTab.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+                self.achievementsTab.setTitle("", forState: .Normal)
+        })
+        //Username Label
+        UIView.animateWithDuration(0.5, delay: 0.5, options: .CurveEaseIn, animations: {
+            self.userNameLabel.frame.origin = CGPoint(x: self.view.frame.width, y: self.userNameLabel.frame.minY)
+            }, completion: {
+                (value: Bool) in
+                
+        })
+        //Total Level Label
+        UIView.animateWithDuration(0.5, delay: 0.7, options: .CurveEaseIn, animations: {
+            self.totalLevelLabel.frame.origin = CGPoint(x: self.view.frame.width, y: self.totalLevelLabel.frame.minY)
+            }, completion: {
+                (value: Bool) in
+                
+        })
+        //Main Container View + Details Container Background Color
+        UIView.animateWithDuration(1.0, delay: 0.5, options: .CurveEaseIn, animations: {
+            self.mainContainerView.frame.origin = CGPoint(x: self.mainContainerView.frame.minX, y: self.view.frame.height + 50)
+            self.detailsContainerView.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+            }, completion: {
+                (value: Bool) in
+                self.view.userInteractionEnabled = true
+                self.presentViewController(profileVC, animated: true, completion: nil)
+        })
+        
     }
+    
+    //Make a Reset function!!
+    ////////////////////
+    
+
+    //////////////////
     
     //Main Container Tabs
     func skillsTabTapped() {

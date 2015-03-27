@@ -163,7 +163,6 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
     }
     
     func profilePictureTapped() {
-        println("profile pic tapped")
         view.userInteractionEnabled = true
         let imagePicker = UIImagePickerController()
         if UIImagePickerController.isSourceTypeAvailable(.SavedPhotosAlbum) {
