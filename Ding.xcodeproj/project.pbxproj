@@ -28,6 +28,7 @@
 		4A5EB7481AC0AC5300FD0709 /* TaskPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EB7471AC0AC5300FD0709 /* TaskPresentationController.swift */; };
 		4A711F951AC1E759003196F3 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A711F941AC1E758003196F3 /* Task.swift */; };
 		4A8959DD1ABA2A6000AB1812 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */; };
+		4AE7F9111AC5C7E300CDC470 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */; };
 		4AF658B21AB93583004D94D2 /* SkillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B11AB93583004D94D2 /* SkillsViewController.swift */; };
 		4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */; };
 		4AF658B61AB93A3C004D94D2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B51AB93A3C004D94D2 /* User.swift */; };
@@ -70,6 +71,7 @@
 		4A5EB7471AC0AC5300FD0709 /* TaskPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskPresentationController.swift; sourceTree = "<group>"; };
 		4A711F941AC1E758003196F3 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4AF658B11AB93583004D94D2 /* SkillsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillsViewController.swift; sourceTree = "<group>"; };
 		4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSkillViewController.swift; sourceTree = "<group>"; };
 		4AF658B51AB93A3C004D94D2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */,
 				4A5EB7451AC0AC3900FD0709 /* TaskPresentationAnimationController.swift */,
 				4A5EB7471AC0AC5300FD0709 /* TaskPresentationController.swift */,
+				4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				4A711F951AC1E759003196F3 /* Task.swift in Sources */,
 				4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */,
 				4A8959DD1ABA2A6000AB1812 /* SplashViewController.swift in Sources */,
+				4AE7F9111AC5C7E300CDC470 /* ProfileViewController.swift in Sources */,
 				4AF658B61AB93A3C004D94D2 /* User.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
 				4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */,

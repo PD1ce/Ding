@@ -26,6 +26,10 @@ class HomeViewController : UIViewController {
     var goalsContainer: UIScrollView!
     var achievementsContainer: UIScrollView!
     
+    var detailsContainerView: UIView!
+    var userNameLabel: UILabel!
+    var totalLevelLabel: UILabel!
+    
     var tasksCurrent: UIButton!
     var tasksSort: UIButton!
     var tasksSearch: UIButton!
@@ -81,7 +85,8 @@ class HomeViewController : UIViewController {
         ////  Container Items  ////
         let userContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
         userContainerView.backgroundColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
-        
+        let profileGR = UITapGestureRecognizer(target: self, action: "profileTapped")
+        userContainerView.addGestureRecognizer(profileGR)
         let userImageView = UIImageView(frame: CGRect(x: 8, y: 8, width: userContainerView.frame.width - 16, height: 96))
         userImageView.image = UIImage(named: "philProfile")
         userImageView.layer.masksToBounds = true
@@ -89,19 +94,20 @@ class HomeViewController : UIViewController {
         userImageView.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
         userImageView.layer.cornerRadius = userImageView.frame.width / 2
         userContainerView.addSubview(userImageView)
+
         
         
-        let detailsContainerView = UIView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: 112))
+        detailsContainerView = UIView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: 112))
         detailsContainerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
         
         
-        let userNameLabel = UILabel(frame: CGRect(x: userContainerView.frame.width + 8, y: 8, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
+        userNameLabel = UILabel(frame: CGRect(x: userContainerView.frame.width + 8, y: 8, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
         userNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
         userNameLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         userNameLabel.text = user.userName
         userNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
         userNameLabel.backgroundColor = UIColor(white: 0.9, alpha: 1.0) // Test
-        let totalLevelLabel = UILabel(frame: CGRect(x: userContainerView.frame.width + 8, y: userNameLabel.frame.height + 16, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
+        totalLevelLabel = UILabel(frame: CGRect(x: userContainerView.frame.width + 8, y: userNameLabel.frame.height + 16, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
         totalLevelLabel.font = UIFont(name: "Helvetica", size: 18.0)
         totalLevelLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         totalLevelLabel.text = "Total Level:"
@@ -277,7 +283,7 @@ class HomeViewController : UIViewController {
         mainContainerView.addSubview(achievementsContainer)
         mainContainerView.bringSubviewToFront(skillsContainer)
         
-        view.backgroundColor = UIColor(red: 0.85, green: 0.85, blue: 0.85, alpha:1)
+        view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
 //        //Dimension prints
 //        println("Skills Container Min X: \(skillsContainer.frame.minX)")
 //        println("Skills Container Min Y: \(skillsContainer.frame.minY)")
@@ -303,6 +309,10 @@ class HomeViewController : UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.detailsContainerView.backgroundColor = whiteColor
+        self.userNameLabel.alpha = 1.0
+        self.totalLevelLabel.alpha = 1.0
+        self.mainContainerView.alpha = 1.0
         //Fetch Skills, Populate Skills
         //Clean up old subviews
         for view in skillsContainer.subviews {
@@ -522,6 +532,24 @@ class HomeViewController : UIViewController {
         //createSkillVC.parentVC = self
         self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         presentViewController(createSkillVC, animated: true, completion: nil)
+    }
+    
+    //Go to ProfileVC After tapping User Image
+    func profileTapped() {
+        let profileVC = ProfileViewController()
+        profileVC.user = user
+        /*
+        UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
+            self.detailsContainerView.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
+            self.userNameLabel.alpha = 0.0
+            self.totalLevelLabel.alpha = 0.0
+            self.mainContainerView.alpha = 0.0
+            }, completion: {
+                (value: Bool) in
+                
+        })
+    */
+        presentViewController(profileVC, animated: true, completion: nil)
     }
     
     //Main Container Tabs
