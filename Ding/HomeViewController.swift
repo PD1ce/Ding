@@ -17,6 +17,9 @@ class HomeViewController : UIViewController {
     var goals: [Goal]!
     var achievements: [Achievement]!
     
+    var userImageView: UIImageView!
+    var userImage: UIImage!
+    
     var skillsTab: UIButton!
     var tasksTab: UIButton!
     var goalsTab: UIButton!
@@ -55,6 +58,7 @@ class HomeViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        userImage = UIImage(named: "philProfile")
         // Need tasks and Goals
         skills = NSMutableArray(array: user.skills.allObjects)
         tasks = NSMutableArray()
@@ -76,7 +80,7 @@ class HomeViewController : UIViewController {
         headerLabel.font = UIFont(name: "Helvetica", size: 24.0)
         headerLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         headerLabel.textAlignment = NSTextAlignment(rawValue: 1)!
-        headerLabel.text = "Ding!"
+        headerLabel.text = "Home"
         
         headerView.addSubview(headerLabel)
         headerView.addSubview(logoutButton)
@@ -87,7 +91,7 @@ class HomeViewController : UIViewController {
         userContainerView.backgroundColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         let profileGR = UITapGestureRecognizer(target: self, action: "profileTapped")
         userContainerView.addGestureRecognizer(profileGR)
-        let userImageView = UIImageView(frame: CGRect(x: 8, y: 8, width: userContainerView.frame.width - 16, height: 96))
+        userImageView = UIImageView(frame: CGRect(x: 8, y: 8, width: userContainerView.frame.width - 16, height: 96))
         userImageView.image = UIImage(named: "philProfile")
         userImageView.layer.masksToBounds = true
         userImageView.layer.borderWidth = 3.0
@@ -309,6 +313,7 @@ class HomeViewController : UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        userImageView.image = userImage
         self.detailsContainerView.backgroundColor = whiteColor
         self.userNameLabel.alpha = 1.0
         self.totalLevelLabel.alpha = 1.0
@@ -519,7 +524,8 @@ class HomeViewController : UIViewController {
     
     func skillCardTapped(gr: UITapGestureRecognizer) {
         let skillTapped = (gr.view as SkillCard).skill
-        let skillsVC = storyboard?.instantiateViewControllerWithIdentifier("SkillsViewController") as SkillsViewController
+        //let skillsVC = storyboard?.instantiateViewControllerWithIdentifier("SkillsViewController") as SkillsViewController
+        let skillsVC = SkillsViewController()
         skillsVC.user = user
         skillsVC.skill = skillTapped
         presentViewController(skillsVC, animated: true, completion: nil)
@@ -538,17 +544,7 @@ class HomeViewController : UIViewController {
     func profileTapped() {
         let profileVC = ProfileViewController()
         profileVC.user = user
-        /*
-        UIView.animateWithDuration(0.5, delay: 0.0, options: nil, animations: {
-            self.detailsContainerView.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
-            self.userNameLabel.alpha = 0.0
-            self.totalLevelLabel.alpha = 0.0
-            self.mainContainerView.alpha = 0.0
-            }, completion: {
-                (value: Bool) in
-                
-        })
-    */
+        profileVC.parentVC = self
         presentViewController(profileVC, animated: true, completion: nil)
     }
     

@@ -63,7 +63,7 @@ class SkillsViewController : UIViewController {
         
         tasksSelectedButton = tasksCurrent
         
-        view.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         
         currentTasks = NSMutableArray(array: skill.tasks.allObjects)
         completedTasks = NSMutableArray()

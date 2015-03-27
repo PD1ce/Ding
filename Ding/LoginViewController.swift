@@ -101,6 +101,7 @@ class LoginViewController: UIViewController {
         view.addSubview(loginButton)
         view.addSubview(createAccountButton)
         
+        
         view.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha:1)
         view.userInteractionEnabled = true
         /************************/
@@ -118,6 +119,15 @@ class LoginViewController: UIViewController {
         passwordTextField.text = ""
         fullLoadView.frame = CGRect(x: self.emptyLoadView.frame.minX, y: self.emptyLoadView.frame.minY, width: 0, height: self.emptyLoadView.frame.height)
         view.userInteractionEnabled = true
+        self.usernameLabel.frame.origin = CGPoint(x: self.usernameLabel.frame.minX, y: 126)
+        self.passwordLabel.frame.origin = CGPoint(x: self.passwordLabel.frame.minX, y: 126)
+        self.userNameTextField.frame.origin = CGPoint(x: self.userNameTextField.frame.minX, y: 155)
+        self.passwordTextField.frame.origin = CGPoint(x: self.passwordTextField.frame.minX, y: 155)
+        self.titleLabel.frame.origin = CGPoint(x: self.titleLabel.frame.minX, y: 30)
+        self.loginButton.frame.origin = CGPoint(x: self.loginButton.frame.minX, y: 193)
+        self.createAccountButton.frame.origin = CGPoint(x: self.createAccountButton.frame.minX, y: 370)
+        self.emptyLoadView.alpha = 1.0
+        self.fullLoadView.alpha = 1.0
     }
 
     func loginButtonTapped() {
@@ -138,17 +148,49 @@ class LoginViewController: UIViewController {
                         fullLoadView.frame = CGRect(x: self.emptyLoadView.frame.minX, y: self.emptyLoadView.frame.minY, width: 0, height: self.emptyLoadView.frame.height)
                         fullLoadView.layer.cornerRadius = 10.0
                         fullLoadView.layer.zPosition = 3
-                        fullLoadView.backgroundColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
+                        fullLoadView.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0, alpha: 1)
+                        view.userInteractionEnabled = false
                         
                         UIView.animateWithDuration(2.0, animations: {
                             self.fullLoadView.frame = CGRect(x: self.emptyLoadView.frame.minX, y: self.emptyLoadView.frame.minY, width: self.emptyLoadView.frame.width, height: self.emptyLoadView.frame.height)
-                            self.fullLoadView.backgroundColor = UIColor(red: 0.645, green: 0.8, blue: 0.2, alpha: 1)
+                            //self.fullLoadView.backgroundColor = UIColor(red: 0.645, green: 0.8, blue: 0.2, alpha: 1)
+                            //Moving other views off screen
+                            self.usernameLabel.frame.origin = CGPoint(x: self.usernameLabel.frame.minX, y: -50)
+                            self.passwordLabel.frame.origin = CGPoint(x: self.passwordLabel.frame.minX, y: -50)
+                            self.userNameTextField.frame.origin = CGPoint(x: self.userNameTextField.frame.minX, y: -50)
+                            self.passwordTextField.frame.origin = CGPoint(x: self.passwordTextField.frame.minX, y: -50)
+                            self.titleLabel.frame.origin = CGPoint(x: self.titleLabel.frame.minX, y: -50)
+                            self.loginButton.frame.origin = CGPoint(x: self.loginButton.frame.minX, y: -50)
+                            self.createAccountButton.frame.origin = CGPoint(x: self.createAccountButton.frame.minX, y: self.view.frame.height + 50)
+                            
+                            
                             }, completion: {
                                 (value: Bool) in
                                 self.user = fetchedResults![0]
                                 let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as HomeViewController
                                 homeViewController.user = self.user
-                                self.presentViewController(homeViewController, animated: true, completion: nil)
+                                homeViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                                self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                                /*
+                                let giantCircle = UIBezierPath(arcCenter: CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2), radius: 20.0, startAngle: 0.0, endAngle: 360.0, clockwise: true)
+                                let circleView = UIView()
+                                circleView.backgroundColor = self.goldColor
+                                circleView.accessibilityPath = giantCircle
+                                self.view.addSubview(circleView)
+                                */
+                                UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
+                                    //Final Animation
+                                    self.fullLoadView.backgroundColor = self.goldColor
+                                    self.emptyLoadView.alpha = 0.0
+                                    self.fullLoadView.alpha = 0.0
+                                    }, completion: {
+                                        (value: Bool) in
+                                        
+                                        self.presentViewController(homeViewController, animated: true, completion: nil)
+                                })
+                                
+                                
+                                
                                 
                         })
                     } else { // Did not find user
