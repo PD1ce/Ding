@@ -17,6 +17,9 @@ class HomeViewController : UIViewController {
     var goals: [Goal]!
     var achievements: [Achievement]!
     
+    //This will track where the view came from so it knows how to appear/transition
+    var transitionCameFrom: UIViewController!
+    
     var userImageView: UIImageView!
     var userImage: UIImage!
     
