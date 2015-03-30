@@ -115,7 +115,7 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
         
         view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         view.userInteractionEnabled = false
-        UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut,animations: {
+        UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
             self.userContainerView.frame = CGRect(x: 8, y: 72, width: self.view.frame.width - 16, height: self.userContainerView.frame.height * 1.5)
             self.userImageView.frame = CGRect(x: 8, y: self.userImageView.frame.minY, width: self.userContainerView.frame.width / 3, height: self.userContainerView.frame.height - 16)
             //self.userImageView.layer.cornerRadius = self.userImageView.frame.width / 2
@@ -204,7 +204,51 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
+    
+    //Clean it up back to normal before transition
+    //Might not even need the view will dissapear stuff
+    // Need to tell the parent whether or not to animate profile picture
     func backButtonTapped() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        
+        // Send the labels back to their proper spots
+        let newHeight = userContainerView.frame.height
+        let divisionHeight = userContainerView.frame.height / 12
+        
+        //Should just use origin not frame!!
+        UIView.animateWithDuration(0.2, delay: 0.0, options: UIViewAnimationOptions.CurveLinear, animations: {
+            self.userNameLabel.frame = CGRect(x: self.view.frame.width, y: self.userNameLabel.frame.minY, width: self.userContainerView.frame.width - self.userImageView.frame.width - 24, height: newHeight / 4)
+            }, completion: {
+                (value: Bool) in
+                
+        })
+        UIView.animateWithDuration(0.2, delay: 0.1, options: UIViewAnimationOptions.CurveLinear, animations: {
+            self.totalLevelLabel.frame = CGRect(x: self.view.frame.width, y: self.totalLevelLabel.frame.minY, width: self.userContainerView.frame.width - self.userImageView.frame.width - 24, height: newHeight / 4)
+            }, completion: {
+                (value: Bool) in
+                
+        })
+        UIView.animateWithDuration(0.2, delay: 0.2, options: UIViewAnimationOptions.CurveLinear, animations: {
+            self.highestSkillLabel.frame = CGRect(x: self.view.frame.width, y: self.self.highestSkillLabel.frame.minY, width: self.userContainerView.frame.width - self.userImageView.frame.width - 24, height: newHeight / 4)
+            }, completion: {
+                (value: Bool) in
+                //Animations finished, allow interaction
+                self.view.userInteractionEnabled = true
+                UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                    self.userContainerView.frame = CGRect(x: 8, y: 72, width: 112, height: 112)
+                    self.userImageView.frame = CGRect(x: 8, y: 8, width: self.userContainerView.frame.width - 16, height: 96)
+                    }, completion: {
+                        (value: Bool) in
+                        self.dismissViewControllerAnimated(false, completion: nil)
+                })
+                
+        })
+        
+        
+        
+        
+        
+        
+        
+       
     }
 }

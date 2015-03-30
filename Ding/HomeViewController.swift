@@ -20,6 +20,9 @@ class HomeViewController : UIViewController {
     var userImageView: UIImageView!
     var userImage: UIImage!
     
+    var headerView: UIView!
+    var userContainerView: UIView!
+    
     var skillsTab: UIButton!
     var tasksTab: UIButton!
     var goalsTab: UIButton!
@@ -70,7 +73,7 @@ class HomeViewController : UIViewController {
         }
         //skills = user.skills.mutableCopy() as NSMutableArray
         
-        let headerView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
+        headerView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
         headerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
         let logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
         logoutButton.setTitle("Logout", forState: .Normal)
@@ -87,7 +90,7 @@ class HomeViewController : UIViewController {
         view.addSubview(headerView)
         
         ////  Container Items  ////
-        let userContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
+        userContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
         userContainerView.backgroundColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         let profileGR = UITapGestureRecognizer(target: self, action: "profileTapped")
         userContainerView.addGestureRecognizer(profileGR)
@@ -310,6 +313,9 @@ class HomeViewController : UIViewController {
         tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = whiteColor
         tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+        
+        //Reset all the animated views!
+        resetView()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -600,11 +606,30 @@ class HomeViewController : UIViewController {
         })
         
     }
-    
     //Make a Reset function!!
     ////////////////////
-    
-
+    func resetView() {
+        // Use in viewDidDisappear
+        
+        //Reset Main ContainerView
+        let mainYPos = 20 + headerView.frame.height + 8 + userContainerView.frame.height + 8
+        self.mainContainerView.frame.origin = CGPoint(x: self.mainContainerView.frame.minX, y: mainYPos)
+        //Reset Tab Buttons
+        let tabWidth = mainContainerView.frame.width / 4
+        skillsTab.frame = CGRect(x: 0, y: 0, width: tabWidth, height: 48)
+        skillsTab.setTitle("Skills", forState: .Normal)
+        tasksTab.frame = CGRect(x: tabWidth, y: 0, width: tabWidth, height: 48)
+        tasksTab.setTitle("Tasks", forState: .Normal)
+        goalsTab.frame = CGRect(x: tabWidth * 2, y: 0, width: tabWidth, height: 48)
+        goalsTab.setTitle("Goals", forState: .Normal)
+        achievementsTab.frame = CGRect(x: tabWidth * 3, y: 0, width: tabWidth, height: 48)
+        achievementsTab.setTitle("Achs", forState: .Normal)
+        //Username and Total Level labels
+        userNameLabel.frame.origin = CGPoint(x: userContainerView.frame.width + 8, y: 8)
+        totalLevelLabel.frame.origin = CGPoint(x: userContainerView.frame.width + 8, y: userNameLabel.frame.height + 16)
+        //Details Container BG Color
+        detailsContainerView.backgroundColor = whiteColor
+    }
     //////////////////
     
     //Main Container Tabs
