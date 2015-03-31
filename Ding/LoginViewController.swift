@@ -32,7 +32,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+       
         
         //** Load up labels and fields **//
         //PDAlert: All of these need to be converted to dynamic frame
@@ -169,24 +169,44 @@ class LoginViewController: UIViewController {
                                 self.user = fetchedResults![0]
                                 let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as HomeViewController
                                 homeViewController.user = self.user
+                                homeViewController.transitionCameFrom = self
                                 homeViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                                 self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-                                /*
-                                let giantCircle = UIBezierPath(arcCenter: CGPoint(x: self.view.frame.width / 2, y: self.view.frame.height / 2), radius: 20.0, startAngle: 0.0, endAngle: 360.0, clockwise: true)
-                                let circleView = UIView()
-                                circleView.backgroundColor = self.goldColor
-                                circleView.accessibilityPath = giantCircle
-                                self.view.addSubview(circleView)
-                                */
-                                UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
+                            
+                                /* The Fake Header view to animate */
+                                let headerView = UIView(frame: CGRect(x: 0, y: self.view.frame.height + 44, width: self.view.frame.width, height: 44))
+                                headerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+                                let logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+                                logoutButton.setTitle("Logout", forState: .Normal)
+                                //logoutButton.addTarget(self, action: "logoutButtonTapped", forControlEvents: .TouchUpInside)
+                                logoutButton.setTitleColor(UIColor(white: 0.0, alpha: 1.0), forState: .Normal)
+                                let headerLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
+                                headerLabel.font = UIFont(name: "Helvetica", size: 24.0)
+                                headerLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
+                                headerLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+                                headerLabel.text = "Home"
+                                headerView.addSubview(headerLabel)
+                                headerView.addSubview(logoutButton)
+                                self.view.addSubview(headerView)
+                                /************************************/
+                                
+                                UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseOut, animations: {
                                     //Final Animation
                                     self.fullLoadView.backgroundColor = self.goldColor
                                     self.emptyLoadView.alpha = 0.0
                                     self.fullLoadView.alpha = 0.0
+                                    headerView.frame.origin = CGPoint(x: 0, y: 20)
+                                    //Header animation
+                                    
                                     }, completion: {
                                         (value: Bool) in
                                         
-                                        self.presentViewController(homeViewController, animated: true, completion: nil)
+                                        self.presentViewController(homeViewController, animated: false, completion: {
+                                                headerView.removeFromSuperview()
+                                            })
+                                            
+                                        
+                                        
                                 })
                                 
                                 

@@ -24,20 +24,23 @@ class HomeViewController : UIViewController {
     var userImage: UIImage!
     
     var headerView: UIView!
-    var userContainerView: UIView!
+    var userContainerView: AniView!
     
-    var skillsTab: UIButton!
-    var tasksTab: UIButton!
-    var goalsTab: UIButton!
-    var achievementsTab: UIButton!
+    var skillsTab: AniButton!
+    var tasksTab: AniButton!
+    var goalsTab: AniButton!
+    var achievementsTab: AniButton!
     var skillsContainer: UIScrollView!
     var tasksContainer: UIScrollView!
     var goalsContainer: UIScrollView!
     var achievementsContainer: UIScrollView!
     
-    var detailsContainerView: UIView!
-    var userNameLabel: UILabel!
-    var totalLevelLabel: UILabel!
+    var detailsContainerView: AniView!
+    var userNameLabel: AniLabel!
+    var totalLevelLabel: AniLabel!
+    
+    var logoutButton: UIButton!
+    var headerLabel: UILabel!
     
     var tasksCurrent: UIButton!
     var tasksSort: UIButton!
@@ -50,7 +53,7 @@ class HomeViewController : UIViewController {
     var tasksSearchContainer: UIScrollView!
     var tasksCompletedContainer: UIScrollView!
     
-    var mainContainerView: UIView!
+    var mainContainerView: AniView!
     
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
     let blackColor = UIColor(white: 0.0, alpha: 1.0)
@@ -63,6 +66,17 @@ class HomeViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //*************************************************************
+        // Everything that will transition can start OFFSCREEN in Load
+        // Animate it all in ViewDidAppear
+        //*************************************************************
+        //
+        
+        
+        
+        /*************************************************************/
+        
         
         userImage = UIImage(named: "philProfile")
         // Need tasks and Goals
@@ -78,11 +92,11 @@ class HomeViewController : UIViewController {
         
         headerView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
         headerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
-        let logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+        logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
         logoutButton.setTitle("Logout", forState: .Normal)
         logoutButton.addTarget(self, action: "logoutButtonTapped", forControlEvents: .TouchUpInside)
         logoutButton.setTitleColor(UIColor(white: 0.0, alpha: 1.0), forState: .Normal)
-        let headerLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
+        headerLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
         headerLabel.font = UIFont(name: "Helvetica", size: 24.0)
         headerLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         headerLabel.textAlignment = NSTextAlignment(rawValue: 1)!
@@ -93,7 +107,7 @@ class HomeViewController : UIViewController {
         view.addSubview(headerView)
         
         ////  Container Items  ////
-        userContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
+        userContainerView = AniView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
         userContainerView.backgroundColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         let profileGR = UITapGestureRecognizer(target: self, action: "profileTapped")
         userContainerView.addGestureRecognizer(profileGR)
@@ -107,17 +121,17 @@ class HomeViewController : UIViewController {
 
         
         
-        detailsContainerView = UIView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: 112))
+        detailsContainerView = AniView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: 112))
         detailsContainerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
         
         
-        userNameLabel = UILabel(frame: CGRect(x: userContainerView.frame.width + 8, y: 8, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
+        userNameLabel = AniLabel(frame: CGRect(x: userContainerView.frame.width + 8, y: 8, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
         userNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
         userNameLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         userNameLabel.text = user.userName
         userNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
         userNameLabel.backgroundColor = UIColor(white: 0.9, alpha: 1.0) // Test
-        totalLevelLabel = UILabel(frame: CGRect(x: userContainerView.frame.width + 8, y: userNameLabel.frame.height + 16, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
+        totalLevelLabel = AniLabel(frame: CGRect(x: userContainerView.frame.width + 8, y: userNameLabel.frame.height + 16, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
         totalLevelLabel.font = UIFont(name: "Helvetica", size: 18.0)
         totalLevelLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         totalLevelLabel.text = "Total Level:"
@@ -130,16 +144,16 @@ class HomeViewController : UIViewController {
         
         view.addSubview(detailsContainerView)
         
+        // Main Container View
         let mainYPos = 20 + headerView.frame.height + 8 + userContainerView.frame.height + 8
-        mainContainerView = UIView(frame: CGRect(x: 8, y: mainYPos, width: view.frame.width - 16, height: view.frame.height - mainYPos - 8))
+        mainContainerView = AniView(frame: CGRect(x: 8, y: mainYPos, width: view.frame.width - 16, height: view.frame.height - mainYPos - 8))
         mainContainerView.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
-        
         view.addSubview(mainContainerView)
         
         ////// Main Container SubViews ///////
         let tabWidth = mainContainerView.frame.width / 4
         //Skills Tab
-        skillsTab = UIButton(frame: CGRect(x: 0, y: 0, width: tabWidth, height: 48))
+        skillsTab = AniButton(frame: CGRect(x: 0, y: 0, width: tabWidth, height: 48))
         skillsTab.backgroundColor = skillsColor
         skillsTab.setTitle("Skills", forState: .Normal)
         skillsTab.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
@@ -147,7 +161,7 @@ class HomeViewController : UIViewController {
         skillsTab.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
         skillsTab.addTarget(self, action: "skillsTabTapped", forControlEvents: .TouchUpInside)
         //Tasks Tab
-        tasksTab = UIButton(frame: CGRect(x: tabWidth, y: 0, width: tabWidth, height: 48))
+        tasksTab = AniButton(frame: CGRect(x: tabWidth, y: 0, width: tabWidth, height: 48))
         tasksTab.backgroundColor = tasksColor
         tasksTab.setTitle("Tasks", forState: .Normal)
         tasksTab.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
@@ -155,7 +169,7 @@ class HomeViewController : UIViewController {
         tasksTab.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
         tasksTab.addTarget(self, action: "tasksTabTapped", forControlEvents: .TouchUpInside)
         //Goals Tab
-        goalsTab = UIButton(frame: CGRect(x: tabWidth * 2, y: 0, width: tabWidth, height: 48))
+        goalsTab = AniButton(frame: CGRect(x: tabWidth * 2, y: 0, width: tabWidth, height: 48))
         goalsTab.backgroundColor = goalsColor
         goalsTab.setTitle("Goals", forState: .Normal)
         goalsTab.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
@@ -163,7 +177,7 @@ class HomeViewController : UIViewController {
         goalsTab.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
         goalsTab.addTarget(self, action: "goalsTabTapped", forControlEvents: .TouchUpInside)
         //Achievements Tab
-        achievementsTab = UIButton(frame: CGRect(x: tabWidth * 3, y: 0, width: tabWidth, height: 48))
+        achievementsTab = AniButton(frame: CGRect(x: tabWidth * 3, y: 0, width: tabWidth, height: 48))
         achievementsTab.backgroundColor = achievementsColor
         achievementsTab.setTitle("Achs", forState: .Normal)
         achievementsTab.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
@@ -188,7 +202,7 @@ class HomeViewController : UIViewController {
         tasksContainer.layer.borderColor = tasksColor.CGColor
         
         //Current Tasks Button
-        tasksCurrent = UIButton(frame: CGRect(x: 5, y: 5, width: (tasksContainer.frame.width - 10) / 4, height: 25))
+        tasksCurrent = UIButton(frame: CGRect(x: 5, y: 5, width: (tasksContainer.frame.width - 10) * 0.35, height: 30))
         tasksCurrent.addTarget(self, action: "tasksCurrentTapped", forControlEvents: .TouchUpInside)
         tasksCurrent.setTitle("Current", forState: .Normal)
         tasksCurrent.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
@@ -204,8 +218,25 @@ class HomeViewController : UIViewController {
         tasksContainer.addSubview(tasksCurrentContainer)
         tasksContainer.addSubview(tasksCurrent)
 
+        //Completed Tasks Button
+        tasksCompleted = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width, y: 5, width: (tasksContainer.frame.width - 10) * 0.35, height: 30))
+        tasksCompleted.addTarget(self, action: "tasksCompletedTapped", forControlEvents: .TouchUpInside)
+        tasksCompleted.setTitle("Completed", forState: .Normal)
+        tasksCompleted.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        tasksCompleted.backgroundColor = tasksColor
+        tasksCompleted.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        tasksCompleted.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        tasksCompleted.layer.borderWidth = 2.0
+        tasksCompleted.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Completed Tasks Container - Populate on ViewWillAppear or ButtonPress
+        tasksCompletedContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksCompletedContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 750)
+        tasksCompletedContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        tasksContainer.addSubview(tasksCompletedContainer)
+        tasksContainer.addSubview(tasksCompleted)
+        
         //Sort Tasks Button
-        tasksSort = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width, y: 5, width: (tasksContainer.frame.width - 10) / 4, height: 25))
+        tasksSort = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width * 2, y: 5, width: (tasksContainer.frame.width - 10) * 0.15, height: 30))
         tasksSort.addTarget(self, action: "tasksSortTapped", forControlEvents: .TouchUpInside)
         tasksSort.setTitle("Sort", forState: .Normal)
         tasksSort.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
@@ -222,7 +253,7 @@ class HomeViewController : UIViewController {
         tasksContainer.addSubview(tasksSort)
         
         //Search Tasks Button
-        tasksSearch = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width * 2, y: 5, width: (tasksContainer.frame.width - 10) / 4, height: 25))
+        tasksSearch = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width * 2 + tasksSort.frame.width, y: 5, width: (tasksContainer.frame.width - 10) * 0.15, height: 30))
         tasksSearch.addTarget(self, action: "tasksSearchTapped", forControlEvents: .TouchUpInside)
         tasksSearch.setTitle("Search", forState: .Normal)
         tasksSearch.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
@@ -238,22 +269,7 @@ class HomeViewController : UIViewController {
         tasksContainer.addSubview(tasksSearchContainer)
         tasksContainer.addSubview(tasksSearch)
         
-        //Completed Tasks Button
-        tasksCompleted = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width * 3, y: 5, width: (tasksContainer.frame.width - 10) / 4, height: 25))
-        tasksCompleted.addTarget(self, action: "tasksCompletedTapped", forControlEvents: .TouchUpInside)
-        tasksCompleted.setTitle("Completed", forState: .Normal)
-        tasksCompleted.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
-        tasksCompleted.backgroundColor = tasksColor
-        tasksCompleted.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
-        tasksCompleted.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
-        tasksCompleted.layer.borderWidth = 2.0
-        tasksCompleted.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
-        // Completed Tasks Container - Populate on ViewWillAppear or ButtonPress
-        tasksCompletedContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
-        tasksCompletedContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 750)
-        tasksCompletedContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
-        tasksContainer.addSubview(tasksCompletedContainer)
-        tasksContainer.addSubview(tasksCompleted)
+        
         //Set selected
         tasksContainer.bringSubviewToFront(tasksCurrentContainer)
         tasksSelectedButton = tasksCurrent
@@ -318,12 +334,29 @@ class HomeViewController : UIViewController {
         tasksContainer.bringSubviewToFront(tasksCurrentContainer)
         
         //Reset all the animated views!
-        resetView()
+        //resetView()
     }
     
     override func viewWillAppear(animated: Bool) {
+        //** Put animations and such in all the offscreen places depending on child
+        // Login Transitions
+        if transitionCameFrom.isMemberOfClass(LoginViewController) {
+                detailsContainerView.frame.origin = CGPoint(x: -detailsContainerView.frame.width - 16, y: detailsContainerView.frame.minY)
+                mainContainerView.frame.origin = CGPoint(x: mainContainerView.frame.minX, y: view.frame.height)
+        }
+        //Profile Transitions
+        if transitionCameFrom.isMemberOfClass(ProfileViewController) {
+            
+        }
+        //Skill Transitions
+        if transitionCameFrom.isMemberOfClass(SkillsViewController) {
+             self.userContainerView.backgroundColor = self.skillsColor
+        }
+       
+        //*************************************************************************
+        
         userImageView.image = userImage
-        self.detailsContainerView.backgroundColor = whiteColor
+        //self.detailsContainerView.backgroundColor = whiteColor
         self.userNameLabel.alpha = 1.0
         self.totalLevelLabel.alpha = 1.0
         self.mainContainerView.alpha = 1.0
@@ -523,6 +556,107 @@ class HomeViewController : UIViewController {
         
     }
     
+    override func viewDidAppear(animated: Bool) {
+        //** Now Animate all of the views into their proper position
+        
+        //Login Transitions
+        if transitionCameFrom.isMemberOfClass(LoginViewController) {
+            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.detailsContainerView.frame.origin = self.detailsContainerView.originalOrigin
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+            UIView.animateWithDuration(1.5, delay: 0.2, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: {
+                self.mainContainerView.frame.origin = self.mainContainerView.originalOrigin
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+        }
+        
+        //Profile Transitions
+        if transitionCameFrom.isMemberOfClass(ProfileViewController) {
+            UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.8, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.mainContainerView.frame.origin = self.mainContainerView.originalOrigin
+            }, completion: {
+                (value: Bool) in
+                //Tabs
+                //Skills
+                UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseInOut, animations: {
+                    self.skillsTab.frame = self.skillsTab.originalFrame
+                    }, completion: {
+                        (value: Bool) in
+                        self.skillsTab.setTitle("Skills", forState: .Normal)
+                })
+                //Tasks
+                UIView.animateWithDuration(0.2, delay: 0.1, options: .CurveEaseInOut, animations: {
+                    self.tasksTab.frame = self.tasksTab.originalFrame
+                    }, completion: {
+                        (value: Bool) in
+                        self.tasksTab.setTitle("Tasks", forState: .Normal)
+                })
+                //Goals
+                UIView.animateWithDuration(0.2, delay: 0.2, options: .CurveEaseInOut, animations: {
+                    self.goalsTab.frame = self.goalsTab.originalFrame
+                    }, completion: {
+                        (value: Bool) in
+                        self.goalsTab.setTitle("Goals", forState: .Normal)
+                })
+                //Achievements
+                UIView.animateWithDuration(0.2, delay: 0.3, options: .CurveEaseInOut, animations: {
+                    self.achievementsTab.frame = self.achievementsTab.originalFrame
+                    }, completion: {
+                        (value: Bool) in
+                        self.achievementsTab.setTitle("Achs", forState: .Normal)
+                })
+            })
+            //Labels into container view
+            UIView.animateWithDuration(0.4, delay: 1.5, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.detailsContainerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+                self.userNameLabel.frame.origin = self.userNameLabel.originalOrigin
+            }, completion: {
+                (value: Bool) in
+                    
+            })
+            UIView.animateWithDuration(0.4, delay: 1.7, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.totalLevelLabel.frame.origin = self.totalLevelLabel.originalOrigin
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+        }
+        
+        //Skill Transition
+        if transitionCameFrom.isMemberOfClass(SkillsViewController) {
+            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+                self.userImageView.alpha = 1.0
+                self.userContainerView.backgroundColor = self.goldColor
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+            resetMainContainer()
+            //User Name Label frame
+            UIView.animateWithDuration(0.5, delay: 0.5, options: .CurveEaseInOut, animations: {
+                self.userNameLabel.frame.origin = self.userNameLabel.originalOrigin
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+            //Total Level Label
+            UIView.animateWithDuration(0.5, delay: 0.7, options: .CurveEaseInOut, animations: {
+                self.totalLevelLabel.frame.origin = self.totalLevelLabel.originalOrigin
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+            
+            
+        }
+        
+    }
+    
     @IBAction func logoutTapped(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -537,14 +671,99 @@ class HomeViewController : UIViewController {
         let skillsVC = SkillsViewController()
         skillsVC.user = user
         skillsVC.skill = skillTapped
-        presentViewController(skillsVC, animated: true, completion: nil)
+        transitionCameFrom = skillsVC
+        
+        //////////* Animate */////////
+        let skillHeaderView = AniView(frame: CGRect(x: 0, y: view.frame.height + 8, width: view.frame.width, height: 44))
+        skillHeaderView.backgroundColor = skillsColor
+        let skillBackButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 44))
+        skillBackButton.setTitle("< Back", forState: .Normal)
+        skillBackButton.setTitleColor(whiteColor, forState: .Normal)
+        let skillHeaderLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
+        skillHeaderLabel.font = UIFont(name: "Helvetica", size: 24.0)
+        skillHeaderLabel.textColor = whiteColor
+        skillHeaderLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+        skillHeaderLabel.text = "\(skillTapped.skillName)"
+        skillHeaderView.addSubview(skillBackButton)
+        skillHeaderView.addSubview(skillHeaderLabel)
+        view.addSubview(skillHeaderView)
+        //Animate
+        //Skills Tab
+        UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseIn, animations: {
+            self.skillsTab.frame = CGRect(x: self.skillsTab.frame.minX, y: self.skillsTab.frame.maxY, width: self.skillsTab.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+                self.skillsTab.setTitle("", forState: .Normal)
+        })
+        //Tasks Tab
+        UIView.animateWithDuration(0.2, delay: 0.1, options: .CurveEaseIn, animations: {
+            self.tasksTab.frame = CGRect(x: self.tasksTab.frame.minX, y: self.tasksTab.frame.maxY, width: self.tasksTab.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+                self.tasksTab.setTitle("", forState: .Normal)
+        })
+        //Goals Tab
+        UIView.animateWithDuration(0.2, delay: 0.2, options: .CurveEaseIn, animations: {
+            self.goalsTab.frame = CGRect(x: self.goalsTab.frame.minX, y: self.goalsTab.frame.maxY, width: self.goalsTab.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+                self.goalsTab.setTitle("", forState: .Normal)
+        })
+        //Achievements Tab
+        UIView.animateWithDuration(0.2, delay: 0.3, options: .CurveEaseIn, animations: {
+            self.achievementsTab.frame = CGRect(x: self.achievementsTab.frame.minX, y: self.achievementsTab.frame.maxY, width: self.achievementsTab.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+                self.achievementsTab.setTitle("", forState: .Normal)
+        })
+        //Main Container and Image View
+        UIView.animateWithDuration(1.0, delay: 0.5, options: .CurveEaseIn, animations: {
+            self.mainContainerView.frame.origin = CGPoint(x: self.mainContainerView.frame.minX, y: self.view.frame.height + 8)
+            self.userImageView.alpha = 0.0
+            }, completion: {
+                (value: Bool) in
+        })
+        //User Name Label frame
+        UIView.animateWithDuration(0.5, delay: 0.5, options: .CurveEaseInOut, animations: {
+            self.userNameLabel.frame.origin = CGPoint(x: self.view.frame.width + 16, y: self.userNameLabel.frame.minY)
+            }, completion: {
+                (value: Bool) in
+                
+        })
+        //Total Level Label
+        UIView.animateWithDuration(0.5, delay: 0.7, options: .CurveEaseInOut, animations: {
+            self.totalLevelLabel.frame.origin = CGPoint(x: self.view.frame.width + 16, y: self.totalLevelLabel.frame.minY)
+            }, completion: {
+                (value: Bool) in
+                
+        })
+        //Add Fake header, then transition
+        UIView.animateWithDuration(0.8, delay: 1.5, options: .CurveEaseInOut, animations: {
+                skillHeaderView.frame.origin = CGPoint(x: 0, y: 20)
+            }, completion: {
+                (value: Bool) in
+                self.presentViewController(skillsVC, animated: false, completion: {
+                    skillHeaderView.removeFromSuperview()
+                })
+        })
+
+        
+        
+        
     }
     
     func newSkillTapped(gr: UITapGestureRecognizer) {
         let createSkillVC = storyboard?.instantiateViewControllerWithIdentifier("CreateSkillViewController") as CreateSkillViewController
         createSkillVC.user = user
         createSkillVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        //createSkillVC.parentVC = self
+        transitionCameFrom = createSkillVC
+        
+        
+        //** Time to animate some shiiiiii **////
+        
+        
+        
+        
         self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         presentViewController(createSkillVC, animated: true, completion: nil)
     }
@@ -555,6 +774,7 @@ class HomeViewController : UIViewController {
         let profileVC = ProfileViewController()
         profileVC.user = user
         profileVC.parentVC = self
+        transitionCameFrom = profileVC
         
         //Skills Tab
         UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseIn, animations: {
@@ -608,6 +828,45 @@ class HomeViewController : UIViewController {
                 self.presentViewController(profileVC, animated: true, completion: nil)
         })
         
+    }
+    
+    //Used for putting back buttons and container frame
+    func resetMainContainer() {
+        UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.8, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            self.mainContainerView.frame.origin = self.mainContainerView.originalOrigin
+            }, completion: {
+                (value: Bool) in
+                //Tabs
+                //Skills
+                UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseInOut, animations: {
+                    self.skillsTab.frame = self.skillsTab.originalFrame
+                    }, completion: {
+                        (value: Bool) in
+                        self.skillsTab.setTitle("Skills", forState: .Normal)
+                })
+                //Tasks
+                UIView.animateWithDuration(0.2, delay: 0.1, options: .CurveEaseInOut, animations: {
+                    self.tasksTab.frame = self.tasksTab.originalFrame
+                    }, completion: {
+                        (value: Bool) in
+                        self.tasksTab.setTitle("Tasks", forState: .Normal)
+                })
+                //Goals
+                UIView.animateWithDuration(0.2, delay: 0.2, options: .CurveEaseInOut, animations: {
+                    self.goalsTab.frame = self.goalsTab.originalFrame
+                    }, completion: {
+                        (value: Bool) in
+                        self.goalsTab.setTitle("Goals", forState: .Normal)
+                })
+                //Achievements
+                UIView.animateWithDuration(0.2, delay: 0.3, options: .CurveEaseInOut, animations: {
+                    self.achievementsTab.frame = self.achievementsTab.originalFrame
+                    }, completion: {
+                        (value: Bool) in
+                        self.achievementsTab.setTitle("Achs", forState: .Normal)
+                })
+        })
+
     }
     //Make a Reset function!!
     ////////////////////

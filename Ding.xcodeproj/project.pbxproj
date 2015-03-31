@@ -17,6 +17,9 @@
 		4A14BEB51AB73DC400F4A659 /* DingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEB41AB73DC400F4A659 /* DingTests.swift */; };
 		4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */; };
 		4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F33301AB9E3920047D9F0 /* TaskCard.swift */; };
+		4A41CFF01AC9B077008FB01F /* AniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A41CFEF1AC9B077008FB01F /* AniView.swift */; };
+		4A41CFF21AC9C369008FB01F /* AniLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A41CFF11AC9C369008FB01F /* AniLabel.swift */; };
+		4A41CFF41AC9C5BB008FB01F /* AniButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A41CFF31AC9C5BB008FB01F /* AniButton.swift */; };
 		4A599A2E1AB920FB00BA8951 /* SkillCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A2D1AB920FB00BA8951 /* SkillCard.swift */; };
 		4A599A341AB9293100BA8951 /* TaskGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A331AB9293100BA8951 /* TaskGoal.swift */; };
 		4A599A381AB9297D00BA8951 /* SkillGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A599A371AB9297D00BA8951 /* SkillGoal.swift */; };
@@ -60,6 +63,9 @@
 		4A14BEB41AB73DC400F4A659 /* DingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DingTests.swift; sourceTree = "<group>"; };
 		4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		4A3F33301AB9E3920047D9F0 /* TaskCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCard.swift; sourceTree = "<group>"; };
+		4A41CFEF1AC9B077008FB01F /* AniView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AniView.swift; sourceTree = "<group>"; };
+		4A41CFF11AC9C369008FB01F /* AniLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AniLabel.swift; sourceTree = "<group>"; };
+		4A41CFF31AC9C5BB008FB01F /* AniButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AniButton.swift; sourceTree = "<group>"; };
 		4A599A2D1AB920FB00BA8951 /* SkillCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillCard.swift; sourceTree = "<group>"; };
 		4A599A331AB9293100BA8951 /* TaskGoal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskGoal.swift; sourceTree = "<group>"; };
 		4A599A371AB9297D00BA8951 /* SkillGoal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillGoal.swift; sourceTree = "<group>"; };
@@ -160,6 +166,9 @@
 			children = (
 				4A599A2D1AB920FB00BA8951 /* SkillCard.swift */,
 				4A3F33301AB9E3920047D9F0 /* TaskCard.swift */,
+				4A41CFEF1AC9B077008FB01F /* AniView.swift */,
+				4A41CFF11AC9C369008FB01F /* AniLabel.swift */,
+				4A41CFF31AC9C5BB008FB01F /* AniButton.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -307,11 +316,14 @@
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
 				4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */,
 				4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */,
+				4A41CFF41AC9C5BB008FB01F /* AniButton.swift in Sources */,
 				4AF658BA1AB93A7C004D94D2 /* Goal.swift in Sources */,
 				4A5EB7481AC0AC5300FD0709 /* TaskPresentationController.swift in Sources */,
 				4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */,
 				4A13A62C1AB75A40001B30B1 /* HomeViewController.swift in Sources */,
+				4A41CFF01AC9B077008FB01F /* AniView.swift in Sources */,
 				4A599A2E1AB920FB00BA8951 /* SkillCard.swift in Sources */,
+				4A41CFF21AC9C369008FB01F /* AniLabel.swift in Sources */,
 				4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */,
 				4A14BE9F1AB73DC400F4A659 /* Ding.xcdatamodeld in Sources */,
 				4A5EB7421AC073C900FD0709 /* Skill.swift in Sources */,
