@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 class LoginViewController: UIViewController {
     
@@ -29,6 +30,9 @@ class LoginViewController: UIViewController {
     
     var loginButton: UIButton!
     var createAccountButton: UIButton!
+    
+    var audioPlayer = AVAudioPlayer()
+    var clickSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("click-login", ofType: "wav")!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -106,6 +110,10 @@ class LoginViewController: UIViewController {
         view.userInteractionEnabled = true
         /************************/
         
+        
+        //Sounds
+        audioPlayer = AVAudioPlayer(contentsOfURL: clickSound, error: nil)
+        audioPlayer.prepareToPlay()
     }
 
     override func didReceiveMemoryWarning() {
@@ -133,6 +141,17 @@ class LoginViewController: UIViewController {
     func loginButtonTapped() {
         //Chain this in 1.2
         //Make it so "" is not legal
+        
+        //// Click Sound ////
+        // Load
+        //println("\(NSBundle.mainBundle().executablePath)")
+        
+        
+        audioPlayer.play()
+        
+        /////////////////////
+        
+        
         if let userName = userNameTextField.text {
             if let password = passwordTextField.text {
                 if userName != "" && password != "" {
@@ -185,28 +204,30 @@ class LoginViewController: UIViewController {
                                 headerLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
                                 headerLabel.textAlignment = NSTextAlignment(rawValue: 1)!
                                 headerLabel.text = "Home"
+                                let optionsButton = AniButton(frame: CGRect(x: headerView.frame.width - 48, y: 6, width: 32, height: 32))
+                                optionsButton.setImage(UIImage(named: "options-gear"), forState: .Normal)
+                                headerView.addSubview(optionsButton)
                                 headerView.addSubview(headerLabel)
                                 headerView.addSubview(logoutButton)
                                 self.view.addSubview(headerView)
                                 /************************************/
                                 
-                                UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseOut, animations: {
+                                UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
                                     //Final Animation
                                     self.fullLoadView.backgroundColor = self.goldColor
                                     self.emptyLoadView.alpha = 0.0
                                     self.fullLoadView.alpha = 0.0
-                                    headerView.frame.origin = CGPoint(x: 0, y: 20)
-                                    //Header animation
-                                    
                                     }, completion: {
                                         (value: Bool) in
-                                        
-                                        self.presentViewController(homeViewController, animated: false, completion: {
+                                        UIView.animateWithDuration(0.75, delay: 0.0, options: .CurveEaseOut, animations: {
+                                            //Header animation
+                                            headerView.frame.origin = CGPoint(x: 0, y: 20)
+                                        }, completion: {
+                                            (value: Bool) in
+                                            self.presentViewController(homeViewController, animated: false, completion: {
                                                 headerView.removeFromSuperview()
                                             })
-                                            
-                                        
-                                        
+                                        })
                                 })
                                 
                                 

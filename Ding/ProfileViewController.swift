@@ -225,6 +225,9 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
         headerView.addSubview(headerLabel)
         headerView.addSubview(logoutButton)
         headerView.layer.zPosition = -1
+        let optionsButton = AniButton(frame: CGRect(x: headerView.frame.width - 48, y: 6, width: 32, height: 32))
+        optionsButton.setImage(UIImage(named: "options-gear"), forState: .Normal)
+        headerView.addSubview(optionsButton)
         self.view.addSubview(headerView)
         
         // Send the labels back to their proper spots

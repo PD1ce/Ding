@@ -15,6 +15,8 @@
 		4A14BEA61AB73DC400F4A659 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA51AB73DC400F4A659 /* Images.xcassets */; };
 		4A14BEA91AB73DC400F4A659 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */; };
 		4A14BEB51AB73DC400F4A659 /* DingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BEB41AB73DC400F4A659 /* DingTests.swift */; };
+		4A2605D31ACC833400F5E309 /* options-gear.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A2605D01ACC833400F5E309 /* options-gear.png */; };
+		4A2605D41ACC833400F5E309 /* click-login.wav in Resources */ = {isa = PBXBuildFile; fileRef = 4A2605D21ACC833400F5E309 /* click-login.wav */; };
 		4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */; };
 		4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3F33301AB9E3920047D9F0 /* TaskCard.swift */; };
 		4A41CFF01AC9B077008FB01F /* AniView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A41CFEF1AC9B077008FB01F /* AniView.swift */; };
@@ -61,6 +63,8 @@
 		4A14BEAE1AB73DC400F4A659 /* DingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A14BEB31AB73DC400F4A659 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4A14BEB41AB73DC400F4A659 /* DingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DingTests.swift; sourceTree = "<group>"; };
+		4A2605D01ACC833400F5E309 /* options-gear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "options-gear.png"; sourceTree = "<group>"; };
+		4A2605D21ACC833400F5E309 /* click-login.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "click-login.wav"; sourceTree = "<group>"; };
 		4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		4A3F33301AB9E3920047D9F0 /* TaskCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCard.swift; sourceTree = "<group>"; };
 		4A41CFEF1AC9B077008FB01F /* AniView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AniView.swift; sourceTree = "<group>"; };
@@ -105,6 +109,8 @@
 		4A14BE8D1AB73DC400F4A659 = {
 			isa = PBXGroup;
 			children = (
+				4A2605CF1ACC833400F5E309 /* Images */,
+				4A2605D11ACC833400F5E309 /* Sounds */,
 				4A14BE981AB73DC400F4A659 /* Ding */,
 				4A14BEB11AB73DC400F4A659 /* DingTests */,
 				4A14BE971AB73DC400F4A659 /* Products */,
@@ -159,6 +165,22 @@
 				4A14BEB31AB73DC400F4A659 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4A2605CF1ACC833400F5E309 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				4A2605D01ACC833400F5E309 /* options-gear.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		4A2605D11ACC833400F5E309 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				4A2605D21ACC833400F5E309 /* click-login.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		4A3D9B551AB88A8200C9CF1D /* Classes */ = {
@@ -285,9 +307,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A2605D41ACC833400F5E309 /* click-login.wav in Resources */,
 				4A14BEA41AB73DC400F4A659 /* Main.storyboard in Resources */,
 				4A14BEA91AB73DC400F4A659 /* LaunchScreen.xib in Resources */,
 				4A14BEA61AB73DC400F4A659 /* Images.xcassets in Resources */,
+				4A2605D31ACC833400F5E309 /* options-gear.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

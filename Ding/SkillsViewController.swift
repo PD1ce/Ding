@@ -29,6 +29,9 @@ class SkillsViewController : UIViewController {
     var totalExpBeforeLevel: Int!
     var oldSkillLevel: Int!
     
+    var particleZero: Int! // Used for particle effects, init in Complete Confirmed
+    var taskCardCenter: CGPoint! // Used for particles
+    
     var headerView: AniView!
     var expBarContainer: AniView!
     var backButton: UIButton!
@@ -503,6 +506,14 @@ class SkillsViewController : UIViewController {
         completedTasks.addObject(task)
         currentTasks.removeObject(task)
         
+        
+        //// Particle Effects ////
+        particleZero = 0
+        taskCardCenter = taskCard.convertPoint(taskCard.center, toView: nil)
+        let expParticleTimer = NSTimer(timeInterval: 0.01, target: self, selector: "expParticleFired:", userInfo: taskCard, repeats: true)
+        NSRunLoop.currentRunLoop().addTimer(expParticleTimer, forMode: NSDefaultRunLoopMode)
+        //////////////////////////
+        
         if saveContext() {
             // Reload the task view and make sure it appears in completedol tooo
             var removedTaskCardFound = false
@@ -694,6 +705,32 @@ class SkillsViewController : UIViewController {
        
     }
     
+    func expParticleFired(timer: NSTimer) {
+        let taskCard = timer.userInfo as TaskCard
+        let expMax = Int(taskCard.task.exp)
+       
+        let expCenter = expBarFull.convertPoint(CGPoint(x: expBarFull.frame.maxX - 10, y: expBarFull.frame.midY), toView: nil)
+        let particleView = UIView(frame: CGRect(x: taskCardCenter.x, y: taskCardCenter.y, width: 5, height: 5))
+        particleView.backgroundColor = goldColor
+        particleView.layer.cornerRadius = particleView.frame.width / 2
+        view.addSubview(particleView)
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveLinear, animations: {
+            particleView.center = CGPoint(x: expCenter.x, y: expCenter.y)
+        }, completion: {
+            (value: Bool) in
+            particleView.removeFromSuperview()
+        })
+        particleZero = particleZero + 1
+        
+        
+        if particleZero >= expMax {
+            particleZero = 0
+            timer.invalidate()
+        }
+        
+        
+    }
+    
     func deleteButtonTapped(button: UIButton) {
         let taskCard = button.superview as TaskCard
         println("Delete Task: \(taskCard.task.taskName)")
@@ -715,6 +752,9 @@ class SkillsViewController : UIViewController {
         headerView.addSubview(headerLabel)
         headerView.addSubview(logoutButton)
         headerView.layer.zPosition = -1
+        let optionsButton = AniButton(frame: CGRect(x: headerView.frame.width - 48, y: 6, width: 32, height: 32))
+        optionsButton.setImage(UIImage(named: "options-gear"), forState: .Normal)
+        headerView.addSubview(optionsButton)
         self.view.addSubview(headerView)
         //Tasks Container and Image
         UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {

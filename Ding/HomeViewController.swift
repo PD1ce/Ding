@@ -17,6 +17,7 @@ class HomeViewController : UIViewController {
     var goals: [Goal]!
     var achievements: [Achievement]!
     
+    var optionsAreOpen: Bool!
     //This will track where the view came from so it knows how to appear/transition
     var transitionCameFrom: UIViewController!
     
@@ -25,6 +26,9 @@ class HomeViewController : UIViewController {
     
     var headerView: UIView!
     var userContainerView: AniView!
+    var optionsButton: AniButton!
+    
+    var optionsView: AniView!
     
     var skillsTab: AniButton!
     var tasksTab: AniButton!
@@ -58,7 +62,8 @@ class HomeViewController : UIViewController {
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
     let blackColor = UIColor(white: 0.0, alpha: 1.0)
     let goldColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
-    let skillsColor = UIColor(red: 51/255, green: 255/255, blue: 204/255, alpha: 1.0)
+    //let skillsColor = UIColor(red: 51/255, green: 255/255, blue: 204/255, alpha: 1.0)
+    let skillsColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
     let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
     let goalsColor = UIColor(red: 51/255, green: 102/255, blue: 255/255, alpha: 1.0)
     let achievementsColor = UIColor(red: 102/255, green: 51/255, blue: 255/255, alpha: 1.0)
@@ -76,6 +81,8 @@ class HomeViewController : UIViewController {
         
         
         /*************************************************************/
+        
+        optionsAreOpen = false
         
         
         userImage = UIImage(named: "philProfile")
@@ -101,10 +108,22 @@ class HomeViewController : UIViewController {
         headerLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         headerLabel.textAlignment = NSTextAlignment(rawValue: 1)!
         headerLabel.text = "Home"
+        optionsButton = AniButton(frame: CGRect(x: headerView.frame.width - 48, y: 6, width: 32, height: 32))
+        optionsButton.setImage(UIImage(named: "options-gear"), forState: .Normal)
+        optionsButton.addTarget(self, action: "optionsButtonTapped", forControlEvents: .TouchUpInside)
         
         headerView.addSubview(headerLabel)
         headerView.addSubview(logoutButton)
+        headerView.addSubview(optionsButton)
         view.addSubview(headerView)
+        
+        ////  Options View ////
+        optionsView = AniView(frame: CGRect(x: 8, y: 20 + headerView.frame.height, width: view.frame.width - 16, height: view.frame.height - 20 - headerView.frame.height - 8))
+        optionsView.layer.borderColor = goldColor.CGColor
+        optionsView.layer.borderWidth = 5.0
+        optionsView.backgroundColor = whiteColor
+        //optionsView.alpha = 0.0
+        view.addSubview(optionsView)
         
         ////  Container Items  ////
         userContainerView = AniView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
@@ -212,7 +231,7 @@ class HomeViewController : UIViewController {
         tasksCurrent.layer.borderWidth = 2.0
         tasksCurrent.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
         // Current Tasks Container - Populate on ViewWillAppear or ButtonPress
-        tasksCurrentContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksCurrentContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 40))
         tasksCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 750)
         tasksCurrentContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         tasksContainer.addSubview(tasksCurrentContainer)
@@ -229,7 +248,7 @@ class HomeViewController : UIViewController {
         tasksCompleted.layer.borderWidth = 2.0
         tasksCompleted.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
         // Completed Tasks Container - Populate on ViewWillAppear or ButtonPress
-        tasksCompletedContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksCompletedContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 40))
         tasksCompletedContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: 750)
         tasksCompletedContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         tasksContainer.addSubview(tasksCompletedContainer)
@@ -246,7 +265,7 @@ class HomeViewController : UIViewController {
         tasksSort.layer.borderWidth = 2.0
         tasksSort.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
         // Sort Tasks Container - Populate on ViewWillAppear or ButtonPress
-        tasksSortContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksSortContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 40))
         tasksSortContainer.contentSize = CGSize(width: tasksSortContainer.frame.width, height: 750)
         tasksSortContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         tasksContainer.addSubview(tasksSortContainer)
@@ -255,7 +274,7 @@ class HomeViewController : UIViewController {
         //Search Tasks Button
         tasksSearch = UIButton(frame: CGRect(x: 5 + tasksCurrent.frame.width * 2 + tasksSort.frame.width, y: 5, width: (tasksContainer.frame.width - 10) * 0.15, height: 30))
         tasksSearch.addTarget(self, action: "tasksSearchTapped", forControlEvents: .TouchUpInside)
-        tasksSearch.setTitle("Search", forState: .Normal)
+        tasksSearch.setTitle("Sear", forState: .Normal)
         tasksSearch.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
         tasksSearch.backgroundColor = tasksColor
         tasksSearch.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
@@ -263,7 +282,7 @@ class HomeViewController : UIViewController {
         tasksSearch.layer.borderWidth = 2.0
         tasksSearch.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
         // Search Tasks Container - Populate on ViewWillAppear or ButtonPress
-        tasksSearchContainer = UIScrollView(frame: CGRect(x: 5, y: 30, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 35))
+        tasksSearchContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: tasksContainer.frame.width - 10, height: tasksContainer.frame.height - 40))
         tasksSearchContainer.contentSize = CGSize(width: tasksSearchContainer.frame.width, height: 750)
         tasksSearchContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         tasksContainer.addSubview(tasksSearchContainer)
@@ -353,6 +372,7 @@ class HomeViewController : UIViewController {
              self.userContainerView.backgroundColor = self.skillsColor
         }
        
+        optionsView.frame = CGRect(x: 8, y: 20 + headerView.frame.height, width: view.frame.width - 16, height: 0)
         //*************************************************************************
         
         userImageView.image = userImage
@@ -511,22 +531,19 @@ class HomeViewController : UIViewController {
             position++
         }
         
-        /// Add a new Skill, last card ///
+        /////////// Add a new Skill, last card /////////////
         if columnOne {
             row = position / 2
             let newSkillCard = UIView(frame: CGRect(x: 8, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128))
-            let skillNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: newSkillCard.frame.width, height: 44))
+            let skillNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: newSkillCard.frame.width, height: newSkillCard.frame.height))
             newSkillCard.layer.cornerRadius = 5.0
             newSkillCard.layer.borderWidth = 2.0
             newSkillCard.layer.borderColor = skillsColor.CGColor
             newSkillCard.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
-            skillNameLabel.layer.borderColor = UIColor(white: 0.0, alpha: 1.0).CGColor
-            skillNameLabel.layer.borderWidth = 1.0
-            skillNameLabel.layer.cornerRadius = 5.0
             skillNameLabel.text = "New!"
-            skillNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            skillNameLabel.textAlignment = NSTextAlignment.Center
             skillNameLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
-            skillNameLabel.font = UIFont(name: "Helvetica", size: 12.0)
+            skillNameLabel.font = UIFont(name: "Helvetica", size: 24.0)
             newSkillCard.addSubview(skillNameLabel)
             skillsContainer.addSubview(newSkillCard)
             let tapNewSkill = UITapGestureRecognizer(target: self, action: "newSkillTapped:")
@@ -534,24 +551,21 @@ class HomeViewController : UIViewController {
         } else {
             row = position / 2
             let newSkillCard = UIView(frame: CGRect(x: skillsContainer.frame.width / 2 + 4, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128))
-            let skillNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: newSkillCard.frame.width, height: 44))
+            let skillNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: newSkillCard.frame.width, height: newSkillCard.frame.height))
             newSkillCard.layer.cornerRadius = 5.0
             newSkillCard.layer.borderWidth = 2.0
             newSkillCard.layer.borderColor = skillsColor.CGColor
             newSkillCard.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
-            skillNameLabel.layer.borderColor = UIColor(white: 0.0, alpha: 1.0).CGColor
-            skillNameLabel.layer.borderWidth = 1.0
-            skillNameLabel.layer.cornerRadius = 5.0
             skillNameLabel.text = "New!"
-            skillNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            skillNameLabel.textAlignment = NSTextAlignment.Center
             skillNameLabel.textColor = UIColor(white: 0.0, alpha: 1.0)
-            skillNameLabel.font = UIFont(name: "Helvetica", size: 12.0)
+            skillNameLabel.font = UIFont(name: "Helvetica", size: 24.0)
             newSkillCard.addSubview(skillNameLabel)
             skillsContainer.addSubview(newSkillCard)
             let tapNewSkill = UITapGestureRecognizer(target: self, action: "newSkillTapped:")
             newSkillCard.addGestureRecognizer(tapNewSkill)
         }
-        
+        ///////////////////////////////////////////////////////
         
         
     }
@@ -567,7 +581,7 @@ class HomeViewController : UIViewController {
                     (value: Bool) in
                     
             })
-            UIView.animateWithDuration(1.5, delay: 0.2, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.8, options: .CurveEaseOut, animations: {
+            UIView.animateWithDuration(1.0, delay: 0.2, options: .CurveEaseOut, animations: {
                 self.mainContainerView.frame.origin = self.mainContainerView.originalOrigin
                 }, completion: {
                     (value: Bool) in
@@ -577,7 +591,7 @@ class HomeViewController : UIViewController {
         
         //Profile Transitions
         if transitionCameFrom.isMemberOfClass(ProfileViewController) {
-            UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.8, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
+            UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseInOut, animations: {
                 self.mainContainerView.frame.origin = self.mainContainerView.originalOrigin
             }, completion: {
                 (value: Bool) in
@@ -663,6 +677,34 @@ class HomeViewController : UIViewController {
     
     func logoutButtonTapped() {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //PDAlert: Bugged, rotates twice the same way at first
+    func optionsButtonTapped() {
+        if let optionBool = optionsAreOpen {
+            if !optionBool {
+                println("OptionAreOpen : \(optionsAreOpen)")
+                println("Spin 90 Deg")
+                UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                    self.optionsButton.transform = CGAffineTransformMakeRotation(-90.0)
+                    self.view.bringSubviewToFront(self.optionsView)
+                    self.optionsView.frame = self.optionsView.originalFrame
+                    //self.optionsView.alpha = 1.0
+                }, completion: nil)
+            } else {
+                println("OptionAreOpen : \(optionsAreOpen)")
+                println("Spin -90 Deg")
+                UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                    self.optionsButton.transform = CGAffineTransformMakeRotation(90.0)
+                    self.optionsView.frame = CGRect(x: 8, y: 20 + self.headerView.frame.height, width: self.view.frame.width - 16, height: 0)
+                    //self.optionsView.alpha = 0.0
+                }, completion: nil)
+            }
+        }
+       
+        optionsAreOpen = !optionsAreOpen
+
+        
     }
     
     func skillCardTapped(gr: UITapGestureRecognizer) {
@@ -776,6 +818,17 @@ class HomeViewController : UIViewController {
         profileVC.parentVC = self
         transitionCameFrom = profileVC
         
+        //Profile Bounce
+        let currentProfileFrame = userImageView.frame
+        UIView.animateWithDuration(0.1, delay: 0.0, options: .CurveLinear, animations: {
+            self.userImageView.frame = CGRect(x: currentProfileFrame.minX - 8, y: currentProfileFrame.minY - 8, width: currentProfileFrame.width + 16, height: currentProfileFrame.height + 16)
+        }, completion: {
+            (value: Bool) in
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.75, options: .CurveEaseInOut, animations: {
+                self.userImageView.frame = currentProfileFrame
+            }, completion: nil)
+        })
+        
         //Skills Tab
         UIView.animateWithDuration(0.2, delay: 0.0, options: .CurveEaseIn, animations: {
             self.skillsTab.frame = CGRect(x: self.skillsTab.frame.minX, y: self.skillsTab.frame.maxY, width: self.skillsTab.frame.width, height: 0)
@@ -832,7 +885,7 @@ class HomeViewController : UIViewController {
     
     //Used for putting back buttons and container frame
     func resetMainContainer() {
-        UIView.animateWithDuration(1.5, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.8, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+        UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             self.mainContainerView.frame.origin = self.mainContainerView.originalOrigin
             }, completion: {
                 (value: Bool) in
@@ -897,6 +950,16 @@ class HomeViewController : UIViewController {
     //Main Container Tabs
     func skillsTabTapped() {
         mainContainerView.bringSubviewToFront(skillsContainer)
+        let currentFrame = skillsTab.frame
+        UIView.animateWithDuration(0.1, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.skillsTab.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY - 30, width: currentFrame.width, height: currentFrame.height + 30)
+        }, completion: {
+            (value: Bool) in
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.75, options: .CurveEaseInOut, animations: {
+                self.skillsTab.frame = self.skillsTab.originalFrame
+            }, completion: nil)
+
+        })
         
         //Set Tasks Back
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
@@ -910,6 +973,17 @@ class HomeViewController : UIViewController {
         
     }
     func tasksTabTapped() {
+        let currentFrame = tasksTab.frame
+        UIView.animateWithDuration(0.1, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.tasksTab.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY - 30, width: currentFrame.width, height: currentFrame.height + 30)
+        }, completion: {
+            (value: Bool) in
+            UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.75, options: .CurveEaseInOut, animations: {
+                self.tasksTab.frame = self.tasksTab.originalFrame
+            }, completion: nil)
+        })
+        
+        
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
         tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = tasksColor
@@ -921,6 +995,17 @@ class HomeViewController : UIViewController {
     }
     func goalsTabTapped() {
         mainContainerView.bringSubviewToFront(goalsContainer)
+        
+        let currentFrame = goalsTab.frame
+        UIView.animateWithDuration(0.1, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.goalsTab.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY - 30, width: currentFrame.width, height: currentFrame.height + 30)
+            }, completion: {
+                (value: Bool) in
+                UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.75, options: .CurveEaseInOut, animations: {
+                    self.goalsTab.frame = self.goalsTab.originalFrame
+                    }, completion: nil)
+        })
+        
         
         //Set Tasks Back
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
@@ -934,6 +1019,16 @@ class HomeViewController : UIViewController {
     }
     func achievementsTabTapped() {
         mainContainerView.bringSubviewToFront(achievementsContainer)
+        
+        let currentFrame = achievementsTab.frame
+        UIView.animateWithDuration(0.1, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.achievementsTab.frame = CGRect(x: currentFrame.minX, y: currentFrame.minY - 30, width: currentFrame.width, height: currentFrame.height + 30)
+            }, completion: {
+                (value: Bool) in
+                UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.75, options: .CurveEaseInOut, animations: {
+                    self.achievementsTab.frame = self.achievementsTab.originalFrame
+                    }, completion: nil)
+        })
         
         //Set Tasks Back
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
