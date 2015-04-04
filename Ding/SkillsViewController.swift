@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreData
+import AVFoundation
 
 class SkillsViewController : UIViewController {
     
@@ -63,6 +64,9 @@ class SkillsViewController : UIViewController {
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
     let blackColor = UIColor(white: 0.0, alpha: 1.0)
     let goldColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
+    
+    var audioPlayer = AVAudioPlayer()
+    var levelUpSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("LevelUpDemo2", ofType: "mp3")!)
     
     
     // PDAlert: Skills needs COUNTERS (miles ran, for instance)
@@ -213,6 +217,10 @@ class SkillsViewController : UIViewController {
         view.addSubview(expBarContainer)
         view.addSubview(detailsContainer)
         view.addSubview(headerView)
+        
+        //// Sounds ////
+        audioPlayer = AVAudioPlayer(contentsOfURL: levelUpSound, error: nil)
+        audioPlayer.prepareToPlay()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -293,6 +301,9 @@ class SkillsViewController : UIViewController {
             
             row++
         }
+        //Number of tasks = row
+        tasksCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: CGFloat(row * 76) + 8)
+
         //Display New Task Creation
         createTaskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
         let taskNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: createTaskCard.frame.width, height: 72))
@@ -309,9 +320,70 @@ class SkillsViewController : UIViewController {
         createTaskCard.addSubview(taskNameLabel)
         let tapGR = UITapGestureRecognizer(target: self, action: "createTaskTapped")
         createTaskCard.addGestureRecognizer(tapGR)
-        
-        
         tasksCurrentContainer.addSubview(createTaskCard)
+        
+        /////////// Tasks Completed ///////////
+        //Display Skill's Completed Tasks
+        row = 0
+        for task in completedTasks {
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as Task)
+            taskCard.backgroundColor = tasksColor
+            tasksCompletedContainer.addSubview(taskCard)
+            let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
+            taskNameLabel.text = taskCard.task.taskName
+            taskNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskNameLabel.backgroundColor = whiteColor
+            taskNameLabel.layer.borderWidth = 2.0
+            taskNameLabel.layer.borderColor = tasksColor.CGColor
+            let taskExpLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskExpLabel.text = "Exp: \(taskCard.task.exp)"
+            taskExpLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskExpLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskExpLabel.backgroundColor = whiteColor
+            taskExpLabel.layer.borderWidth = 2.0
+            taskExpLabel.layer.borderColor = tasksColor.CGColor
+            let taskDifficultyLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.525), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskDifficultyLabel.text = "Diff: \(taskCard.task.difficulty)"
+            taskDifficultyLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskDifficultyLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskDifficultyLabel.backgroundColor = whiteColor
+            taskDifficultyLabel.layer.borderWidth = 2.0
+            taskDifficultyLabel.layer.borderColor = tasksColor.CGColor
+            
+            //Complete or Delete Buttons
+            /*
+            let completeButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: 0, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            completeButton.setTitle("!", forState: .Normal)
+            completeButton.setTitleColor(whiteColor, forState: .Normal)
+            completeButton.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            //completeButton.layer.cornerRadius = 10.0
+            completeButton.addTarget(self, action: "completeButtonTapped:", forControlEvents: .TouchUpInside)
+            completeButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            completeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let deleteButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            deleteButton.setTitle("X", forState: .Normal)
+            deleteButton.setTitleColor(whiteColor, forState: .Normal)
+            deleteButton.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            //deleteButton.layer.cornerRadius = 10.0
+            deleteButton.addTarget(self, action: "deleteButtonTapped:", forControlEvents: .TouchUpInside)
+            deleteButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            deleteButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let buttonDivider = UIView(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2 - 2, width: CGFloat(taskCard.frame.width * 0.15), height: 4))
+            buttonDivider.backgroundColor = tasksColor
+            */
+            taskCard.addSubview(taskNameLabel)
+            taskCard.addSubview(taskExpLabel)
+            taskCard.addSubview(taskDifficultyLabel)
+            //taskCard.addSubview(completeButton)
+            //taskCard.addSubview(deleteButton)
+            //taskCard.addSubview(buttonDivider)
+            
+            row++
+        }
+        //Number of tasks = row
+        tasksCompletedContainer.contentSize = CGSize(width: tasksCompletedContainer.frame.width, height: CGFloat(row * 76) + 8)
+
 
     }
     
@@ -616,6 +688,9 @@ class SkillsViewController : UIViewController {
             
             //Independent level up animations: Fire as soon as task is complete
             if levelUp {
+                //Level up Sound //
+                audioPlayer.play()
+                ///////////////////
                 let backgroundShine = UIView(frame: CGRect(x: self.view.frame.minX - self.view.frame.width, y: self.view.frame.minY, width: self.view.frame.width, height: self.view.frame.height))
                 backgroundShine.layer.zPosition = -1
                 backgroundShine.backgroundColor = self.goldColor
@@ -708,19 +783,32 @@ class SkillsViewController : UIViewController {
     func expParticleFired(timer: NSTimer) {
         let taskCard = timer.userInfo as TaskCard
         let expMax = Int(taskCard.task.exp)
+        
        
+        
         let expCenter = expBarFull.convertPoint(CGPoint(x: expBarFull.frame.maxX - 10, y: expBarFull.frame.midY), toView: nil)
         let particleView = UIView(frame: CGRect(x: taskCardCenter.x, y: taskCardCenter.y, width: 5, height: 5))
         particleView.backgroundColor = goldColor
         particleView.layer.cornerRadius = particleView.frame.width / 2
         view.addSubview(particleView)
+        ////
+        /*
+        let particleAnimation = CAKeyframeAnimation(keyPath: "position")
+        particleAnimation.duration = 5.0
+        particleAnimation.path = CGPathCreateWithEllipseInRect(tasksContainer.frame, nil)
+        particleAnimation.removedOnCompletion = true
+        particleView.layer.addAnimation(particleAnimation, forKey: "particleAnimation")
+        */
+        ////
+        
         UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveLinear, animations: {
             particleView.center = CGPoint(x: expCenter.x, y: expCenter.y)
         }, completion: {
             (value: Bool) in
             particleView.removeFromSuperview()
         })
-        particleZero = particleZero + 1
+        
+        particleZero = particleZero + 5
         
         
         if particleZero >= expMax {
@@ -729,6 +817,14 @@ class SkillsViewController : UIViewController {
         }
         
         
+    }
+    
+    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+        /*
+        if anim.valueForKey("particleAnimation") {
+            
+        }
+*/
     }
     
     func deleteButtonTapped(button: UIButton) {

@@ -14,7 +14,11 @@ class HomeViewController : UIViewController {
     var user: User!
     var skills: NSMutableArray!
     var tasks: NSMutableArray!
+    var currentTasks: NSMutableArray!
+    var completedTasks: NSMutableArray!
     var goals: [Goal]!
+    var currentGoals: NSMutableArray!
+    var completedGoals: NSMutableArray!
     var achievements: [Achievement]!
     
     var optionsAreOpen: Bool!
@@ -46,6 +50,8 @@ class HomeViewController : UIViewController {
     var logoutButton: UIButton!
     var headerLabel: UILabel!
     
+    var totalLevel: Int = 0
+    
     var tasksCurrent: UIButton!
     var tasksSort: UIButton!
     var tasksSearch: UIButton!
@@ -56,6 +62,28 @@ class HomeViewController : UIViewController {
     var tasksSortContainer: UIScrollView!
     var tasksSearchContainer: UIScrollView!
     var tasksCompletedContainer: UIScrollView!
+    
+    var goalsCurrent: UIButton!
+    var goalsSort: UIButton!
+    var goalsSearch: UIButton!
+    var goalsCompleted: UIButton!
+    var goalsSelectedButton: UIButton!
+    
+    var goalsCurrentContainer: UIScrollView!
+    var goalsSortContainer: UIScrollView!
+    var goalsSearchContainer: UIScrollView!
+    var goalsCompletedContainer: UIScrollView!
+    
+    var achievementsCurrent: UIButton!
+    var achievementsSort: UIButton!
+    var achievementsSearch: UIButton!
+    var achievementsCompleted: UIButton!
+    var achievementsSelectedButton: UIButton!
+    
+    var achievementsCurrentContainer: UIScrollView!
+    var achievementsSortContainer: UIScrollView!
+    var achievementsSearchContainer: UIScrollView!
+    var achievementsCompletedContainer: UIScrollView!
     
     var mainContainerView: AniView!
     
@@ -88,12 +116,14 @@ class HomeViewController : UIViewController {
         userImage = UIImage(named: "philProfile")
         // Need tasks and Goals
         skills = NSMutableArray(array: user.skills.allObjects)
-        tasks = NSMutableArray()
+        currentTasks = NSMutableArray()
+        totalLevel = 0
         for skill in skills {
             let moreTasks = NSMutableArray(array: (skill as Skill).tasks.allObjects)
             for task in moreTasks {
-                tasks.addObject(task as Task)
+                currentTasks.addObject(task as Task)
             }
+            totalLevel += Int((skill as Skill).level)
         }
         //skills = user.skills.mutableCopy() as NSMutableArray
         
@@ -153,7 +183,8 @@ class HomeViewController : UIViewController {
         totalLevelLabel = AniLabel(frame: CGRect(x: userContainerView.frame.width + 8, y: userNameLabel.frame.height + 16, width: detailsContainerView.frame.width - userContainerView.frame.width - 16, height: userContainerView.frame.height / 2 - 12))
         totalLevelLabel.font = UIFont(name: "Helvetica", size: 18.0)
         totalLevelLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
-        totalLevelLabel.text = "Total Level:"
+        totalLevelLabel.text = "Total Level: \(totalLevel)"
+        totalLevelLabel.textAlignment = NSTextAlignment.Center
         totalLevelLabel.backgroundColor = UIColor(white: 0.9, alpha: 1.0) // Test
         
         detailsContainerView.addSubview(userContainerView)
@@ -204,6 +235,7 @@ class HomeViewController : UIViewController {
         achievementsTab.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
         achievementsTab.addTarget(self, action: "achievementsTabTapped", forControlEvents: .TouchUpInside)
         
+        /////////////////////////////     SKILLS     ////////////////////////////////
         //Skills Container
         // Height of containers will be dynamic based on number of skills
         skillsContainer = UIScrollView(frame: CGRect(x: 0, y: skillsTab.frame.height, width: mainContainerView.frame.width, height: mainContainerView.frame.height - skillsTab.frame.height))
@@ -211,9 +243,9 @@ class HomeViewController : UIViewController {
         skillsContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         skillsContainer.layer.borderWidth = 5.0
         skillsContainer.layer.borderColor = skillsColor.CGColor
+        /////////////////////////////     SKILLS     ////////////////////////////////
         
-        
-        
+        /////////////////////////////     TASKS     ////////////////////////////////
         //Tasks Container
         tasksContainer = UIScrollView(frame: CGRect(x: 0, y: skillsTab.frame.height, width: mainContainerView.frame.width, height: mainContainerView.frame.height - skillsTab.frame.height))
         tasksContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
@@ -301,20 +333,176 @@ class HomeViewController : UIViewController {
         println("tasks CuContainer Width: \(tasksCurrentContainer.frame.width)")
         println("tasks CuContainer Height: \(tasksCurrentContainer.frame.height)")
         */
-
+        /////////////////////////////     TASKS     ////////////////////////////////
         
         
-        
+        /////////////////////////////     GOALS     ////////////////////////////////
         //Goals Container
         goalsContainer = UIScrollView(frame: CGRect(x: 0, y: skillsTab.frame.height, width: mainContainerView.frame.width, height: mainContainerView.frame.height - skillsTab.frame.height))
         goalsContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         goalsContainer.layer.borderWidth = 5.0
         goalsContainer.layer.borderColor = goalsColor.CGColor
+        
+        //Current Goals Button
+        goalsCurrent = UIButton(frame: CGRect(x: 5, y: 5, width: (goalsContainer.frame.width - 10) * 0.35, height: 30))
+        goalsCurrent.addTarget(self, action: "goalsCurrentTapped", forControlEvents: .TouchUpInside)
+        goalsCurrent.setTitle("Current", forState: .Normal)
+        goalsCurrent.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        goalsCurrent.backgroundColor = goalsColor
+        goalsCurrent.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        goalsCurrent.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        goalsCurrent.layer.borderWidth = 2.0
+        goalsCurrent.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Current goals Container - Populate on ViewWillAppear or ButtonPress
+        goalsCurrentContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: goalsContainer.frame.width - 10, height: goalsContainer.frame.height - 40))
+        goalsCurrentContainer.contentSize = CGSize(width: goalsCurrentContainer.frame.width, height: 750)
+        goalsCurrentContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        goalsContainer.addSubview(goalsCurrentContainer)
+        goalsContainer.addSubview(goalsCurrent)
+        
+        //Completed goals Button
+        goalsCompleted = UIButton(frame: CGRect(x: 5 + goalsCurrent.frame.width, y: 5, width: (goalsContainer.frame.width - 10) * 0.35, height: 30))
+        goalsCompleted.addTarget(self, action: "goalsCompletedTapped", forControlEvents: .TouchUpInside)
+        goalsCompleted.setTitle("Completed", forState: .Normal)
+        goalsCompleted.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        goalsCompleted.backgroundColor = goalsColor
+        goalsCompleted.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        goalsCompleted.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        goalsCompleted.layer.borderWidth = 2.0
+        goalsCompleted.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Completed goals Container - Populate on ViewWillAppear or ButtonPress
+        goalsCompletedContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: goalsContainer.frame.width - 10, height: goalsContainer.frame.height - 40))
+        goalsCompletedContainer.contentSize = CGSize(width: goalsCurrentContainer.frame.width, height: 750)
+        goalsCompletedContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        goalsContainer.addSubview(goalsCompletedContainer)
+        goalsContainer.addSubview(goalsCompleted)
+        
+        //Sort goals Button
+        goalsSort = UIButton(frame: CGRect(x: 5 + goalsCurrent.frame.width * 2, y: 5, width: (goalsContainer.frame.width - 10) * 0.15, height: 30))
+        goalsSort.addTarget(self, action: "goalsSortTapped", forControlEvents: .TouchUpInside)
+        goalsSort.setTitle("Sort", forState: .Normal)
+        goalsSort.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        goalsSort.backgroundColor = goalsColor
+        goalsSort.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        goalsSort.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        goalsSort.layer.borderWidth = 2.0
+        goalsSort.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Sort goals Container - Populate on ViewWillAppear or ButtonPress
+        goalsSortContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: goalsContainer.frame.width - 10, height: goalsContainer.frame.height - 40))
+        goalsSortContainer.contentSize = CGSize(width: goalsSortContainer.frame.width, height: 750)
+        goalsSortContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        goalsContainer.addSubview(goalsSortContainer)
+        goalsContainer.addSubview(goalsSort)
+        
+        //Search goals Button
+        goalsSearch = UIButton(frame: CGRect(x: 5 + goalsCurrent.frame.width * 2 + goalsSort.frame.width, y: 5, width: (goalsContainer.frame.width - 10) * 0.15, height: 30))
+        goalsSearch.addTarget(self, action: "goalsSearchTapped", forControlEvents: .TouchUpInside)
+        goalsSearch.setTitle("Sear", forState: .Normal)
+        goalsSearch.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        goalsSearch.backgroundColor = goalsColor
+        goalsSearch.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        goalsSearch.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        goalsSearch.layer.borderWidth = 2.0
+        goalsSearch.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Search goals Container - Populate on ViewWillAppear or ButtonPress
+        goalsSearchContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: goalsContainer.frame.width - 10, height: goalsContainer.frame.height - 40))
+        goalsSearchContainer.contentSize = CGSize(width: goalsSearchContainer.frame.width, height: 750)
+        goalsSearchContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        goalsContainer.addSubview(goalsSearchContainer)
+        goalsContainer.addSubview(goalsSearch)
+        
+        goalsSelectedButton = goalsCurrent
+        
+        //Set selected
+        goalsContainer.bringSubviewToFront(goalsCurrentContainer)
+        goalsSelectedButton = goalsCurrent
+        /////////////////////////////     GOALS     ////////////////////////////////
+        
+        
+        
+        
+        
+        /////////////////////////     ACHIEVEMENTS     /////////////////////////////
         //Achievements Container
         achievementsContainer = UIScrollView(frame: CGRect(x: 0, y: skillsTab.frame.height, width: mainContainerView.frame.width, height: mainContainerView.frame.height - skillsTab.frame.height))
         achievementsContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
         achievementsContainer.layer.borderWidth = 5.0
         achievementsContainer.layer.borderColor = achievementsColor.CGColor
+        
+        //Current Achievements Button
+        achievementsCurrent = UIButton(frame: CGRect(x: 5, y: 5, width: (achievementsContainer.frame.width - 10) * 0.35, height: 30))
+        achievementsCurrent.addTarget(self, action: "achievementsCurrentTapped", forControlEvents: .TouchUpInside)
+        achievementsCurrent.setTitle("Current", forState: .Normal)
+        achievementsCurrent.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        achievementsCurrent.backgroundColor = achievementsColor
+        achievementsCurrent.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        achievementsCurrent.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        achievementsCurrent.layer.borderWidth = 2.0
+        achievementsCurrent.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Current achievements Container - Populate on ViewWillAppear or ButtonPress
+        achievementsCurrentContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: achievementsContainer.frame.width - 10, height: achievementsContainer.frame.height - 40))
+        achievementsCurrentContainer.contentSize = CGSize(width: achievementsCurrentContainer.frame.width, height: 750)
+        achievementsCurrentContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        achievementsContainer.addSubview(achievementsCurrentContainer)
+        achievementsContainer.addSubview(achievementsCurrent)
+        
+        //Completed achievements Button
+        achievementsCompleted = UIButton(frame: CGRect(x: 5 + achievementsCurrent.frame.width, y: 5, width: (achievementsContainer.frame.width - 10) * 0.35, height: 30))
+        achievementsCompleted.addTarget(self, action: "achievementsCompletedTapped", forControlEvents: .TouchUpInside)
+        achievementsCompleted.setTitle("Completed", forState: .Normal)
+        achievementsCompleted.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        achievementsCompleted.backgroundColor = achievementsColor
+        achievementsCompleted.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        achievementsCompleted.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        achievementsCompleted.layer.borderWidth = 2.0
+        achievementsCompleted.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Completed achievements Container - Populate on ViewWillAppear or ButtonPress
+        achievementsCompletedContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: achievementsContainer.frame.width - 10, height: achievementsContainer.frame.height - 40))
+        achievementsCompletedContainer.contentSize = CGSize(width: achievementsCurrentContainer.frame.width, height: 750)
+        achievementsCompletedContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        achievementsContainer.addSubview(achievementsCompletedContainer)
+        achievementsContainer.addSubview(achievementsCompleted)
+        
+        //Sort achievements Button
+        achievementsSort = UIButton(frame: CGRect(x: 5 + achievementsCurrent.frame.width * 2, y: 5, width: (achievementsContainer.frame.width - 10) * 0.15, height: 30))
+        achievementsSort.addTarget(self, action: "achievementsSortTapped", forControlEvents: .TouchUpInside)
+        achievementsSort.setTitle("Sort", forState: .Normal)
+        achievementsSort.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        achievementsSort.backgroundColor = achievementsColor
+        achievementsSort.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        achievementsSort.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        achievementsSort.layer.borderWidth = 2.0
+        achievementsSort.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Sort achievements Container - Populate on ViewWillAppear or ButtonPress
+        achievementsSortContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: achievementsContainer.frame.width - 10, height: achievementsContainer.frame.height - 40))
+        achievementsSortContainer.contentSize = CGSize(width: achievementsSortContainer.frame.width, height: 750)
+        achievementsSortContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        achievementsContainer.addSubview(achievementsSortContainer)
+        achievementsContainer.addSubview(achievementsSort)
+        
+        //Search achievements Button
+        achievementsSearch = UIButton(frame: CGRect(x: 5 + achievementsCurrent.frame.width * 2 + achievementsSort.frame.width, y: 5, width: (achievementsContainer.frame.width - 10) * 0.15, height: 30))
+        achievementsSearch.addTarget(self, action: "achievementsSearchTapped", forControlEvents: .TouchUpInside)
+        achievementsSearch.setTitle("Sear", forState: .Normal)
+        achievementsSearch.setTitleColor(UIColor(white: 1.0, alpha: 1.0), forState: .Normal)
+        achievementsSearch.backgroundColor = achievementsColor
+        achievementsSearch.titleLabel?.font = UIFont(name: "Helvetica", size: 16.0)
+        achievementsSearch.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+        achievementsSearch.layer.borderWidth = 2.0
+        achievementsSearch.layer.borderColor = UIColor(white: 1.0, alpha: 1.0).CGColor
+        // Search achievements Container - Populate on ViewWillAppear or ButtonPress
+        achievementsSearchContainer = UIScrollView(frame: CGRect(x: 5, y: 35, width: achievementsContainer.frame.width - 10, height: achievementsContainer.frame.height - 40))
+        achievementsSearchContainer.contentSize = CGSize(width: achievementsSearchContainer.frame.width, height: 750)
+        achievementsSearchContainer.backgroundColor = UIColor(white: 0.85, alpha: 1.0)
+        achievementsContainer.addSubview(achievementsSearchContainer)
+        achievementsContainer.addSubview(achievementsSearch)
+        
+        achievementsSelectedButton = achievementsCurrent
+        //Set selected
+        goalsContainer.bringSubviewToFront(goalsCurrentContainer)
+        goalsSelectedButton = goalsCurrent
+        
+        /////////////////////////     ACHIEVEMENTS     /////////////////////////////
         
         
         mainContainerView.addSubview(skillsTab)
@@ -565,9 +753,218 @@ class HomeViewController : UIViewController {
             let tapNewSkill = UITapGestureRecognizer(target: self, action: "newSkillTapped:")
             newSkillCard.addGestureRecognizer(tapNewSkill)
         }
+        
+        //Number of skills = row * 2
+        if row <= 1 {
+            skillsContainer.contentSize = CGSize(width: skillsContainer.frame.width, height: 144)
+        } else {
+            skillsContainer.contentSize = CGSize(width: skillsContainer.frame.width, height: CGFloat(row * 136) + 136 + 8)
+        }
+       
+
         ///////////////////////////////////////////////////////
         
+        ///////////////////     TASKS      ////////////////////
+        //Refresh subviews
+        for view in tasksCurrentContainer.subviews {
+            view.removeFromSuperview()
+        }
+        for view in tasksCompletedContainer.subviews {
+            view.removeFromSuperview()
+        }
         
+        currentTasks = NSMutableArray()
+        for skill in skills {
+            let moreTasks = NSMutableArray(array: (skill as Skill).tasks.allObjects)
+            for task in moreTasks {
+                currentTasks.addObject(task as Task)
+            }
+        }
+        
+        completedTasks = NSMutableArray()
+        for task in currentTasks {
+            if (task as Task).completed == 1 {
+                completedTasks.addObject(task)
+                currentTasks.removeObject(task)
+            }
+        }
+        
+        //Display Current Tasks
+        
+        row = 0
+        for task in currentTasks {
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
+            taskCard.backgroundColor = tasksColor
+            tasksCurrentContainer.addSubview(taskCard)
+            let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
+            taskNameLabel.text = taskCard.task.taskName
+            taskNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskNameLabel.backgroundColor = whiteColor
+            taskNameLabel.layer.borderWidth = 2.0
+            taskNameLabel.layer.borderColor = tasksColor.CGColor
+            let taskExpLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskExpLabel.text = "Exp: \(taskCard.task.exp)"
+            taskExpLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskExpLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskExpLabel.backgroundColor = whiteColor
+            taskExpLabel.layer.borderWidth = 2.0
+            taskExpLabel.layer.borderColor = tasksColor.CGColor
+            let taskDifficultyLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.525), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskDifficultyLabel.text = "Diff: \(taskCard.task.difficulty)"
+            taskDifficultyLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskDifficultyLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskDifficultyLabel.backgroundColor = whiteColor
+            taskDifficultyLabel.layer.borderWidth = 2.0
+            taskDifficultyLabel.layer.borderColor = tasksColor.CGColor
+            
+            //Complete or Delete Buttons
+            /*
+            let completeButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: 0, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            completeButton.setTitle("!", forState: .Normal)
+            completeButton.setTitleColor(whiteColor, forState: .Normal)
+            completeButton.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            //completeButton.layer.cornerRadius = 10.0
+            completeButton.addTarget(self, action: "completeButtonTapped:", forControlEvents: .TouchUpInside)
+            completeButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            completeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let deleteButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            deleteButton.setTitle("X", forState: .Normal)
+            deleteButton.setTitleColor(whiteColor, forState: .Normal)
+            deleteButton.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            //deleteButton.layer.cornerRadius = 10.0
+            deleteButton.addTarget(self, action: "deleteButtonTapped:", forControlEvents: .TouchUpInside)
+            deleteButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            deleteButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let buttonDivider = UIView(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2 - 2, width: CGFloat(taskCard.frame.width * 0.15), height: 4))
+            buttonDivider.backgroundColor = tasksColor
+            */
+            taskCard.addSubview(taskNameLabel)
+            taskCard.addSubview(taskExpLabel)
+            taskCard.addSubview(taskDifficultyLabel)
+            //taskCard.addSubview(completeButton)
+            //taskCard.addSubview(deleteButton)
+            //taskCard.addSubview(buttonDivider)
+            
+            row++
+        }
+        //Number of tasks = row
+        tasksCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: CGFloat(row * 76) + 8)
+        //Display Completed Tasks
+        row = 0
+        for task in completedTasks {
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as Task)
+            taskCard.backgroundColor = tasksColor
+            tasksCompletedContainer.addSubview(taskCard)
+            let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
+            taskNameLabel.text = taskCard.task.taskName
+            taskNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskNameLabel.backgroundColor = whiteColor
+            taskNameLabel.layer.borderWidth = 2.0
+            taskNameLabel.layer.borderColor = tasksColor.CGColor
+            let taskExpLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskExpLabel.text = "Exp: \(taskCard.task.exp)"
+            taskExpLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskExpLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskExpLabel.backgroundColor = whiteColor
+            taskExpLabel.layer.borderWidth = 2.0
+            taskExpLabel.layer.borderColor = tasksColor.CGColor
+            let taskDifficultyLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.525), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskDifficultyLabel.text = "Diff: \(taskCard.task.difficulty)"
+            taskDifficultyLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskDifficultyLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskDifficultyLabel.backgroundColor = whiteColor
+            taskDifficultyLabel.layer.borderWidth = 2.0
+            taskDifficultyLabel.layer.borderColor = tasksColor.CGColor
+            
+            //Complete or Delete Buttons
+            /*
+            let completeButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: 0, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            completeButton.setTitle("!", forState: .Normal)
+            completeButton.setTitleColor(whiteColor, forState: .Normal)
+            completeButton.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            //completeButton.layer.cornerRadius = 10.0
+            completeButton.addTarget(self, action: "completeButtonTapped:", forControlEvents: .TouchUpInside)
+            completeButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            completeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let deleteButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            deleteButton.setTitle("X", forState: .Normal)
+            deleteButton.setTitleColor(whiteColor, forState: .Normal)
+            deleteButton.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            //deleteButton.layer.cornerRadius = 10.0
+            deleteButton.addTarget(self, action: "deleteButtonTapped:", forControlEvents: .TouchUpInside)
+            deleteButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            deleteButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let buttonDivider = UIView(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2 - 2, width: CGFloat(taskCard.frame.width * 0.15), height: 4))
+            buttonDivider.backgroundColor = tasksColor
+            */
+            taskCard.addSubview(taskNameLabel)
+            taskCard.addSubview(taskExpLabel)
+            taskCard.addSubview(taskDifficultyLabel)
+            //taskCard.addSubview(completeButton)
+            //taskCard.addSubview(deleteButton)
+            //taskCard.addSubview(buttonDivider)
+            
+            row++
+        }
+        //Number of tasks = row
+        tasksCompletedContainer.contentSize = CGSize(width: tasksCompletedContainer.frame.width, height: CGFloat(row * 76) + 8)
+        
+        
+        
+        ///////////////////     GOALS      ////////////////////
+        //Refresh subviews
+        for view in goalsCurrentContainer.subviews {
+            view.removeFromSuperview()
+        }
+        for view in goalsCompletedContainer.subviews {
+            view.removeFromSuperview()
+        }
+        currentGoals = NSMutableArray(array: user.goals.allObjects)
+        completedGoals = NSMutableArray()
+        for goal in currentGoals {
+            if (goal as Goal).completed == 1 {
+                completedGoals.addObject(goal)
+                currentGoals.removeObject(goal)
+            }
+        }
+        
+        row = 0
+        for goal in currentGoals {
+            let goalCard = GoalCard(frame: CGRect(x: 4, y: CGFloat(row * 136) + 8, width: goalsCurrentContainer.frame.width - 8, height: 128), goal: goal as Goal)
+            
+        }
+        
+        ///////////////////////////////////////////////////////
+        
+        //Set Current Tasks as Selected
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = tasksColor
+        tasksSelectedButton = tasksCurrent
+        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+        //Set Current Goals as Selected
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = goalsColor
+        goalsSelectedButton = goalsCurrent
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(goalsColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = whiteColor
+        goalsContainer.bringSubviewToFront(goalsCurrentContainer)
+        //Set Current Achievements as Selected
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = achievementsColor
+        achievementsSelectedButton = achievementsCurrent
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(achievementsColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = whiteColor
+        achievementsContainer.bringSubviewToFront(achievementsCurrentContainer)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -962,6 +1359,7 @@ class HomeViewController : UIViewController {
         })
         
         //Set Tasks Back
+        /*
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
         tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = tasksColor
@@ -970,6 +1368,7 @@ class HomeViewController : UIViewController {
         tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = whiteColor
         tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+        */
         
     }
     func tasksTabTapped() {
@@ -983,7 +1382,7 @@ class HomeViewController : UIViewController {
             }, completion: nil)
         })
         
-        
+        /*
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
         tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = tasksColor
@@ -991,6 +1390,7 @@ class HomeViewController : UIViewController {
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
         tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = whiteColor
+        */
         mainContainerView.bringSubviewToFront(tasksContainer)
     }
     func goalsTabTapped() {
@@ -1007,7 +1407,8 @@ class HomeViewController : UIViewController {
         })
         
         
-        //Set Tasks Back
+        //Set Goals Back
+        /*
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
         tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = tasksColor
@@ -1016,6 +1417,7 @@ class HomeViewController : UIViewController {
         tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = whiteColor
         tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+        */
     }
     func achievementsTabTapped() {
         mainContainerView.bringSubviewToFront(achievementsContainer)
@@ -1031,6 +1433,7 @@ class HomeViewController : UIViewController {
         })
         
         //Set Tasks Back
+        /*
         tasksSelectedButton.layer.borderColor = whiteColor.CGColor
         tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = tasksColor
@@ -1039,6 +1442,7 @@ class HomeViewController : UIViewController {
         tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
         tasksSelectedButton.backgroundColor = whiteColor
         tasksContainer.bringSubviewToFront(tasksCurrentContainer)
+        */
     }
     
     //Task Container Buttons
@@ -1082,4 +1486,90 @@ class HomeViewController : UIViewController {
         tasksSelectedButton.backgroundColor = whiteColor
         tasksContainer.bringSubviewToFront(tasksCompletedContainer)
     }
+    
+    //Goal Container Buttons
+    func goalsCurrentTapped() {
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = goalsColor
+        goalsSelectedButton = goalsCurrent
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(goalsColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = whiteColor
+        goalsContainer.bringSubviewToFront(goalsCurrentContainer)
+    }
+    func goalsSortTapped() {
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = goalsColor
+        goalsSelectedButton = goalsSort
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(goalsColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = whiteColor
+        goalsContainer.bringSubviewToFront(goalsSortContainer)
+    }
+    func goalsSearchTapped() {
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = goalsColor
+        goalsSelectedButton = goalsSearch
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(goalsColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = whiteColor
+        goalsContainer.bringSubviewToFront(goalsSearchContainer)
+    }
+    func goalsCompletedTapped() {
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = goalsColor
+        goalsSelectedButton = goalsCompleted
+        goalsSelectedButton.layer.borderColor = whiteColor.CGColor
+        goalsSelectedButton.setTitleColor(goalsColor, forState: .Normal)
+        goalsSelectedButton.backgroundColor = whiteColor
+        goalsContainer.bringSubviewToFront(goalsCompletedContainer)
+    }
+    
+    //Achievement Container Buttons
+    func achievementsCurrentTapped() {
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = achievementsColor
+        achievementsSelectedButton = achievementsCurrent
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(achievementsColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = whiteColor
+        achievementsContainer.bringSubviewToFront(achievementsCurrentContainer)
+    }
+    func achievementsSortTapped() {
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = achievementsColor
+        achievementsSelectedButton = achievementsSort
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(achievementsColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = whiteColor
+        achievementsContainer.bringSubviewToFront(achievementsSortContainer)
+    }
+    func achievementsSearchTapped() {
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = achievementsColor
+        achievementsSelectedButton = achievementsSearch
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(achievementsColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = whiteColor
+        achievementsContainer.bringSubviewToFront(achievementsSearchContainer)
+    }
+    func achievementsCompletedTapped() {
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(whiteColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = achievementsColor
+        achievementsSelectedButton = achievementsCompleted
+        achievementsSelectedButton.layer.borderColor = whiteColor.CGColor
+        achievementsSelectedButton.setTitleColor(achievementsColor, forState: .Normal)
+        achievementsSelectedButton.backgroundColor = whiteColor
+        achievementsContainer.bringSubviewToFront(achievementsCompletedContainer)
+    }
+
+
 }

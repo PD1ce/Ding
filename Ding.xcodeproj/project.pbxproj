@@ -31,13 +31,16 @@
 		4A5EB7441AC0A35300FD0709 /* CreateTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EB7431AC0A35300FD0709 /* CreateTaskViewController.swift */; };
 		4A5EB7461AC0AC3900FD0709 /* TaskPresentationAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EB7451AC0AC3900FD0709 /* TaskPresentationAnimationController.swift */; };
 		4A5EB7481AC0AC5300FD0709 /* TaskPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5EB7471AC0AC5300FD0709 /* TaskPresentationController.swift */; };
+		4A66C0A01ACDAB0E0076592D /* GoalCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66C09F1ACDAB0E0076592D /* GoalCard.swift */; };
+		4A66C0A21ACDAB730076592D /* AchievementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66C0A11ACDAB730076592D /* AchievementCard.swift */; };
+		4A66C0A41ACDBB4E0076592D /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66C0A31ACDBB4D0076592D /* Goal.swift */; };
 		4A711F951AC1E759003196F3 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A711F941AC1E758003196F3 /* Task.swift */; };
 		4A8959DD1ABA2A6000AB1812 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */; };
+		4ABE98AD1ACC9570007ADE7F /* LevelUpDemo2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4ABE98AC1ACC9570007ADE7F /* LevelUpDemo2.mp3 */; };
 		4AE7F9111AC5C7E300CDC470 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */; };
 		4AF658B21AB93583004D94D2 /* SkillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B11AB93583004D94D2 /* SkillsViewController.swift */; };
 		4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */; };
 		4AF658B61AB93A3C004D94D2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B51AB93A3C004D94D2 /* User.swift */; };
-		4AF658BA1AB93A7C004D94D2 /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B91AB93A7C004D94D2 /* Goal.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,13 +82,16 @@
 		4A5EB7431AC0A35300FD0709 /* CreateTaskViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTaskViewController.swift; sourceTree = "<group>"; };
 		4A5EB7451AC0AC3900FD0709 /* TaskPresentationAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskPresentationAnimationController.swift; sourceTree = "<group>"; };
 		4A5EB7471AC0AC5300FD0709 /* TaskPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskPresentationController.swift; sourceTree = "<group>"; };
+		4A66C09F1ACDAB0E0076592D /* GoalCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalCard.swift; sourceTree = "<group>"; };
+		4A66C0A11ACDAB730076592D /* AchievementCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementCard.swift; sourceTree = "<group>"; };
+		4A66C0A31ACDBB4D0076592D /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		4A711F941AC1E758003196F3 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		4ABE98AC1ACC9570007ADE7F /* LevelUpDemo2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LevelUpDemo2.mp3; sourceTree = "<group>"; };
 		4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4AF658B11AB93583004D94D2 /* SkillsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillsViewController.swift; sourceTree = "<group>"; };
 		4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSkillViewController.swift; sourceTree = "<group>"; };
 		4AF658B51AB93A3C004D94D2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		4AF658B91AB93A7C004D94D2 /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +184,7 @@
 		4A2605D11ACC833400F5E309 /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				4ABE98AC1ACC9570007ADE7F /* LevelUpDemo2.mp3 */,
 				4A2605D21ACC833400F5E309 /* click-login.wav */,
 			);
 			path = Sounds;
@@ -186,11 +193,13 @@
 		4A3D9B551AB88A8200C9CF1D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				4A66C0A11ACDAB730076592D /* AchievementCard.swift */,
+				4A41CFF31AC9C5BB008FB01F /* AniButton.swift */,
+				4A41CFF11AC9C369008FB01F /* AniLabel.swift */,
+				4A41CFEF1AC9B077008FB01F /* AniView.swift */,
+				4A66C09F1ACDAB0E0076592D /* GoalCard.swift */,
 				4A599A2D1AB920FB00BA8951 /* SkillCard.swift */,
 				4A3F33301AB9E3920047D9F0 /* TaskCard.swift */,
-				4A41CFEF1AC9B077008FB01F /* AniView.swift */,
-				4A41CFF11AC9C369008FB01F /* AniLabel.swift */,
-				4A41CFF31AC9C5BB008FB01F /* AniButton.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -203,11 +212,11 @@
 				4A5EB7431AC0A35300FD0709 /* CreateTaskViewController.swift */,
 				4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */,
 				4A14BEA01AB73DC400F4A659 /* LoginViewController.swift */,
+				4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */,
 				4AF658B11AB93583004D94D2 /* SkillsViewController.swift */,
 				4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */,
 				4A5EB7451AC0AC3900FD0709 /* TaskPresentationAnimationController.swift */,
 				4A5EB7471AC0AC5300FD0709 /* TaskPresentationController.swift */,
-				4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -216,7 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				4A599A421AB92A5D00BA8951 /* Achievement.swift */,
-				4AF658B91AB93A7C004D94D2 /* Goal.swift */,
+				4A66C0A31ACDBB4D0076592D /* Goal.swift */,
 				4A599A3E1AB92A2B00BA8951 /* LevelUpDate.swift */,
 				4A5EB7411AC073C900FD0709 /* Skill.swift */,
 				4A599A371AB9297D00BA8951 /* SkillGoal.swift */,
@@ -307,6 +316,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4ABE98AD1ACC9570007ADE7F /* LevelUpDemo2.mp3 in Resources */,
 				4A2605D41ACC833400F5E309 /* click-login.wav in Resources */,
 				4A14BEA41AB73DC400F4A659 /* Main.storyboard in Resources */,
 				4A14BEA91AB73DC400F4A659 /* LaunchScreen.xib in Resources */,
@@ -330,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A3D9B5A1AB89F6000C9CF1D /* CreateAccountViewController.swift in Sources */,
+				4A66C0A21ACDAB730076592D /* AchievementCard.swift in Sources */,
 				4A5EB7441AC0A35300FD0709 /* CreateTaskViewController.swift in Sources */,
 				4A599A381AB9297D00BA8951 /* SkillGoal.swift in Sources */,
 				4A711F951AC1E759003196F3 /* Task.swift in Sources */,
@@ -339,10 +350,11 @@
 				4AF658B61AB93A3C004D94D2 /* User.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
 				4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */,
+				4A66C0A01ACDAB0E0076592D /* GoalCard.swift in Sources */,
 				4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */,
 				4A41CFF41AC9C5BB008FB01F /* AniButton.swift in Sources */,
-				4AF658BA1AB93A7C004D94D2 /* Goal.swift in Sources */,
 				4A5EB7481AC0AC5300FD0709 /* TaskPresentationController.swift in Sources */,
+				4A66C0A41ACDBB4E0076592D /* Goal.swift in Sources */,
 				4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */,
 				4A13A62C1AB75A40001B30B1 /* HomeViewController.swift in Sources */,
 				4A41CFF01AC9B077008FB01F /* AniView.swift in Sources */,
