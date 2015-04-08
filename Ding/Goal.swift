@@ -2,7 +2,7 @@
 //  Goal.swift
 //  Ding
 //
-//  Created by Philip Deisinger on 3/17/15.
+//  Created by Philip Deisinger on 4/2/15.
 //  Copyright (c) 2015 PDice. All rights reserved.
 //
 
@@ -17,6 +17,7 @@ class Goal: NSManagedObject {
     @NSManaged var goalName: String
     @NSManaged var id: NSNumber
     @NSManaged var startDate: NSDate
+    @NSManaged var completed: NSNumber
     @NSManaged var skillGoals: NSSet
     @NSManaged var taskGoals: NSSet
     @NSManaged var user: Ding.User
