@@ -1,0 +1,49 @@
+[
+ {
+    "schemeName": "default",
+    "schemeId": 0,
+    "bgRed": 0.9,
+    "bgGreen": 0.9,
+    "bgBlue": 0.9,
+    "homeRed": 1.0,
+    "homeGreen": 0.65,
+    "homeBlue": 0.1,
+    "skillsRed": 0.2,
+    "skillsGreen": 1.0,
+    "skillsBlue": 0.8,
+    "tasksRed": 0.2,
+    "tasksGreen": 0.8,
+    "tasksBlue": 1.0,
+    "goalsRed": 0.2,
+    "goalsGreen": 0.4,
+    "goalsBlue": 1.0,
+    "achievementsRed": 0.4,
+    "achievementsGreen": 0.2,
+    "achievementsBlue": 1.0
+ },
+ {
+    "schemeName": "custom1",
+    "schemeId": 1,
+    "bgRed": 0.9,
+    "bgGreen": 0.9,
+    "bgBlue": 0.9,
+    "homeRed": 1.0,
+    "homeGreen": 0.65,
+    "homeBlue": 0.1,
+    "skillsRed": 1.0,
+    "skillsGreen": 0.467,
+    "skillsBlue": 0.2,
+    "tasksRed": 1.0,
+    "tasksGreen": 0.2,
+    "tasksBlue": 0.333,
+    "goalsRed": 1.0,
+    "goalsGreen": 0.2,
+    "goalsBlue": 0.733,
+    "achievementsRed": 0.867,
+    "achievementsGreen": 0.2,
+    "achievementsBlue": 1.0
+ },
+
+]
+
+

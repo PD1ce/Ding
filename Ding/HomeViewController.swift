@@ -33,6 +33,10 @@ class HomeViewController : UIViewController {
     var optionsButton: AniButton!
     
     var optionsView: AniView!
+    var optionsColorSchemeLabel: AniLabel!
+    var optionsColorSchemeScrollView: UIScrollView!
+    var optionsVoicePackLabel: AniLabel!
+    var optionsVoicePackScrollView: UIScrollView!
     
     var skillsTab: AniButton!
     var tasksTab: AniButton!
@@ -89,12 +93,23 @@ class HomeViewController : UIViewController {
     
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
     let blackColor = UIColor(white: 0.0, alpha: 1.0)
+    /*
     let goldColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
-    //let skillsColor = UIColor(red: 51/255, green: 255/255, blue: 204/255, alpha: 1.0)
+    let skillsColor = UIColor(red: 51/255, green: 255/255, blue: 204/255, alpha: 1.0)
     let skillsColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
     let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
     let goalsColor = UIColor(red: 51/255, green: 102/255, blue: 255/255, alpha: 1.0)
     let achievementsColor = UIColor(red: 102/255, green: 51/255, blue: 255/255, alpha: 1.0)
+    */
+    
+    var goldColor: UIColor!
+    var skillsColor: UIColor!
+    var tasksColor: UIColor!
+    var goalsColor: UIColor!
+    var achievementsColor: UIColor!
+    
+    
+    var colorSchemes: NSMutableArray!
     
     
     override func viewDidLoad() {
@@ -107,6 +122,13 @@ class HomeViewController : UIViewController {
         //
         
         
+        //////////// Color Scheme ///////////////
+        var colorSchemeSelection = user.colorScheme as Int
+        goldColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).home
+        skillsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).skills
+        tasksColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).tasks
+        goalsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).goals
+        achievementsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).achievements
         
         /*************************************************************/
         
@@ -147,13 +169,80 @@ class HomeViewController : UIViewController {
         headerView.addSubview(optionsButton)
         view.addSubview(headerView)
         
-        ////  Options View ////
+        ////////////////////     Options View     ////////////////////////////
         optionsView = AniView(frame: CGRect(x: 8, y: 20 + headerView.frame.height, width: view.frame.width - 16, height: view.frame.height - 20 - headerView.frame.height - 8))
         optionsView.layer.borderColor = goldColor.CGColor
         optionsView.layer.borderWidth = 5.0
         optionsView.backgroundColor = whiteColor
         //optionsView.alpha = 0.0
+        
+        optionsColorSchemeLabel = AniLabel(frame: CGRect(x: 5, y: 5, width: optionsView.frame.width - 10, height: 50))
+        optionsColorSchemeLabel.text = "Color Scheme"
+        optionsColorSchemeLabel.font = UIFont(name: "Helvetica", size: 24.0)
+        optionsColorSchemeLabel.textAlignment = NSTextAlignment.Center
+        optionsColorSchemeLabel.textColor = goldColor
+        optionsColorSchemeLabel.alpha = 0.0
+        //Clicking a Scheme will drop down the scroll view to reveal the colors
+        optionsColorSchemeScrollView = UIScrollView(frame: CGRect(x: 20, y: 5 + optionsColorSchemeLabel.frame.height, width: optionsView.frame.width - 40, height: 80))
+        optionsColorSchemeScrollView.layer.borderWidth = 3.0
+        optionsColorSchemeScrollView.layer.cornerRadius = 10.0
+        optionsColorSchemeScrollView.layer.borderColor = goldColor.CGColor
+        optionsColorSchemeScrollView.contentSize = CGSize(width: 750, height: 80) // Will adjust with amount of schemes
+        optionsColorSchemeScrollView.alpha = 0.0
+        var pos = 0
+        for scheme in colorSchemes {
+            //Should be custom uiviews with scheme
+            let schemeImageView = ColorSchemeView(frame: CGRect(x: 10 + (pos * 70), y: 10, width: 60, height: 60), num: pos)
+            schemeImageView.backgroundColor = (scheme as ColorScheme).skills
+            schemeImageView.layer.cornerRadius = 10.0
+            let schemeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: schemeImageView.frame.width, height: schemeImageView.frame.height))
+            schemeLabel.text = "\(pos + 1)"
+            schemeLabel.textAlignment = NSTextAlignment.Center
+            schemeLabel.textColor = whiteColor
+            schemeLabel.font = UIFont(name: "Helvetica", size: 36.0)
+            let schemeGR = UITapGestureRecognizer(target: self, action: "colorSchemeTapped:")
+            schemeImageView.addGestureRecognizer(schemeGR)
+            schemeImageView.addSubview(schemeLabel)
+            optionsColorSchemeScrollView.addSubview(schemeImageView)
+            pos++
+        }
+        
+        optionsVoicePackLabel = AniLabel(frame: CGRect(x: 5, y: 5 + optionsColorSchemeLabel.frame.height + 5 + optionsColorSchemeScrollView.frame.height + 5, width: optionsView.frame.width - 10, height: 50))
+        optionsVoicePackLabel.text = "Voice Pack"
+        optionsVoicePackLabel.font = UIFont(name: "Helvetica", size: 24.0)
+        optionsVoicePackLabel.textAlignment = NSTextAlignment.Center
+        optionsVoicePackLabel.textColor = goldColor
+        optionsVoicePackLabel.alpha = 0.0
+        //Clicking a Scheme will drop down the scroll view to reveal the colors
+        optionsVoicePackScrollView = UIScrollView(frame: CGRect(x: 20, y: 5 + optionsColorSchemeLabel.frame.height + 5 + optionsColorSchemeScrollView.frame.height + 5 + optionsVoicePackLabel.frame.height, width: optionsView.frame.width - 40, height: 80))
+        optionsVoicePackScrollView.layer.borderWidth = 3.0
+        optionsVoicePackScrollView.layer.cornerRadius = 10.0
+        optionsVoicePackScrollView.layer.borderColor = goldColor.CGColor
+        optionsVoicePackScrollView.contentSize = CGSize(width: 750, height: 80) // Will adjust with amount of schemes
+        optionsVoicePackScrollView.alpha = 0.0
+        pos = 0
+        /*
+        for voice in voicePacks {
+            //Should be custom uiviews with scheme
+            let schemeImageView = UIView(frame: CGRect(x: 10 + (pos * 70), y: 10, width: 60, height: 60))
+            schemeImageView.backgroundColor = (scheme as ColorScheme).skills
+            schemeImageView.layer.cornerRadius = 10.0
+            let schemeGR = UITapGestureRecognizer(target: self, action: "colorSchemeTapped:")
+            schemeImageView.addGestureRecognizer(schemeGR)
+            optionsColorSchemeScrollView.addSubview(schemeImageView)
+            pos++
+        }
+        */
+
+        
+        optionsView.addSubview(optionsColorSchemeLabel)
+        optionsView.addSubview(optionsColorSchemeScrollView)
+        optionsView.addSubview(optionsVoicePackLabel)
+        optionsView.addSubview(optionsVoicePackScrollView)
         view.addSubview(optionsView)
+        
+        ////////////////////////////////////////////////////////////////////////
+        
         
         ////  Container Items  ////
         userContainerView = AniView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
@@ -581,7 +670,7 @@ class HomeViewController : UIViewController {
             row = position / 2
             if columnOne { // First Column
                 //Add Gesture Recognizers to tap and go to skill
-                let skillCard = SkillCard(frame: CGRect(x: 8, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill)
+                let skillCard = SkillCard(frame: CGRect(x: 8, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill, color: skillsColor)
                 let tapGR = UITapGestureRecognizer(target: self, action: "skillCardTapped:")
                 skillCard.addGestureRecognizer(tapGR)
                 
@@ -649,7 +738,7 @@ class HomeViewController : UIViewController {
                 skillCard.addSubview(expBarContainer)
                 skillsContainer.addSubview(skillCard)
             } else { // Second Column
-                let skillCard = SkillCard(frame: CGRect(x: skillsContainer.frame.width / 2 + 4, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill)
+                let skillCard = SkillCard(frame: CGRect(x: skillsContainer.frame.width / 2 + 4, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill, color: skillsColor)
                 let tapGR = UITapGestureRecognizer(target: self, action: "skillCardTapped:")
                 skillCard.addGestureRecognizer(tapGR)
                 
@@ -933,8 +1022,25 @@ class HomeViewController : UIViewController {
         row = 0
         for goal in currentGoals {
             let goalCard = GoalCard(frame: CGRect(x: 4, y: CGFloat(row * 136) + 8, width: goalsCurrentContainer.frame.width - 8, height: 128), goal: goal as Goal)
-            
+            row++
         }
+        goalsCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: CGFloat(row * 136) + 8)
+        
+        //// New Goal Card /////
+        let newGoalCard = GoalCard(frame: CGRect(x: 4, y: CGFloat(row * 136) + 8, width: goalsCurrentContainer.frame.width - 8, height: 128))
+        newGoalCard.backgroundColor = whiteColor
+        newGoalCard.layer.borderWidth = 2.0
+        newGoalCard.layer.borderColor = goalsColor.CGColor
+        let newGoalLabel = UILabel(frame: CGRect(x: 4, y: 4, width: newGoalCard.frame.width - 8, height: newGoalCard.frame.height - 8))
+        newGoalLabel.text = "New!"
+        newGoalLabel.font = UIFont(name: "Helvetica", size: 36.0)
+        newGoalLabel.textColor = blackColor
+        newGoalLabel.textAlignment = NSTextAlignment.Center
+        newGoalCard.addSubview(newGoalLabel)
+        goalsCurrentContainer.addSubview(newGoalCard)
+        
+        
+        
         
         ///////////////////////////////////////////////////////
         
@@ -1079,6 +1185,8 @@ class HomeViewController : UIViewController {
     //PDAlert: Bugged, rotates twice the same way at first
     func optionsButtonTapped() {
         if let optionBool = optionsAreOpen {
+            
+            //Options are Now Visible
             if !optionBool {
                 println("OptionAreOpen : \(optionsAreOpen)")
                 println("Spin 90 Deg")
@@ -1088,9 +1196,44 @@ class HomeViewController : UIViewController {
                     self.optionsView.frame = self.optionsView.originalFrame
                     //self.optionsView.alpha = 1.0
                 }, completion: nil)
-            } else {
+                //ColorScheme Label
+                UIView.animateWithDuration(0.4, delay: 0.1, options: .CurveEaseOut, animations: {
+                    self.optionsColorSchemeLabel.alpha = 1.0
+                }, completion: nil)
+                //ColorScheme Scroll View
+                UIView.animateWithDuration(0.4, delay: 0.2, options: .CurveEaseOut, animations: {
+                    self.optionsColorSchemeScrollView.alpha = 1.0
+                }, completion: nil)
+                //VoicePack Label
+                UIView.animateWithDuration(0.4, delay: 0.3, options: .CurveEaseOut, animations: {
+                    self.optionsVoicePackLabel.alpha = 1.0
+                }, completion: nil)
+                //VoicePack Scroll View
+                UIView.animateWithDuration(0.4, delay: 0.4, options: .CurveEaseOut, animations: {
+                    self.optionsVoicePackScrollView.alpha = 1.0
+                }, completion: nil)
+
+            } else { // Options are now hidden
                 println("OptionAreOpen : \(optionsAreOpen)")
                 println("Spin -90 Deg")
+                //VoicePack Scroll View
+                UIView.animateWithDuration(0.4, delay: 0.1, options: .CurveEaseOut, animations: {
+                    self.optionsVoicePackScrollView.alpha = 0.0
+                }, completion: nil)
+                //VoicePack Label
+                UIView.animateWithDuration(0.4, delay: 0.2, options: .CurveEaseOut, animations: {
+                    self.optionsVoicePackLabel.alpha = 0.0
+                }, completion: nil)
+                //ColorScheme Scroll View
+                UIView.animateWithDuration(0.4, delay: 0.3, options: .CurveEaseOut, animations: {
+                    self.optionsColorSchemeScrollView.alpha = 0.0
+                    }, completion: nil)
+                //ColorScheme Label
+                UIView.animateWithDuration(0.4, delay: 0.4, options: .CurveEaseOut, animations: {
+                    self.optionsColorSchemeLabel.alpha = 0.0
+                }, completion: nil)
+                
+                
                 UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
                     self.optionsButton.transform = CGAffineTransformMakeRotation(90.0)
                     self.optionsView.frame = CGRect(x: 8, y: 20 + self.headerView.frame.height, width: self.view.frame.width - 16, height: 0)
@@ -1102,6 +1245,20 @@ class HomeViewController : UIViewController {
         optionsAreOpen = !optionsAreOpen
 
         
+    }
+    
+    func colorSchemeTapped(gr: UITapGestureRecognizer) {
+        let schemeNum = (gr.view! as ColorSchemeView).schemeNumber
+        user.colorScheme = schemeNum
+        skillsColor = (colorSchemes.objectAtIndex(schemeNum) as ColorScheme).skills
+        tasksColor = (colorSchemes.objectAtIndex(schemeNum) as ColorScheme).tasks
+        goalsColor = (colorSchemes.objectAtIndex(schemeNum) as ColorScheme).goals
+        achievementsColor = (colorSchemes.objectAtIndex(schemeNum) as ColorScheme).achievements
+        if saveContext() {
+            //Saved
+        } else {
+            println("Error Saving")
+        }
     }
     
     func skillCardTapped(gr: UITapGestureRecognizer) {
@@ -1197,14 +1354,43 @@ class HomeViewController : UIViewController {
         createSkillVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         transitionCameFrom = createSkillVC
         
+        let realOrigin = gr.view!.superview!.convertPoint(gr.view!.frame.origin, toView: nil)
+        let newSkillOverlay = UIView(frame: CGRect(x: realOrigin.x, y: realOrigin.y, width: gr.view!.frame.width, height: gr.view!.frame.height))
+        newSkillOverlay.backgroundColor = whiteColor
+        newSkillOverlay.layer.borderWidth = 3.0
+        newSkillOverlay.layer.borderColor = skillsColor.CGColor
+        self.view.addSubview(newSkillOverlay)
+        self.view.bringSubviewToFront(newSkillOverlay)
+        println("Skill Card Origin: \(gr.view!.frame.origin)")
+        println("realOrigin: \(realOrigin)")
+        UIView.animateWithDuration(0.1, delay: 0.0, options: .CurveLinear, animations: {
+            newSkillOverlay.frame = CGRectInset(newSkillOverlay.frame, 10, 10)
+            gr.view!.hidden = true
+        }, completion: {
+                (value: Bool) in
+                
+                UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+                    newSkillOverlay.frame = CGRect(x: 0, y: 20, width: self.view.frame.width, height: self.view.frame.height - 20)
+                    }, completion: {
+                        (value: Bool) in
+                        gr.view!.hidden = false
+                        //Test
+                        newSkillOverlay.frame = CGRect(x: realOrigin.x, y: realOrigin.y, width: gr.view!.frame.width, height: gr.view!.frame.height)
+                        self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                        self.presentViewController(createSkillVC, animated: false, completion: {
+                            newSkillOverlay.removeFromSuperview()
+                        })
+                })
+                
+        })
         
         //** Time to animate some shiiiiii **////
         
         
         
         
-        self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-        presentViewController(createSkillVC, animated: true, completion: nil)
+        
+        
     }
     
     //Go to ProfileVC After tapping User Image
@@ -1318,6 +1504,14 @@ class HomeViewController : UIViewController {
         })
 
     }
+    
+    /// Used After ColorScheme Change
+    func resetColors() {
+        
+    }
+    
+    
+    
     //Make a Reset function!!
     ////////////////////
     func resetView() {
@@ -1382,15 +1576,6 @@ class HomeViewController : UIViewController {
             }, completion: nil)
         })
         
-        /*
-        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
-        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
-        tasksSelectedButton.backgroundColor = tasksColor
-        tasksSelectedButton = tasksCurrent
-        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
-        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
-        tasksSelectedButton.backgroundColor = whiteColor
-        */
         mainContainerView.bringSubviewToFront(tasksContainer)
     }
     func goalsTabTapped() {
@@ -1405,19 +1590,6 @@ class HomeViewController : UIViewController {
                     self.goalsTab.frame = self.goalsTab.originalFrame
                     }, completion: nil)
         })
-        
-        
-        //Set Goals Back
-        /*
-        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
-        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
-        tasksSelectedButton.backgroundColor = tasksColor
-        tasksSelectedButton = tasksCurrent
-        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
-        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
-        tasksSelectedButton.backgroundColor = whiteColor
-        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
-        */
     }
     func achievementsTabTapped() {
         mainContainerView.bringSubviewToFront(achievementsContainer)
@@ -1431,18 +1603,6 @@ class HomeViewController : UIViewController {
                     self.achievementsTab.frame = self.achievementsTab.originalFrame
                     }, completion: nil)
         })
-        
-        //Set Tasks Back
-        /*
-        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
-        tasksSelectedButton.setTitleColor(whiteColor, forState: .Normal)
-        tasksSelectedButton.backgroundColor = tasksColor
-        tasksSelectedButton = tasksCurrent
-        tasksSelectedButton.layer.borderColor = whiteColor.CGColor
-        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
-        tasksSelectedButton.backgroundColor = whiteColor
-        tasksContainer.bringSubviewToFront(tasksCurrentContainer)
-        */
     }
     
     //Task Container Buttons
@@ -1571,5 +1731,16 @@ class HomeViewController : UIViewController {
         achievementsContainer.bringSubviewToFront(achievementsCompletedContainer)
     }
 
+    func saveContext() -> Bool {
+        let managedContext = user.managedObjectContext!
+        
+        var error: NSError?
+        if !managedContext.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+            return false
+        }
+        
+        return true
+    }
 
 }

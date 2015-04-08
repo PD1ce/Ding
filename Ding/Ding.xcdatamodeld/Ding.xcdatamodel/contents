@@ -63,6 +63,7 @@
         <relationship name="task" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Task" syncable="YES"/>
     </entity>
     <entity name="User" representedClassName="Ding.User" syncable="YES">
+        <attribute name="colorScheme" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="firstName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -72,6 +73,7 @@
         <attribute name="totalExp" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="totalLevel" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voicePack" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="achievements" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Achievement" inverseName="user" inverseEntity="Achievement" syncable="YES"/>
         <relationship name="goals" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Goal" inverseName="user" inverseEntity="Goal" syncable="YES"/>
         <relationship name="skills" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Skill" inverseName="user" inverseEntity="Skill" syncable="YES"/>
@@ -84,6 +86,6 @@
         <element name="SkillGoal" positionX="-54" positionY="81" width="128" height="88"/>
         <element name="Task" positionX="-36" positionY="9" width="128" height="195"/>
         <element name="TaskGoal" positionX="-45" positionY="90" width="128" height="88"/>
-        <element name="User" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="User" positionX="-63" positionY="-18" width="128" height="255"/>
     </elements>
 </model>

@@ -31,13 +31,45 @@ class LoginViewController: UIViewController {
     var loginButton: UIButton!
     var createAccountButton: UIButton!
     
+    var colorSchemes: NSMutableArray!
+    
     var audioPlayer = AVAudioPlayer()
     var clickSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("click-login", ofType: "wav")!)
     
     override func viewDidLoad() {
         super.viewDidLoad()
        
+        ///////////////////////    Color Schemes    /////////////////////////
+        colorSchemes = NSMutableArray()
+        let data = NSData(contentsOfFile: "/Users/Phil/Desktop/Swift/Ding/Ding/ColorSchemes.json")
+        let parsedObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments,error: nil)
+        let colorsArray = parsedObject as NSArray
+        for color in colorsArray {
+            var schemeName: String = ""; var schemeId: Int = 0; var bgRed: CGFloat = 0; var bgGreen: CGFloat = 0; var bgBlue: CGFloat = 0; var homeRed: CGFloat = 0; var homeGreen: CGFloat = 0; var homeBlue: CGFloat = 0; var skillsRed: CGFloat = 0; var skillsGreen: CGFloat = 0; var skillsBlue: CGFloat = 0; var tasksRed: CGFloat = 0; var tasksGreen: CGFloat = 0; var tasksBlue: CGFloat = 0; var goalsRed: CGFloat = 0; var goalsGreen: CGFloat = 0; var goalsBlue: CGFloat = 0; var achievementsRed: CGFloat = 0; var achievementsGreen: CGFloat = 0; var achievementsBlue: CGFloat = 0;
+            if let newSchemeName = color.valueForKey("schemeName") as? String { schemeName = newSchemeName }
+            if let newSchemeId = color.valueForKey("schemeId") as? Int { schemeId = newSchemeId }
+            if let newbgRed = color.valueForKey("bgRed") as? CGFloat { bgRed = newbgRed }
+            if let newbgGreen = color.valueForKey("bgGreen") as? CGFloat { bgGreen = newbgGreen }
+            if let newbgBlue = color.valueForKey("bgBlue") as? CGFloat { bgBlue = newbgBlue }
+            if let newhomeRed = color.valueForKey("homeRed") as? CGFloat { homeRed = newhomeRed }
+            if let newhomeGreen = color.valueForKey("homeGreen") as? CGFloat { homeGreen = newhomeGreen }
+            if let newhomeBlue = color.valueForKey("homeBlue") as? CGFloat { homeBlue = newhomeBlue }
+            if let newskillsRed = color.valueForKey("skillsRed") as? CGFloat { skillsRed = newskillsRed }
+            if let newskillsGreen = color.valueForKey("skillsGreen") as? CGFloat { skillsGreen = newskillsGreen }
+            if let newskillsBlue = color.valueForKey("skillsBlue") as? CGFloat { skillsBlue = newskillsBlue }
+            if let newtasksRed = color.valueForKey("tasksRed") as? CGFloat { tasksRed = newtasksRed }
+            if let newtasksGreen = color.valueForKey("tasksGreen") as? CGFloat { tasksGreen = newtasksGreen }
+            if let newtasksBlue = color.valueForKey("tasksBlue") as? CGFloat { tasksBlue = newtasksBlue }
+            if let newgoalsRed = color.valueForKey("goalsRed") as? CGFloat { goalsRed = newgoalsRed }
+            if let newgoalsGreen = color.valueForKey("goalsGreen") as? CGFloat { goalsGreen = newgoalsGreen }
+            if let newgoalsBlue = color.valueForKey("goalsBlue") as? CGFloat { goalsBlue = newgoalsBlue }
+            if let newachievementsRed = color.valueForKey("achievementsRed") as? CGFloat { achievementsRed = newachievementsRed }
+            if let newachievementsGreen = color.valueForKey("achievementsGreen") as? CGFloat { achievementsGreen = newachievementsGreen }
+            if let newachievementsBlue = color.valueForKey("achievementsBlue") as? CGFloat { achievementsBlue = newachievementsBlue }
+            colorSchemes.addObject(ColorScheme(schemeName: schemeName, schemeId: schemeId, bgRed: bgRed, bgGreen: bgGreen, bgBlue: bgBlue, homeRed: homeRed, homeGreen: homeGreen, homeBlue: homeBlue, skillsRed: skillsRed, skillsGreen: skillsGreen, skillsBlue: skillsBlue, tasksRed: tasksRed, tasksGreen: tasksGreen, tasksBlue: tasksBlue, goalsRed: goalsRed, goalsGreen: goalsGreen, goalsBlue: goalsBlue, achievementsRed: achievementsRed, achievementsGreen: achievementsGreen, achievementsBlue: achievementsBlue))
+        }
         
+
         //** Load up labels and fields **//
         //PDAlert: All of these need to be converted to dynamic frame
         usernameLabel = UILabel(frame: CGRect(x: 16, y: 126, width: 79, height: 21))
@@ -188,10 +220,14 @@ class LoginViewController: UIViewController {
                                 self.user = fetchedResults![0]
                                 let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as HomeViewController
                                 homeViewController.user = self.user
+                                homeViewController.colorSchemes = self.colorSchemes
                                 homeViewController.transitionCameFrom = self
+                                
                                 homeViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                                 self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                             
+                                
+                                
                                 /* The Fake Header view to animate */
                                 let headerView = UIView(frame: CGRect(x: 0, y: self.view.frame.height + 44, width: self.view.frame.width, height: 44))
                                 headerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)

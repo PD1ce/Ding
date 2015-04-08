@@ -35,12 +35,15 @@
 		4A66C0A21ACDAB730076592D /* AchievementCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66C0A11ACDAB730076592D /* AchievementCard.swift */; };
 		4A66C0A41ACDBB4E0076592D /* Goal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A66C0A31ACDBB4D0076592D /* Goal.swift */; };
 		4A711F951AC1E759003196F3 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A711F941AC1E758003196F3 /* Task.swift */; };
+		4A7B412F1AD474B90032095C /* ColorSchemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A7B412E1AD474B90032095C /* ColorSchemeView.swift */; };
 		4A8959DD1ABA2A6000AB1812 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */; };
 		4ABE98AD1ACC9570007ADE7F /* LevelUpDemo2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 4ABE98AC1ACC9570007ADE7F /* LevelUpDemo2.mp3 */; };
+		4AC6A27A1AD454B1000DF2C6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6A2791AD454B0000DF2C6 /* User.swift */; };
+		4AC6A27C1AD45519000DF2C6 /* ColorScheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC6A27B1AD45519000DF2C6 /* ColorScheme.swift */; };
+		4AC6A27E1AD45791000DF2C6 /* ColorSchemes.json in Resources */ = {isa = PBXBuildFile; fileRef = 4AC6A27D1AD45791000DF2C6 /* ColorSchemes.json */; };
 		4AE7F9111AC5C7E300CDC470 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */; };
 		4AF658B21AB93583004D94D2 /* SkillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B11AB93583004D94D2 /* SkillsViewController.swift */; };
 		4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */; };
-		4AF658B61AB93A3C004D94D2 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B51AB93A3C004D94D2 /* User.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,12 +89,15 @@
 		4A66C0A11ACDAB730076592D /* AchievementCard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AchievementCard.swift; sourceTree = "<group>"; };
 		4A66C0A31ACDBB4D0076592D /* Goal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Goal.swift; sourceTree = "<group>"; };
 		4A711F941AC1E758003196F3 /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		4A7B412E1AD474B90032095C /* ColorSchemeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorSchemeView.swift; sourceTree = "<group>"; };
 		4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		4ABE98AC1ACC9570007ADE7F /* LevelUpDemo2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = LevelUpDemo2.mp3; sourceTree = "<group>"; };
+		4AC6A2791AD454B0000DF2C6 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		4AC6A27B1AD45519000DF2C6 /* ColorScheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorScheme.swift; sourceTree = "<group>"; };
+		4AC6A27D1AD45791000DF2C6 /* ColorSchemes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ColorSchemes.json; sourceTree = "<group>"; };
 		4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4AF658B11AB93583004D94D2 /* SkillsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillsViewController.swift; sourceTree = "<group>"; };
 		4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSkillViewController.swift; sourceTree = "<group>"; };
-		4AF658B51AB93A3C004D94D2 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				4A14BE9A1AB73DC400F4A659 /* Info.plist */,
+				4AC6A27D1AD45791000DF2C6 /* ColorSchemes.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -200,6 +207,8 @@
 				4A66C09F1ACDAB0E0076592D /* GoalCard.swift */,
 				4A599A2D1AB920FB00BA8951 /* SkillCard.swift */,
 				4A3F33301AB9E3920047D9F0 /* TaskCard.swift */,
+				4AC6A27B1AD45519000DF2C6 /* ColorScheme.swift */,
+				4A7B412E1AD474B90032095C /* ColorSchemeView.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -231,7 +240,7 @@
 				4A599A371AB9297D00BA8951 /* SkillGoal.swift */,
 				4A711F941AC1E758003196F3 /* Task.swift */,
 				4A599A331AB9293100BA8951 /* TaskGoal.swift */,
-				4AF658B51AB93A3C004D94D2 /* User.swift */,
+				4AC6A2791AD454B0000DF2C6 /* User.swift */,
 			);
 			name = ManagedObjects;
 			sourceTree = "<group>";
@@ -321,6 +330,7 @@
 				4A14BEA41AB73DC400F4A659 /* Main.storyboard in Resources */,
 				4A14BEA91AB73DC400F4A659 /* LaunchScreen.xib in Resources */,
 				4A14BEA61AB73DC400F4A659 /* Images.xcassets in Resources */,
+				4AC6A27E1AD45791000DF2C6 /* ColorSchemes.json in Resources */,
 				4A2605D31ACC833400F5E309 /* options-gear.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -347,14 +357,15 @@
 				4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */,
 				4A8959DD1ABA2A6000AB1812 /* SplashViewController.swift in Sources */,
 				4AE7F9111AC5C7E300CDC470 /* ProfileViewController.swift in Sources */,
-				4AF658B61AB93A3C004D94D2 /* User.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
 				4A3F33311AB9E3920047D9F0 /* TaskCard.swift in Sources */,
 				4A66C0A01ACDAB0E0076592D /* GoalCard.swift in Sources */,
 				4A599A3F1AB92A2B00BA8951 /* LevelUpDate.swift in Sources */,
+				4A7B412F1AD474B90032095C /* ColorSchemeView.swift in Sources */,
 				4A41CFF41AC9C5BB008FB01F /* AniButton.swift in Sources */,
 				4A5EB7481AC0AC5300FD0709 /* TaskPresentationController.swift in Sources */,
 				4A66C0A41ACDBB4E0076592D /* Goal.swift in Sources */,
+				4AC6A27A1AD454B1000DF2C6 /* User.swift in Sources */,
 				4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */,
 				4A13A62C1AB75A40001B30B1 /* HomeViewController.swift in Sources */,
 				4A41CFF01AC9B077008FB01F /* AniView.swift in Sources */,
@@ -363,6 +374,7 @@
 				4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */,
 				4A14BE9F1AB73DC400F4A659 /* Ding.xcdatamodeld in Sources */,
 				4A5EB7421AC073C900FD0709 /* Skill.swift in Sources */,
+				4AC6A27C1AD45519000DF2C6 /* ColorScheme.swift in Sources */,
 				4AF658B21AB93583004D94D2 /* SkillsViewController.swift in Sources */,
 				4A599A341AB9293100BA8951 /* TaskGoal.swift in Sources */,
 				4A5EB7461AC0AC3900FD0709 /* TaskPresentationAnimationController.swift in Sources */,
