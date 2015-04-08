@@ -23,11 +23,11 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
     var userContainerView: UIView!
     var userImageView: UIImageView!
     
-    var headerView: UIView!
+    var headerView: AniView!
     var editButton: UIButton!
     var backButton: UIButton!
     
-    var userNameLabel: UILabel!
+    var userNameLabel: AniLabel!
     var totalLevelLabel: UILabel!
     var highestSkillLabel: UILabel!
     
@@ -42,7 +42,7 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
         userImage = parentVC.userImage
         editable = false
         
-        headerView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
+        headerView = AniView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
         headerView.backgroundColor = goldColor
         backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 44))
         backButton.setTitle("< Back", forState: .Normal)
@@ -82,7 +82,7 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
         
         let newHeight = userContainerView.frame.height * 1.5
         let divisionHeight = userContainerView.frame.height / 12
-        userNameLabel = UILabel(frame: CGRect(x: view.frame.width, y: divisionHeight, width: userContainerView.frame.width - userImageView.frame.width - 24, height: newHeight / 4))
+        userNameLabel = AniLabel(frame: CGRect(x: view.frame.width, y: divisionHeight, width: userContainerView.frame.width - userImageView.frame.width - 24, height: newHeight / 4))
         userNameLabel.text = "\(user.userName)"
         userNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
         userNameLabel.textAlignment = NSTextAlignment.Center
@@ -210,6 +210,26 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
     // Need to tell the parent whether or not to animate profile picture
     func backButtonTapped() {
         
+        // Fake label behind the moving one
+        let headerView = UIView(frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: 44))
+        headerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        let logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+        logoutButton.setTitle("Logout", forState: .Normal)
+        //logoutButton.addTarget(self, action: "logoutButtonTapped", forControlEvents: .TouchUpInside)
+        logoutButton.setTitleColor(UIColor(white: 0.0, alpha: 1.0), forState: .Normal)
+        let headerLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
+        headerLabel.font = UIFont(name: "Helvetica", size: 24.0)
+        headerLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
+        headerLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+        headerLabel.text = "Home"
+        headerView.addSubview(headerLabel)
+        headerView.addSubview(logoutButton)
+        headerView.layer.zPosition = -1
+        let optionsButton = AniButton(frame: CGRect(x: headerView.frame.width - 48, y: 6, width: 32, height: 32))
+        optionsButton.setImage(UIImage(named: "options-gear"), forState: .Normal)
+        headerView.addSubview(optionsButton)
+        self.view.addSubview(headerView)
+        
         // Send the labels back to their proper spots
         let newHeight = userContainerView.frame.height
         let divisionHeight = userContainerView.frame.height / 12
@@ -227,18 +247,30 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
                 (value: Bool) in
                 
         })
+        
         UIView.animateWithDuration(0.2, delay: 0.2, options: UIViewAnimationOptions.CurveLinear, animations: {
             self.highestSkillLabel.frame = CGRect(x: self.view.frame.width, y: self.self.highestSkillLabel.frame.minY, width: self.userContainerView.frame.width - self.userImageView.frame.width - 24, height: newHeight / 4)
             }, completion: {
                 (value: Bool) in
                 //Animations finished, allow interaction
+                
+                
                 self.view.userInteractionEnabled = true
                 UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
                     self.userContainerView.frame = CGRect(x: 8, y: 72, width: 112, height: 112)
                     self.userImageView.frame = CGRect(x: 8, y: 8, width: self.userContainerView.frame.width - 16, height: 96)
                     }, completion: {
                         (value: Bool) in
-                        self.dismissViewControllerAnimated(false, completion: nil)
+                        UIView.animateWithDuration(0.6, delay: 0.0, options: .CurveEaseInOut, animations: {
+                             self.headerView.frame.origin = CGPoint(x: 0, y: self.view.frame.height + 8)
+                            }, completion: {
+                                (value: Bool) in
+                                self.dismissViewControllerAnimated(false, completion: {
+                                    headerView.removeFromSuperview()
+                                })
+                        })
+                       
+                        
                 })
                 
         })

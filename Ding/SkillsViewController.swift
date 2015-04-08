@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CoreData
+import AVFoundation
 
 class SkillsViewController : UIViewController {
     
@@ -29,13 +30,21 @@ class SkillsViewController : UIViewController {
     var totalExpBeforeLevel: Int!
     var oldSkillLevel: Int!
     
-    var headerView: UIView!
-    var expBarContainer: UIView!
+    var particleZero: Int! // Used for particle effects, init in Complete Confirmed
+    var taskCardCenter: CGPoint! // Used for particles
     
-    var skillNameLabel: UILabel! // These names should be changed
-    var totalLevelLabel: UILabel!
+    var headerView: AniView!
+    var expBarContainer: AniView!
+    var backButton: UIButton!
+    var headerLabel: UILabel!
     
-    var tasksContainer: UIView!
+    var skillContainerView: AniView!
+    var skillImageView: UIImageView!
+    
+    var skillNameLabel: AniLabel! // These names should be changed
+    var totalLevelLabel: AniLabel!
+    
+    var tasksContainer: AniView!
     var tasksCurrentContainer: UIScrollView!
     var tasksCompletedContainer: UIScrollView!
     
@@ -55,6 +64,9 @@ class SkillsViewController : UIViewController {
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
     let blackColor = UIColor(white: 0.0, alpha: 1.0)
     let goldColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
+    
+    var audioPlayer = AVAudioPlayer()
+    var levelUpSound = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("LevelUpDemo2", ofType: "mp3")!)
     
     
     // PDAlert: Skills needs COUNTERS (miles ran, for instance)
@@ -77,13 +89,13 @@ class SkillsViewController : UIViewController {
         detailsContainer = UIView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: 112))
         detailsContainer.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
         
-        headerView = UIView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
+        headerView = AniView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
         headerView.backgroundColor = skillsColor
-        let backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 44))
+        backButton = UIButton(frame: CGRect(x: 0, y: 0, width: 64, height: 44))
         backButton.setTitle("< Back", forState: .Normal)
         backButton.setTitleColor(whiteColor, forState: .Normal)
         backButton.addTarget(self, action: "backButtonTapped", forControlEvents: .TouchUpInside)
-        let headerLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
+        headerLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
         headerLabel.font = UIFont(name: "Helvetica", size: 24.0)
         headerLabel.textColor = whiteColor
         headerLabel.textAlignment = NSTextAlignment(rawValue: 1)!
@@ -92,10 +104,10 @@ class SkillsViewController : UIViewController {
         headerView.addSubview(backButton)
         headerView.addSubview(headerLabel)
         
-        let skillContainerView = UIView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
+        skillContainerView = AniView(frame: CGRect(x: 0, y: 0, width: 112, height: 112))
         skillContainerView.backgroundColor = skillsColor
         
-        let skillImageView = UIImageView(frame: CGRect(x: 8, y: 8, width: skillContainerView.frame.width - 16, height: 96))
+        skillImageView = UIImageView(frame: CGRect(x: 8, y: 8, width: skillContainerView.frame.width - 16, height: 96))
         skillImageView.image = UIImage(named: "philProfile")
         skillImageView.layer.masksToBounds = true
         skillImageView.layer.borderWidth = 3.0
@@ -103,13 +115,13 @@ class SkillsViewController : UIViewController {
         skillImageView.layer.cornerRadius = skillImageView.frame.width / 2
         skillContainerView.addSubview(skillImageView)
         
-        skillNameLabel = UILabel(frame: CGRect(x: skillContainerView.frame.width + 8, y: 8, width: detailsContainer.frame.width - skillContainerView.frame.width - 16, height: skillContainerView.frame.height / 2 - 12))
+        skillNameLabel = AniLabel(frame: CGRect(x: skillContainerView.frame.width + 8, y: 8, width: detailsContainer.frame.width - skillContainerView.frame.width - 16, height: skillContainerView.frame.height / 2 - 12))
         skillNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
         skillNameLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         skillNameLabel.text = "Level: \(skill.level)"
         //skillNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
         skillNameLabel.backgroundColor = UIColor(white: 0.9, alpha: 1.0) // Test
-        totalLevelLabel = UILabel(frame: CGRect(x: skillContainerView.frame.width + 8, y: skillNameLabel.frame.height + 16, width: detailsContainer.frame.width - skillContainerView.frame.width - 16, height: skillContainerView.frame.height / 2 - 12))
+        totalLevelLabel = AniLabel(frame: CGRect(x: skillContainerView.frame.width + 8, y: skillNameLabel.frame.height + 16, width: detailsContainer.frame.width - skillContainerView.frame.width - 16, height: skillContainerView.frame.height / 2 - 12))
         totalLevelLabel.font = UIFont(name: "Helvetica", size: 18.0)
         totalLevelLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
         
@@ -118,7 +130,7 @@ class SkillsViewController : UIViewController {
         totalLevelLabel.text = "Exp: \(expCurrent) / \(skill.expTotal)"
         totalLevelLabel.backgroundColor = UIColor(white: 0.9, alpha: 1.0) // Test
         
-        expBarContainer = UIView(frame: CGRect(x: 8, y: 20 + headerView.frame.height + 8 + detailsContainer.frame.height, width: detailsContainer.frame.width, height: detailsContainer.frame.height / 2))
+        expBarContainer = AniView(frame: CGRect(x: 8, y: 20 + headerView.frame.height + 8 + detailsContainer.frame.height, width: detailsContainer.frame.width, height: detailsContainer.frame.height / 2))
         expBarContainer.backgroundColor = whiteColor
         expBarEmpty = UIView(frame: CGRect(x: 8, y: 8, width: expBarContainer.frame.width - 16, height: expBarContainer.frame.height - 16))
         expBarEmpty.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
@@ -134,7 +146,7 @@ class SkillsViewController : UIViewController {
         detailsContainer.addSubview(skillContainerView)
         
         let tasksYPos = 20 + headerView.frame.height + 8 + detailsContainer.frame.height + expBarContainer.frame.height + 8
-        tasksContainer = UIView(frame: CGRect(x: 8, y: tasksYPos, width: view.frame.width - 16, height: view.frame.height - tasksYPos - 8))
+        tasksContainer = AniView(frame: CGRect(x: 8, y: tasksYPos, width: view.frame.width - 16, height: view.frame.height - tasksYPos - 8))
         tasksContainer.backgroundColor = whiteColor
         tasksContainer.layer.borderColor = tasksColor.CGColor
         tasksContainer.layer.borderWidth = 5.0
@@ -205,10 +217,24 @@ class SkillsViewController : UIViewController {
         view.addSubview(expBarContainer)
         view.addSubview(detailsContainer)
         view.addSubview(headerView)
+        
+        //// Sounds ////
+        audioPlayer = AVAudioPlayer(contentsOfURL: levelUpSound, error: nil)
+        audioPlayer.prepareToPlay()
     }
     
     override func viewWillAppear(animated: Bool) {
         self.tasksCurrentTapped()
+        
+        //*** Place things offscreen or change color ****//
+        
+        skillContainerView.backgroundColor = goldColor
+        expBarContainer.frame = CGRect(x: expBarContainer.frame.minX, y: expBarContainer.frame.minY, width: expBarContainer.frame.width, height: 0)
+        tasksContainer.frame.origin = CGPoint(x: tasksContainer.frame.minX, y: view.frame.height + 8)
+        skillImageView.alpha = 0.0
+        skillNameLabel.frame.origin = CGPoint(x: view.frame.width + 16, y: skillNameLabel.frame.minY)
+        totalLevelLabel.frame.origin = CGPoint(x: view.frame.width + 16, y: totalLevelLabel.frame.minY)
+        ////////////////////////////////////
         
         //Refresh subviews
         for view in tasksCurrentContainer.subviews {
@@ -275,6 +301,9 @@ class SkillsViewController : UIViewController {
             
             row++
         }
+        //Number of tasks = row
+        tasksCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: CGFloat(row * 76) + 8)
+
         //Display New Task Creation
         createTaskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
         let taskNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: createTaskCard.frame.width, height: 72))
@@ -291,9 +320,70 @@ class SkillsViewController : UIViewController {
         createTaskCard.addSubview(taskNameLabel)
         let tapGR = UITapGestureRecognizer(target: self, action: "createTaskTapped")
         createTaskCard.addGestureRecognizer(tapGR)
-        
-        
         tasksCurrentContainer.addSubview(createTaskCard)
+        
+        /////////// Tasks Completed ///////////
+        //Display Skill's Completed Tasks
+        row = 0
+        for task in completedTasks {
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as Task)
+            taskCard.backgroundColor = tasksColor
+            tasksCompletedContainer.addSubview(taskCard)
+            let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
+            taskNameLabel.text = taskCard.task.taskName
+            taskNameLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskNameLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskNameLabel.backgroundColor = whiteColor
+            taskNameLabel.layer.borderWidth = 2.0
+            taskNameLabel.layer.borderColor = tasksColor.CGColor
+            let taskExpLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskExpLabel.text = "Exp: \(taskCard.task.exp)"
+            taskExpLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskExpLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskExpLabel.backgroundColor = whiteColor
+            taskExpLabel.layer.borderWidth = 2.0
+            taskExpLabel.layer.borderColor = tasksColor.CGColor
+            let taskDifficultyLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.525), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.325), height: taskCard.frame.height / 2))
+            taskDifficultyLabel.text = "Diff: \(taskCard.task.difficulty)"
+            taskDifficultyLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+            taskDifficultyLabel.font = UIFont(name: "Helvetica", size: 18.0)
+            taskDifficultyLabel.backgroundColor = whiteColor
+            taskDifficultyLabel.layer.borderWidth = 2.0
+            taskDifficultyLabel.layer.borderColor = tasksColor.CGColor
+            
+            //Complete or Delete Buttons
+            /*
+            let completeButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: 0, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            completeButton.setTitle("!", forState: .Normal)
+            completeButton.setTitleColor(whiteColor, forState: .Normal)
+            completeButton.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
+            //completeButton.layer.cornerRadius = 10.0
+            completeButton.addTarget(self, action: "completeButtonTapped:", forControlEvents: .TouchUpInside)
+            completeButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            completeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let deleteButton = UIButton(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2, width: CGFloat(taskCard.frame.width * 0.15), height: taskCard.frame.height / 2))
+            deleteButton.setTitle("X", forState: .Normal)
+            deleteButton.setTitleColor(whiteColor, forState: .Normal)
+            deleteButton.backgroundColor = UIColor(red: 0.8, green: 0.0, blue: 0.0, alpha: 1.0)
+            //deleteButton.layer.cornerRadius = 10.0
+            deleteButton.addTarget(self, action: "deleteButtonTapped:", forControlEvents: .TouchUpInside)
+            deleteButton.titleLabel?.textAlignment = NSTextAlignment(rawValue: 1)!
+            deleteButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+            let buttonDivider = UIView(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.85), y: taskCard.frame.height / 2 - 2, width: CGFloat(taskCard.frame.width * 0.15), height: 4))
+            buttonDivider.backgroundColor = tasksColor
+            */
+            taskCard.addSubview(taskNameLabel)
+            taskCard.addSubview(taskExpLabel)
+            taskCard.addSubview(taskDifficultyLabel)
+            //taskCard.addSubview(completeButton)
+            //taskCard.addSubview(deleteButton)
+            //taskCard.addSubview(buttonDivider)
+            
+            row++
+        }
+        //Number of tasks = row
+        tasksCompletedContainer.contentSize = CGSize(width: tasksCompletedContainer.frame.width, height: CGFloat(row * 76) + 8)
+
 
     }
     
@@ -301,12 +391,52 @@ class SkillsViewController : UIViewController {
         currentExp = Float(skill.expCurrent)
         realWidth = currentExp / Float(skill.expTotal) * Float(expBarEmpty.frame.width)
         self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
-        UIView.animateWithDuration(2.0, animations: {
-            self.expBarFull.frame = CGRect(x: self.expBarEmpty.frame.minX, y: self.expBarEmpty.frame.minY, width: CGFloat(self.realWidth), height: self.expBarEmpty.frame.height)
-            self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1)
+        
+        
+        // Skill Container Background Color
+        UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.skillContainerView.backgroundColor = self.skillsColor
             }, completion: {
                 (value: Bool) in
         })
+        //Skill Image View Alpha
+        UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.skillImageView.alpha = 1.0
+            }, completion: {
+                (value: Bool) in
+        })
+        // Exp Bar Container Frame
+        UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.expBarContainer.frame = self.expBarContainer.originalFrame
+            }, completion: {
+                (value: Bool) in
+                UIView.animateWithDuration(2.0, animations: {
+                    self.expBarFull.frame = CGRect(x: self.expBarEmpty.frame.minX, y: self.expBarEmpty.frame.minY, width: CGFloat(self.realWidth), height: self.expBarEmpty.frame.height)
+                    self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1)
+                    }, completion: {
+                        (value: Bool) in
+                })
+        })
+        // Main Tasks Container Frame
+        UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.tasksContainer.frame.origin = self.tasksContainer.originalOrigin
+            }, completion: {
+                (value: Bool) in
+        })
+        //Labels
+        UIView.animateWithDuration(0.5, delay: 0.5, options: .CurveEaseInOut, animations: {
+            self.skillNameLabel.frame.origin = self.skillNameLabel.originalOrigin
+            }, completion: {
+                (value: Bool) in
+        })
+        UIView.animateWithDuration(0.5, delay: 0.7, options: .CurveEaseInOut, animations: {
+            self.totalLevelLabel.frame.origin = self.totalLevelLabel.originalOrigin
+            }, completion: {
+                (value: Bool) in
+        })
+        
+        
+        
     }
     
     
@@ -448,6 +578,14 @@ class SkillsViewController : UIViewController {
         completedTasks.addObject(task)
         currentTasks.removeObject(task)
         
+        
+        //// Particle Effects ////
+        particleZero = 0
+        taskCardCenter = taskCard.convertPoint(taskCard.center, toView: nil)
+        let expParticleTimer = NSTimer(timeInterval: 0.01, target: self, selector: "expParticleFired:", userInfo: taskCard, repeats: true)
+        NSRunLoop.currentRunLoop().addTimer(expParticleTimer, forMode: NSDefaultRunLoopMode)
+        //////////////////////////
+        
         if saveContext() {
             // Reload the task view and make sure it appears in completedol tooo
             var removedTaskCardFound = false
@@ -550,6 +688,9 @@ class SkillsViewController : UIViewController {
             
             //Independent level up animations: Fire as soon as task is complete
             if levelUp {
+                //Level up Sound //
+                audioPlayer.play()
+                ///////////////////
                 let backgroundShine = UIView(frame: CGRect(x: self.view.frame.minX - self.view.frame.width, y: self.view.frame.minY, width: self.view.frame.width, height: self.view.frame.height))
                 backgroundShine.layer.zPosition = -1
                 backgroundShine.backgroundColor = self.goldColor
@@ -639,13 +780,114 @@ class SkillsViewController : UIViewController {
        
     }
     
+    func expParticleFired(timer: NSTimer) {
+        let taskCard = timer.userInfo as TaskCard
+        let expMax = Int(taskCard.task.exp)
+        
+       
+        
+        let expCenter = expBarFull.convertPoint(CGPoint(x: expBarFull.frame.maxX - 10, y: expBarFull.frame.midY), toView: nil)
+        let particleView = UIView(frame: CGRect(x: taskCardCenter.x, y: taskCardCenter.y, width: 5, height: 5))
+        particleView.backgroundColor = goldColor
+        particleView.layer.cornerRadius = particleView.frame.width / 2
+        view.addSubview(particleView)
+        ////
+        /*
+        let particleAnimation = CAKeyframeAnimation(keyPath: "position")
+        particleAnimation.duration = 5.0
+        particleAnimation.path = CGPathCreateWithEllipseInRect(tasksContainer.frame, nil)
+        particleAnimation.removedOnCompletion = true
+        particleView.layer.addAnimation(particleAnimation, forKey: "particleAnimation")
+        */
+        ////
+        
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveLinear, animations: {
+            particleView.center = CGPoint(x: expCenter.x, y: expCenter.y)
+        }, completion: {
+            (value: Bool) in
+            particleView.removeFromSuperview()
+        })
+        
+        particleZero = particleZero + 5
+        
+        
+        if particleZero >= expMax {
+            particleZero = 0
+            timer.invalidate()
+        }
+        
+        
+    }
+    
+    override func animationDidStop(anim: CAAnimation!, finished flag: Bool) {
+        /*
+        if anim.valueForKey("particleAnimation") {
+            
+        }
+*/
+    }
+    
     func deleteButtonTapped(button: UIButton) {
         let taskCard = button.superview as TaskCard
         println("Delete Task: \(taskCard.task.taskName)")
     }
     
     func backButtonTapped() {
-        dismissViewControllerAnimated(true, completion: nil)
+        // Fake label behind the moving one
+        let headerView = UIView(frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: 44))
+        headerView.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
+        let logoutButton = UIButton(frame: CGRect(x: 0, y: 0, width: 100, height: 44))
+        logoutButton.setTitle("Logout", forState: .Normal)
+        //logoutButton.addTarget(self, action: "logoutButtonTapped", forControlEvents: .TouchUpInside)
+        logoutButton.setTitleColor(UIColor(white: 0.0, alpha: 1.0), forState: .Normal)
+        let headerLabel = UILabel(frame: CGRect(x: headerView.frame.width / 4, y: 0, width: headerView.frame.width / 2, height: headerView.frame.height))
+        headerLabel.font = UIFont(name: "Helvetica", size: 24.0)
+        headerLabel.textColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
+        headerLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+        headerLabel.text = "Home"
+        headerView.addSubview(headerLabel)
+        headerView.addSubview(logoutButton)
+        headerView.layer.zPosition = -1
+        let optionsButton = AniButton(frame: CGRect(x: headerView.frame.width - 48, y: 6, width: 32, height: 32))
+        optionsButton.setImage(UIImage(named: "options-gear"), forState: .Normal)
+        headerView.addSubview(optionsButton)
+        self.view.addSubview(headerView)
+        //Tasks Container and Image
+        UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.tasksContainer.frame.origin = CGPoint(x: self.tasksContainer.frame.minX, y: self.view.frame.height + 8)
+            self.skillImageView.alpha = 0.0
+            self.expBarEmpty.frame = CGRect(x: self.expBarEmpty.frame.minX, y: self.expBarEmpty.frame.minY, width: self.expBarEmpty.frame.width, height: 0.0)
+            self.expBarFull.frame = CGRect(x: self.expBarFull.frame.minX, y: self.expBarFull.frame.minY, width: self.expBarFull.frame.width, height: 0.0)
+            }, completion: {
+                (value: Bool) in
+                
+        })
+        //Exp Bar container
+        UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.expBarContainer.frame = CGRect(x: self.expBarContainer.frame.minX, y: self.expBarContainer.frame.minY, width: self.expBarContainer.frame.width, height: 0)
+            }, completion: {
+                (value: Bool) in
+        })
+        //Labels
+        UIView.animateWithDuration(0.5, delay: 0.2, options: .CurveEaseInOut, animations: {
+            self.skillNameLabel.frame.origin = CGPoint(x: self.view.frame.width + 16, y: self.skillNameLabel.frame.minY)
+            }, completion: nil)
+        UIView.animateWithDuration(0.5, delay: 0.4, options: .CurveEaseInOut, animations: {
+            self.totalLevelLabel.frame.origin = CGPoint(x: self.view.frame.width + 16, y: self.totalLevelLabel.frame.minY)
+            }, completion: nil)
+        //Header View
+        UIView.animateWithDuration(0.5, delay: 1.0, options: .CurveEaseInOut, animations: {
+            self.headerView.frame.origin = CGPoint(x: 0, y: self.view.frame.height + 44)
+            }, completion: {
+                (value: Bool) in
+                self.dismissViewControllerAnimated(false, completion: {
+                    headerView.removeFromSuperview()
+                })
+        })
+        
+        
+        
+       
     }
     
     func createTaskTapped() {
