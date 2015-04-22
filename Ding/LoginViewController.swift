@@ -14,7 +14,7 @@ class LoginViewController: UIViewController {
     
     var user: User!
     var titleLabel: UILabel!
-    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    let appDelegate = UIApplication.sharedApplication().delegate! as! AppDelegate
     
     let goldColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
@@ -43,7 +43,7 @@ class LoginViewController: UIViewController {
         colorSchemes = NSMutableArray()
         let data = NSData(contentsOfFile: "/Users/Phil/Desktop/Swift/Ding/Ding/ColorSchemes.json")
         let parsedObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments,error: nil)
-        let colorsArray = parsedObject as NSArray
+        let colorsArray = parsedObject as! NSArray
         for color in colorsArray {
             var schemeName: String = ""; var schemeId: Int = 0; var bgRed: CGFloat = 0; var bgGreen: CGFloat = 0; var bgBlue: CGFloat = 0; var homeRed: CGFloat = 0; var homeGreen: CGFloat = 0; var homeBlue: CGFloat = 0; var skillsRed: CGFloat = 0; var skillsGreen: CGFloat = 0; var skillsBlue: CGFloat = 0; var tasksRed: CGFloat = 0; var tasksGreen: CGFloat = 0; var tasksBlue: CGFloat = 0; var goalsRed: CGFloat = 0; var goalsGreen: CGFloat = 0; var goalsBlue: CGFloat = 0; var achievementsRed: CGFloat = 0; var achievementsGreen: CGFloat = 0; var achievementsBlue: CGFloat = 0;
             if let newSchemeName = color.valueForKey("schemeName") as? String { schemeName = newSchemeName }
@@ -193,7 +193,7 @@ class LoginViewController: UIViewController {
                     let predicate = NSPredicate(format: "userName = %@ AND password = %@", userName, password)
                     fetchRequest.predicate = predicate
                     
-                    let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as [User]?
+                    let fetchedResults = managedContext.executeFetchRequest(fetchRequest, error: &error) as! [User]?
                     if !fetchedResults!.isEmpty { // Found User
                         //view.userInteractionEnabled = false
                         fullLoadView.frame = CGRect(x: self.emptyLoadView.frame.minX, y: self.emptyLoadView.frame.minY, width: 0, height: self.emptyLoadView.frame.height)
@@ -218,7 +218,7 @@ class LoginViewController: UIViewController {
                             }, completion: {
                                 (value: Bool) in
                                 self.user = fetchedResults![0]
-                                let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as HomeViewController
+                                let homeViewController = self.storyboard?.instantiateViewControllerWithIdentifier("HomeViewController") as! HomeViewController
                                 homeViewController.user = self.user
                                 homeViewController.colorSchemes = self.colorSchemes
                                 homeViewController.transitionCameFrom = self
@@ -281,7 +281,7 @@ class LoginViewController: UIViewController {
     }
     
     func createAccountButtonTapped() {
-        let createAccountViewController = storyboard?.instantiateViewControllerWithIdentifier("CreateAccountViewController") as CreateAccountViewController
+        let createAccountViewController = storyboard?.instantiateViewControllerWithIdentifier("CreateAccountViewController") as! CreateAccountViewController
         createAccountViewController.appDelegate = appDelegate
         presentViewController(createAccountViewController, animated: true, completion: nil)
     }

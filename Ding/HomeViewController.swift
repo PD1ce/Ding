@@ -124,11 +124,11 @@ class HomeViewController : UIViewController {
         
         //////////// Color Scheme ///////////////
         var colorSchemeSelection = user.colorScheme as Int
-        goldColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).home
-        skillsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).skills
-        tasksColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).tasks
-        goalsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).goals
-        achievementsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as ColorScheme).achievements
+        goldColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as! ColorScheme).home
+        skillsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as! ColorScheme).skills
+        tasksColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as! ColorScheme).tasks
+        goalsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as! ColorScheme).goals
+        achievementsColor = (colorSchemes.objectAtIndex(colorSchemeSelection) as! ColorScheme).achievements
         
         /*************************************************************/
         
@@ -141,11 +141,11 @@ class HomeViewController : UIViewController {
         currentTasks = NSMutableArray()
         totalLevel = 0
         for skill in skills {
-            let moreTasks = NSMutableArray(array: (skill as Skill).tasks.allObjects)
+            let moreTasks = NSMutableArray(array: (skill as! Skill).tasks.allObjects)
             for task in moreTasks {
-                currentTasks.addObject(task as Task)
+                currentTasks.addObject(task as! Task)
             }
-            totalLevel += Int((skill as Skill).level)
+            totalLevel += Int((skill as! Skill).level)
         }
         //skills = user.skills.mutableCopy() as NSMutableArray
         
@@ -193,7 +193,7 @@ class HomeViewController : UIViewController {
         for scheme in colorSchemes {
             //Should be custom uiviews with scheme
             let schemeImageView = ColorSchemeView(frame: CGRect(x: 10 + (pos * 70), y: 10, width: 60, height: 60), num: pos)
-            schemeImageView.backgroundColor = (scheme as ColorScheme).skills
+            schemeImageView.backgroundColor = (scheme as! ColorScheme).skills
             schemeImageView.layer.cornerRadius = 10.0
             let schemeLabel = UILabel(frame: CGRect(x: 0, y: 0, width: schemeImageView.frame.width, height: schemeImageView.frame.height))
             schemeLabel.text = "\(pos + 1)"
@@ -670,7 +670,7 @@ class HomeViewController : UIViewController {
             row = position / 2
             if columnOne { // First Column
                 //Add Gesture Recognizers to tap and go to skill
-                let skillCard = SkillCard(frame: CGRect(x: 8, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill, color: skillsColor)
+                let skillCard = SkillCard(frame: CGRect(x: 8, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as! Skill, color: skillsColor)
                 let tapGR = UITapGestureRecognizer(target: self, action: "skillCardTapped:")
                 skillCard.addGestureRecognizer(tapGR)
                 
@@ -738,7 +738,7 @@ class HomeViewController : UIViewController {
                 skillCard.addSubview(expBarContainer)
                 skillsContainer.addSubview(skillCard)
             } else { // Second Column
-                let skillCard = SkillCard(frame: CGRect(x: skillsContainer.frame.width / 2 + 4, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as Skill, color: skillsColor)
+                let skillCard = SkillCard(frame: CGRect(x: skillsContainer.frame.width / 2 + 4, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), skill: skill as! Skill, color: skillsColor)
                 let tapGR = UITapGestureRecognizer(target: self, action: "skillCardTapped:")
                 skillCard.addGestureRecognizer(tapGR)
                 
@@ -864,15 +864,15 @@ class HomeViewController : UIViewController {
         
         currentTasks = NSMutableArray()
         for skill in skills {
-            let moreTasks = NSMutableArray(array: (skill as Skill).tasks.allObjects)
+            let moreTasks = NSMutableArray(array: (skill as! Skill).tasks.allObjects)
             for task in moreTasks {
-                currentTasks.addObject(task as Task)
+                currentTasks.addObject(task as! Task)
             }
         }
         
         completedTasks = NSMutableArray()
         for task in currentTasks {
-            if (task as Task).completed == 1 {
+            if (task as! Task).completed == 1 {
                 completedTasks.addObject(task)
                 currentTasks.removeObject(task)
             }
@@ -882,7 +882,7 @@ class HomeViewController : UIViewController {
         
         row = 0
         for task in currentTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task)
             taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -942,7 +942,7 @@ class HomeViewController : UIViewController {
         //Display Completed Tasks
         row = 0
         for task in completedTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as! Task)
             taskCard.backgroundColor = tasksColor
             tasksCompletedContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -1013,7 +1013,7 @@ class HomeViewController : UIViewController {
         currentGoals = NSMutableArray(array: user.goals.allObjects)
         completedGoals = NSMutableArray()
         for goal in currentGoals {
-            if (goal as Goal).completed == 1 {
+            if (goal as! Goal).completed == 1 {
                 completedGoals.addObject(goal)
                 currentGoals.removeObject(goal)
             }
@@ -1021,7 +1021,7 @@ class HomeViewController : UIViewController {
         
         row = 0
         for goal in currentGoals {
-            let goalCard = GoalCard(frame: CGRect(x: 4, y: CGFloat(row * 136) + 8, width: goalsCurrentContainer.frame.width - 8, height: 128), goal: goal as Goal)
+            let goalCard = GoalCard(frame: CGRect(x: 4, y: CGFloat(row * 136) + 8, width: goalsCurrentContainer.frame.width - 8, height: 128), goal: goal as! Goal)
             row++
         }
         goalsCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: CGFloat(row * 136) + 8)
@@ -1248,12 +1248,12 @@ class HomeViewController : UIViewController {
     }
     
     func colorSchemeTapped(gr: UITapGestureRecognizer) {
-        let schemeNum = (gr.view! as ColorSchemeView).schemeNumber
+        let schemeNum = (gr.view! as! ColorSchemeView).schemeNumber
         user.colorScheme = schemeNum
-        skillsColor = (colorSchemes.objectAtIndex(schemeNum) as ColorScheme).skills
-        tasksColor = (colorSchemes.objectAtIndex(schemeNum) as ColorScheme).tasks
-        goalsColor = (colorSchemes.objectAtIndex(schemeNum) as ColorScheme).goals
-        achievementsColor = (colorSchemes.objectAtIndex(schemeNum) as ColorScheme).achievements
+        skillsColor = (colorSchemes.objectAtIndex(schemeNum) as! ColorScheme).skills
+        tasksColor = (colorSchemes.objectAtIndex(schemeNum) as! ColorScheme).tasks
+        goalsColor = (colorSchemes.objectAtIndex(schemeNum) as! ColorScheme).goals
+        achievementsColor = (colorSchemes.objectAtIndex(schemeNum) as! ColorScheme).achievements
         if saveContext() {
             //Saved
         } else {
@@ -1262,7 +1262,7 @@ class HomeViewController : UIViewController {
     }
     
     func skillCardTapped(gr: UITapGestureRecognizer) {
-        let skillTapped = (gr.view as SkillCard).skill
+        let skillTapped = (gr.view as! SkillCard).skill
         //let skillsVC = storyboard?.instantiateViewControllerWithIdentifier("SkillsViewController") as SkillsViewController
         let skillsVC = SkillsViewController()
         skillsVC.user = user
@@ -1349,7 +1349,7 @@ class HomeViewController : UIViewController {
     }
     
     func newSkillTapped(gr: UITapGestureRecognizer) {
-        let createSkillVC = storyboard?.instantiateViewControllerWithIdentifier("CreateSkillViewController") as CreateSkillViewController
+        let createSkillVC = storyboard?.instantiateViewControllerWithIdentifier("CreateSkillViewController") as! CreateSkillViewController
         createSkillVC.user = user
         createSkillVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         transitionCameFrom = createSkillVC

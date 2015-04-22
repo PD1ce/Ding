@@ -80,7 +80,7 @@ class SkillsViewController : UIViewController {
         currentTasks = NSMutableArray(array: skill.tasks.allObjects)
         completedTasks = NSMutableArray()
         for task in currentTasks {
-            if (task as Task).completed == 1 {
+            if (task as! Task).completed == 1 {
                 completedTasks.addObject(task)
                 currentTasks.removeObject(task)
             }
@@ -247,7 +247,7 @@ class SkillsViewController : UIViewController {
         //Display Skill's Tasks
         var row = 0
         for task in currentTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task)
             taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -326,7 +326,7 @@ class SkillsViewController : UIViewController {
         //Display Skill's Completed Tasks
         row = 0
         for task in completedTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as! Task)
             taskCard.backgroundColor = tasksColor
             tasksCompletedContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -466,7 +466,7 @@ class SkillsViewController : UIViewController {
         //Display Skill's Tasks
         var row = 0
         for task in currentTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task)
             taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -548,7 +548,7 @@ class SkillsViewController : UIViewController {
     
     /* Complete Alert and Actions! */
     func completeButtonTapped(button: UIButton) {
-        let taskCard = button.superview as TaskCard
+        let taskCard = button.superview as! TaskCard
         
         let alert = UIAlertController(title: "Complete Task", message: "Did you complete this task?", preferredStyle: UIAlertControllerStyle.Alert)
         let confirmButton = UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default, handler:
@@ -591,7 +591,7 @@ class SkillsViewController : UIViewController {
             var removedTaskCardFound = false
             for tCard in tasksCurrentContainer.subviews {
                 if tCard.isKindOfClass(TaskCard) {
-                    let tCardObject = tCard as TaskCard
+                    let tCardObject = tCard as! TaskCard
                     if removedTaskCardFound {
                         UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
                             tCardObject.center.y = tCardObject.center.y - 76
@@ -599,7 +599,7 @@ class SkillsViewController : UIViewController {
                             (value: Bool) in
                         })
                     }
-                    if (tCard as TaskCard) == taskCard {
+                    if (tCard as! TaskCard) == taskCard {
                         removedTaskCardFound = true
                         UIView.animateWithDuration(1.0, delay: 0.0, options: nil, animations: {
                             taskCard.alpha = 0.0
@@ -781,7 +781,7 @@ class SkillsViewController : UIViewController {
     }
     
     func expParticleFired(timer: NSTimer) {
-        let taskCard = timer.userInfo as TaskCard
+        let taskCard = timer.userInfo as! TaskCard
         let expMax = Int(taskCard.task.exp)
         
        
@@ -828,7 +828,7 @@ class SkillsViewController : UIViewController {
     }
     
     func deleteButtonTapped(button: UIButton) {
-        let taskCard = button.superview as TaskCard
+        let taskCard = button.superview as! TaskCard
         println("Delete Task: \(taskCard.task.taskName)")
     }
     

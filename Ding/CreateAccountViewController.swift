@@ -41,7 +41,7 @@ class CreateAccountViewController : UIViewController {
     
     func saveContext() -> Bool {
         let managedContext = appDelegate.managedObjectContext!
-        let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: managedContext) as User
+        let user = NSEntityDescription.insertNewObjectForEntityForName("User", inManagedObjectContext: managedContext) as! User
         if let userName = userNameTextField.text {
             if let password = passwordTextField.text {
                 if userName != "" && password != "" {

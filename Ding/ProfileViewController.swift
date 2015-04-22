@@ -175,7 +175,7 @@ class ProfileViewController : UIViewController, UIImagePickerControllerDelegate,
         
     }
     
-    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage!, editingInfo: [NSObject : AnyObject]!) {
         userImage = image
         userImageView.image = userImage
         picker.dismissViewControllerAnimated(true, completion: nil)

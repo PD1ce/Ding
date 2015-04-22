@@ -122,13 +122,13 @@ class CreateSkillViewController : UIViewController {
     
     func createSkillTapped() {
         let managedContext = user.managedObjectContext!
-        let skill = NSEntityDescription.insertNewObjectForEntityForName("Skill", inManagedObjectContext: managedContext) as Skill
+        let skill = NSEntityDescription.insertNewObjectForEntityForName("Skill", inManagedObjectContext: managedContext) as! Skill
         skill.skillName = skillNameTextField.text
         skill.skillDescription = skillDescTextField.text
         skill.level = skillLevelTextField.text.toInt()!
         skill.expCurrent = skillExpTextField.text.toInt()!
         skill.expTotal = (Int(skill.level) * 100)
-        let userSkills = user.skills.mutableCopy() as NSMutableSet
+        let userSkills = user.skills.mutableCopy() as! NSMutableSet
         userSkills.addObject(skill)
         user.skills = userSkills
         if saveContext() {

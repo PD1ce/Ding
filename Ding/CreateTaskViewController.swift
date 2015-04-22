@@ -20,7 +20,7 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
     
     var taskNameTF: UITextField!
     var taskExpTF: UITextField!
-    var taskDifficultyTF: UITextField!
+var taskDifficultyTF: UITextField!
     
     let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
@@ -38,7 +38,7 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
     }
     
     init(skill: Skill) {
-        super.init()
+        super.init(nibName: nil, bundle: nil)
         self.skill = skill
         self.commonInit()
     }
@@ -121,7 +121,7 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
     
     func saveContext() -> Bool {
         let managedContext = skill.managedObjectContext!
-        let task = NSEntityDescription.insertNewObjectForEntityForName("Task", inManagedObjectContext: managedContext) as Task
+        let task = NSEntityDescription.insertNewObjectForEntityForName("Task", inManagedObjectContext: managedContext) as! Task
         //Set Task Details
         task.taskName = taskNameTF.text
         task.exp = taskExpTF.text.toInt()!
@@ -129,14 +129,14 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
         
         
         //PDAlert: Go over all this! Might be duplicates/leaks
-        let skillTasks = skill.tasks.mutableCopy() as NSMutableSet
+        let skillTasks = skill.tasks.mutableCopy() as! NSMutableSet
         skillTasks.addObject(task)
         skill.tasks = skillTasks
         var tempParentArray = NSMutableArray()
         for tempTask in skillTasks {
             //println("Task name: \((tempTask as Task).taskName) + \((tempTask as Task).completed)")
-            if (tempTask as Task).completed == 0 {
-                tempParentArray.addObject(tempTask as Task)
+            if (tempTask as! Task).completed == 0 {
+                tempParentArray.addObject(tempTask as! Task)
             }
         }
         parentVC.currentTasks = tempParentArray

@@ -84,7 +84,7 @@ class SplashViewController : UIViewController {
                         }, completion: {
                             (value: Bool) in
                             self.modalPresentationStyle = UIModalPresentationStyle.None
-                            let loginVC = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as LoginViewController
+                            let loginVC = self.storyboard?.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
                             loginVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                             self.presentViewController(loginVC, animated: true, completion: nil)
                     })
