@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43526A7FEBBBC2E4A0ACC07E /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D63E82CD8A6FF2A16A0F005B /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		4A13A62C1AB75A40001B30B1 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */; };
 		4A14BE9C1AB73DC400F4A659 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BE9B1AB73DC400F4A659 /* AppDelegate.swift */; };
 		4A14BE9F1AB73DC400F4A659 /* Ding.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4A14BE9D1AB73DC400F4A659 /* Ding.xcdatamodeld */; };
@@ -57,6 +58,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		012ED830E42F310AB221937F /* Pods-Ding.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ding.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Ding/Pods-Ding.debug.xcconfig"; sourceTree = "<group>"; };
+		36C5741D799FE8413E8CB6B4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		4A14BE961AB73DC400F4A659 /* Ding.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Ding.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A14BE9A1AB73DC400F4A659 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -98,6 +101,10 @@
 		4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4AF658B11AB93583004D94D2 /* SkillsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillsViewController.swift; sourceTree = "<group>"; };
 		4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSkillViewController.swift; sourceTree = "<group>"; };
+		8363B7ABE4025B55C80C61A3 /* Pods-Ding.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Ding.release.xcconfig"; path = "Pods/Target Support Files/Pods-Ding/Pods-Ding.release.xcconfig"; sourceTree = "<group>"; };
+		D63E82CD8A6FF2A16A0F005B /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB7EE872D86DAD40122E8842 /* Pods_Ding.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Ding.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FFBF344DE6287AA3719FF8BC /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +112,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43526A7FEBBBC2E4A0ACC07E /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +126,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		440FD8DDEFBD99121E2CC49C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				FB7EE872D86DAD40122E8842 /* Pods_Ding.framework */,
+				D63E82CD8A6FF2A16A0F005B /* Pods.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		4A14BE8D1AB73DC400F4A659 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +143,8 @@
 				4A14BE981AB73DC400F4A659 /* Ding */,
 				4A14BEB11AB73DC400F4A659 /* DingTests */,
 				4A14BE971AB73DC400F4A659 /* Products */,
+				77C93F882E535C96EB153C5C /* Pods */,
+				440FD8DDEFBD99121E2CC49C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,13 +162,13 @@
 			children = (
 				4A14BE9B1AB73DC400F4A659 /* AppDelegate.swift */,
 				4A3D9B551AB88A8200C9CF1D /* Classes */,
-				4A599A391AB9299E00BA8951 /* ManagedObjects */,
-				4A3D9B561AB88A8A00C9CF1D /* ViewControllers */,
 				4A14BE9D1AB73DC400F4A659 /* Ding.xcdatamodeld */,
 				4A14BEA51AB73DC400F4A659 /* Images.xcassets */,
 				4A14BEA71AB73DC400F4A659 /* LaunchScreen.xib */,
 				4A14BEA21AB73DC400F4A659 /* Main.storyboard */,
+				4A599A391AB9299E00BA8951 /* ManagedObjects */,
 				4A14BE991AB73DC400F4A659 /* Supporting Files */,
+				4A3D9B561AB88A8A00C9CF1D /* ViewControllers */,
 			);
 			path = Ding;
 			sourceTree = "<group>";
@@ -245,6 +264,17 @@
 			name = ManagedObjects;
 			sourceTree = "<group>";
 		};
+		77C93F882E535C96EB153C5C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				012ED830E42F310AB221937F /* Pods-Ding.debug.xcconfig */,
+				8363B7ABE4025B55C80C61A3 /* Pods-Ding.release.xcconfig */,
+				FFBF344DE6287AA3719FF8BC /* Pods.debug.xcconfig */,
+				36C5741D799FE8413E8CB6B4 /* Pods.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -252,9 +282,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A14BEB81AB73DC400F4A659 /* Build configuration list for PBXNativeTarget "Ding" */;
 			buildPhases = (
+				AF071A7850D2B451028853DD /* Check Pods Manifest.lock */,
 				4A14BE921AB73DC400F4A659 /* Sources */,
 				4A14BE931AB73DC400F4A659 /* Frameworks */,
 				4A14BE941AB73DC400F4A659 /* Resources */,
+				1C88A03955861F73D58EF24F /* Embed Pods Frameworks */,
+				3FD1AF08E5647D6BBB5F2B86 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -297,7 +330,6 @@
 					};
 					4A14BEAD1AB73DC400F4A659 = {
 						CreatedOnToolsVersion = 6.2;
-						TestTargetID = 4A14BE951AB73DC400F4A659;
 					};
 				};
 			};
@@ -343,6 +375,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1C88A03955861F73D58EF24F /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		3FD1AF08E5647D6BBB5F2B86 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AF071A7850D2B451028853DD /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4A14BE921AB73DC400F4A659 /* Sources */ = {
@@ -499,9 +579,11 @@
 		};
 		4A14BEB91AB73DC400F4A659 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FFBF344DE6287AA3719FF8BC /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Ding/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -509,9 +591,11 @@
 		};
 		4A14BEBA1AB73DC400F4A659 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 36C5741D799FE8413E8CB6B4 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Ding/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -520,7 +604,6 @@
 		4A14BEBC1AB73DC400F4A659 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -532,14 +615,12 @@
 				INFOPLIST_FILE = DingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ding.app/Ding";
 			};
 			name = Debug;
 		};
 		4A14BEBD1AB73DC400F4A659 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -547,7 +628,6 @@
 				INFOPLIST_FILE = DingTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Ding.app/Ding";
 			};
 			name = Release;
 		};

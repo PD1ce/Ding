@@ -1,11 +1,6 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '6.0'
+source 'https://github.com/CocoaPods/Specs.git'
+platform :ios, '8.2'
+use_frameworks!
 
-target 'Ding' do
-
-end
-
-target 'DingTests' do
-
-end
-
+pod 'Alamofire', '~> 1.2'

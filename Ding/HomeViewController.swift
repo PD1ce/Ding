@@ -703,7 +703,7 @@ class HomeViewController : UIViewController {
                 
                 //Animation Testing
                 let expBarFull = UIView(frame: CGRect(x: 8, y: 0, width: 0, height: 20))
-                expBarFull.backgroundColor = goldColor
+                expBarFull.backgroundColor = skillsColor
                 if skillCard.skill.expCurrent != 0 {
                     UIView.animateWithDuration(2.0, animations: {
                         let expCurrent = Float(skillCard.skill.expCurrent)
@@ -770,7 +770,7 @@ class HomeViewController : UIViewController {
                 expBarEmpty.layer.cornerRadius = 10.0
                 //Animation Testing
                 let expBarFull = UIView(frame: CGRect(x: 8, y: 0, width: 0, height: 20))
-                expBarFull.backgroundColor = goldColor
+                expBarFull.backgroundColor = skillsColor
                 if skillCard.skill.expCurrent != 0 {
                     UIView.animateWithDuration(2.0, animations: {
                         let expCurrent = Float(skillCard.skill.expCurrent)

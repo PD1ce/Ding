@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import AVFoundation
+import Alamofire
 
 class LoginViewController: UIViewController {
     
@@ -38,7 +39,28 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+       /*
+        Alamofire.request(.GET, "http://httpbin.org/get", parameters: ["foo": "bar"])
+            .response { (request, response, data, error) in
+                println("Request: \(request)")
+                println("Response: \(response)")
+                println("Data: \(data)")
+                println("Error: \(error)")
+        }
+        */
+        Alamofire.request(.GET, "https://api.500px.com/v1/photos", parameters: ["consumer_key": "63QtZxAmzrSO0ybQoR3FwfSwZgBzE9wMPFEuHFgp"]).responseJSON() {
+            (_, _, data, _) in
+            println(data)
+        }
+        /*
+        Alamofire.request(.GET, "http://httpbin.org/get")
+            .responseJSON { (_, _, JSON, _) in
+                println(JSON)
+        }*/
+//        request(.GET, "http://httpbin.org/get")
+//            .responseString { (_, _, string, _) in
+//                println(string)
+//        }
         ///////////////////////    Color Schemes    /////////////////////////
         colorSchemes = NSMutableArray()
         let data = NSData(contentsOfFile: "/Users/Phil/Desktop/Swift/Ding/Ding/ColorSchemes.json")
