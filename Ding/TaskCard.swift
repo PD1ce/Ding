@@ -12,11 +12,12 @@ import CoreData
 
 class TaskCard : UIView {
     var task: Task!
-    let mainColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
+    var mainColor: UIColor!
     
-    init(frame: CGRect, task: Task) {
+    init(frame: CGRect, task: Task, color: UIColor) {
         super.init(frame: frame)
         self.task = task
+        mainColor = color
         layer.cornerRadius = 10.0
         layer.borderWidth = 2.0
         layer.borderColor = mainColor.CGColor
@@ -24,8 +25,9 @@ class TaskCard : UIView {
         
     }
     //Used for creation of new task cards
-    override init(frame: CGRect) {
+    init(frame: CGRect, color: UIColor) {
         super.init(frame: frame)
+        mainColor = color
         layer.cornerRadius = 10.0
         layer.borderWidth = 2.0
         layer.borderColor = mainColor.CGColor

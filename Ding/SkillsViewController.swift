@@ -59,8 +59,8 @@ class SkillsViewController : UIViewController {
     
     var createTaskCard: UIView!
     
-    let skillsColor = UIColor(red: 51/255, green: 255/255, blue: 204/255, alpha: 1.0)
-    let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
+    var skillsColor: UIColor!
+    var tasksColor: UIColor!
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
     let blackColor = UIColor(white: 0.0, alpha: 1.0)
     let goldColor = UIColor(red: 1.0, green: 0.65, blue: 0.1, alpha: 1.0)
@@ -247,7 +247,7 @@ class SkillsViewController : UIViewController {
         //Display Skill's Tasks
         var row = 0
         for task in currentTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task, color: tasksColor)
             taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -305,7 +305,7 @@ class SkillsViewController : UIViewController {
         tasksCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: CGFloat(row * 76) + 8)
 
         //Display New Task Creation
-        createTaskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
+        createTaskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), color: tasksColor)
         let taskNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: createTaskCard.frame.width, height: 72))
         createTaskCard.layer.cornerRadius = 10.0
         createTaskCard.layer.borderWidth = 2.0
@@ -326,7 +326,7 @@ class SkillsViewController : UIViewController {
         //Display Skill's Completed Tasks
         row = 0
         for task in completedTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as! Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as! Task, color: tasksColor)
             taskCard.backgroundColor = tasksColor
             tasksCompletedContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -466,7 +466,7 @@ class SkillsViewController : UIViewController {
         //Display Skill's Tasks
         var row = 0
         for task in currentTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task, color: tasksColor)
             taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -521,7 +521,7 @@ class SkillsViewController : UIViewController {
             row++
         }
         //Display New Task Creation
-        createTaskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72))
+        createTaskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), color: tasksColor)
         let taskNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: createTaskCard.frame.width, height: 72))
         createTaskCard.layer.cornerRadius = 10.0
         createTaskCard.layer.borderWidth = 2.0
@@ -892,6 +892,7 @@ class SkillsViewController : UIViewController {
     
     func createTaskTapped() {
         let createTaskVC = CreateTaskViewController(skill: self.skill)
+        createTaskVC.tasksColor = tasksColor
         createTaskVC.parentVC = self
         presentViewController(createTaskVC, animated: true, completion: nil)
         //let taskPresentationController = TaskPresentationController()

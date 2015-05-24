@@ -19,6 +19,7 @@ class LoginViewController: UIViewController {
     
     let goldColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
+    let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
     
     var userNameTextField: UITextField!
     var passwordTextField: UITextField!
@@ -48,10 +49,12 @@ class LoginViewController: UIViewController {
                 println("Error: \(error)")
         }
         */
+        /*
         Alamofire.request(.GET, "https://api.500px.com/v1/photos", parameters: ["consumer_key": "63QtZxAmzrSO0ybQoR3FwfSwZgBzE9wMPFEuHFgp"]).responseJSON() {
             (_, _, data, _) in
             println(data)
         }
+        */
         /*
         Alamofire.request(.GET, "http://httpbin.org/get")
             .responseJSON { (_, _, JSON, _) in
@@ -62,6 +65,8 @@ class LoginViewController: UIViewController {
 //                println(string)
 //        }
         ///////////////////////    Color Schemes    /////////////////////////
+        
+            
         colorSchemes = NSMutableArray()
         let data = NSData(contentsOfFile: "/Users/Phil/Desktop/Swift/Ding/Ding/ColorSchemes.json")
         let parsedObject: AnyObject? = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments,error: nil)
@@ -94,6 +99,7 @@ class LoginViewController: UIViewController {
 
         //** Load up labels and fields **//
         //PDAlert: All of these need to be converted to dynamic frame
+        /*
         usernameLabel = UILabel(frame: CGRect(x: 16, y: 126, width: 79, height: 21))
         usernameLabel.text = "Username"
         usernameLabel.font = UIFont(name: "Helvetica", size: 12.0)
@@ -104,17 +110,26 @@ class LoginViewController: UIViewController {
         passwordLabel.font = UIFont(name: "Helvetica", size: 12.0)
         passwordLabel.textAlignment = NSTextAlignment.Left
         passwordLabel.textColor = goldColor
+        */
         
-        userNameTextField = UITextField(frame: CGRect(x: 16, y: 155, width: 167, height: 30))
+        titleLabel = UILabel(frame: CGRect(x: 0, y: 20, width: view.bounds.width, height: view.frame.height * 0.2))
+        titleLabel.text = "DING!"
+        titleLabel.font = UIFont(name: "Helvetica", size: 96.0)
+        titleLabel.textColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
+        titleLabel.textAlignment = NSTextAlignment(rawValue: 1)!
+        
+        userNameTextField = UITextField(frame: CGRect(x: view.frame.width * 0.15, y: view.frame.height * 0.25, width: view.frame.width * 0.7, height: 50))
+        userNameTextField.placeholder = "Username"
         userNameTextField.textAlignment = NSTextAlignment.Center
         userNameTextField.borderStyle = UITextBorderStyle.RoundedRect
         userNameTextField.textColor = goldColor
-        userNameTextField.font = UIFont(name: "Helvetica", size: 16.0)
-        passwordTextField = UITextField(frame: CGRect(x: 192, y: 155, width: 167, height: 30))
+        userNameTextField.font = UIFont(name: "Helvetica", size: 24.0)
+        passwordTextField = UITextField(frame: CGRect(x: view.frame.width * 0.15, y: view.frame.height * 0.25 + 55, width: view.frame.width * 0.7, height: 50))
+        passwordTextField.placeholder = "Password"
         passwordTextField.textAlignment = NSTextAlignment.Center
         passwordTextField.borderStyle = UITextBorderStyle.RoundedRect
         passwordTextField.textColor = goldColor
-        passwordTextField.font = UIFont(name: "Helvetica", size: 16.0)
+        passwordTextField.font = UIFont(name: "Helvetica", size: 24.0)
         passwordTextField.secureTextEntry = true
         
         incorrectLabel = UILabel(frame: CGRect(x: 16, y: 237, width: 343, height: 21))
@@ -122,35 +137,33 @@ class LoginViewController: UIViewController {
         incorrectLabel.font = UIFont(name: "Helvetica", size: 16.0)
         incorrectLabel.textColor = goldColor
         
-        emptyLoadView = UIView(frame: CGRect(x: 16, y: 292, width: 343, height: 32))
+        emptyLoadView = UIView(frame: CGRect(x: 16, y: view.frame.height * 0.5, width: view.frame.width - 32, height: 32))
         emptyLoadView.layer.zPosition = 2
         emptyLoadView.layer.cornerRadius = 10.0
         emptyLoadView.backgroundColor = whiteColor
         fullLoadView = UIView(frame: CGRect(x: self.emptyLoadView.frame.minX, y: emptyLoadView.frame.minY, width: 0.0, height: emptyLoadView.frame.height))
-
-        titleLabel = UILabel(frame: CGRect(x: 0, y: 30, width: view.bounds.width, height: 36.0))
-        titleLabel.text = "DING!"
-        titleLabel.font = UIFont(name: "Helvetica", size: 36.0)
-        titleLabel.textColor = UIColor(red: 1.0, green: 0.645, blue: 0, alpha: 1)
-        titleLabel.textAlignment = NSTextAlignment(rawValue: 1)!
         
-        loginButton = UIButton(frame: CGRect(x: 155, y: 193, width: 64, height: 36))
-        loginButton.titleLabel?.font = UIFont(name: "Helvetica", size: 18.0)
+        loginButton = UIButton(frame: CGRect(x: 155, y: view.frame.height * 0.425, width: 64, height: 36))
+        loginButton.titleLabel?.font = UIFont(name: "Helvetica", size: 24.0)
         loginButton.setTitleColor(goldColor, forState: .Normal)
         loginButton.setTitle("Login", forState: .Normal)
         loginButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        loginButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        loginButton.layer.shadowOpacity = 0.3
+        loginButton.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).CGColor
+        loginButton.layer.shadowRadius = 1.0
         loginButton.addTarget(self, action: "loginButtonTapped", forControlEvents: .TouchUpInside)
         
-        createAccountButton = UIButton(frame: CGRect(x: 125, y: 370, width:124, height: 36))
-        createAccountButton.titleLabel?.font = UIFont(name: "Helvetica", size: 18.0)
+        createAccountButton = UIButton(frame: CGRect(x: view.frame.width * 0.1, y: view.frame.height * 0.75, width: view.frame.width * 0.8, height: 36))
+        createAccountButton.titleLabel?.font = UIFont(name: "Helvetica", size: 24.0)
         createAccountButton.setTitleColor(goldColor, forState: .Normal)
         createAccountButton.setTitle("Create Account", forState: .Normal)
         createAccountButton.titleLabel?.textAlignment = NSTextAlignment.Center
         createAccountButton.addTarget(self, action: "createAccountButtonTapped", forControlEvents: .TouchUpInside)
 
         view.addSubview(titleLabel)
-        view.addSubview(usernameLabel)
-        view.addSubview(passwordLabel)
+        //view.addSubview(usernameLabel)
+        //view.addSubview(passwordLabel)
         view.addSubview(userNameTextField)
         view.addSubview(passwordTextField)
         view.addSubview(incorrectLabel)
@@ -160,7 +173,7 @@ class LoginViewController: UIViewController {
         view.addSubview(createAccountButton)
         
         
-        view.backgroundColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha:1)
+        view.backgroundColor = UIColor(white: 0.90, alpha: 1.0)
         view.userInteractionEnabled = true
         /************************/
         
@@ -181,13 +194,13 @@ class LoginViewController: UIViewController {
         passwordTextField.text = ""
         fullLoadView.frame = CGRect(x: self.emptyLoadView.frame.minX, y: self.emptyLoadView.frame.minY, width: 0, height: self.emptyLoadView.frame.height)
         view.userInteractionEnabled = true
-        self.usernameLabel.frame.origin = CGPoint(x: self.usernameLabel.frame.minX, y: 126)
-        self.passwordLabel.frame.origin = CGPoint(x: self.passwordLabel.frame.minX, y: 126)
-        self.userNameTextField.frame.origin = CGPoint(x: self.userNameTextField.frame.minX, y: 155)
-        self.passwordTextField.frame.origin = CGPoint(x: self.passwordTextField.frame.minX, y: 155)
+        //self.usernameLabel.frame.origin = CGPoint(x: self.usernameLabel.frame.minX, y: 126)
+        //self.passwordLabel.frame.origin = CGPoint(x: self.passwordLabel.frame.minX, y: 126)
+        self.userNameTextField.frame.origin = CGPoint(x: self.userNameTextField.frame.minX, y: view.frame.height * 0.25)
+        self.passwordTextField.frame.origin = CGPoint(x: self.passwordTextField.frame.minX, y: view.frame.height * 0.25 + 55)
         self.titleLabel.frame.origin = CGPoint(x: self.titleLabel.frame.minX, y: 30)
-        self.loginButton.frame.origin = CGPoint(x: self.loginButton.frame.minX, y: 193)
-        self.createAccountButton.frame.origin = CGPoint(x: self.createAccountButton.frame.minX, y: 370)
+        self.loginButton.frame.origin = CGPoint(x: self.loginButton.frame.minX, y: view.frame.height * 0.425)
+        self.createAccountButton.frame.origin = CGPoint(x: self.createAccountButton.frame.minX, y: view.frame.height * 0.8)
         self.emptyLoadView.alpha = 1.0
         self.fullLoadView.alpha = 1.0
     }
@@ -228,11 +241,11 @@ class LoginViewController: UIViewController {
                             self.fullLoadView.frame = CGRect(x: self.emptyLoadView.frame.minX, y: self.emptyLoadView.frame.minY, width: self.emptyLoadView.frame.width, height: self.emptyLoadView.frame.height)
                             //self.fullLoadView.backgroundColor = UIColor(red: 0.645, green: 0.8, blue: 0.2, alpha: 1)
                             //Moving other views off screen
-                            self.usernameLabel.frame.origin = CGPoint(x: self.usernameLabel.frame.minX, y: -50)
-                            self.passwordLabel.frame.origin = CGPoint(x: self.passwordLabel.frame.minX, y: -50)
+                            //self.usernameLabel.frame.origin = CGPoint(x: self.usernameLabel.frame.minX, y: -50)
+                            //self.passwordLabel.frame.origin = CGPoint(x: self.passwordLabel.frame.minX, y: -50)
                             self.userNameTextField.frame.origin = CGPoint(x: self.userNameTextField.frame.minX, y: -50)
                             self.passwordTextField.frame.origin = CGPoint(x: self.passwordTextField.frame.minX, y: -50)
-                            self.titleLabel.frame.origin = CGPoint(x: self.titleLabel.frame.minX, y: -50)
+                            self.titleLabel.frame.origin = CGPoint(x: self.titleLabel.frame.minX, y: -120)
                             self.loginButton.frame.origin = CGPoint(x: self.loginButton.frame.minX, y: -50)
                             self.createAccountButton.frame.origin = CGPoint(x: self.createAccountButton.frame.minX, y: self.view.frame.height + 50)
                             

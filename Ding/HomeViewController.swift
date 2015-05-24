@@ -692,17 +692,17 @@ class HomeViewController : UIViewController {
                 levelText.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
                 levelText.selectable = false
                 levelText.editable = false
-                let expBarContainer = UIView(frame: CGRect(x: 0, y: 88, width: skillCard.frame.width, height: 40))
+                let expBarContainer = ExpBarContainer(frame: CGRect(x: 0, y: 88, width: skillCard.frame.width, height: 40))
                 expBarContainer.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
                 expBarContainer.layer.cornerRadius = 5.0
-                let expBarEmpty = UIView(frame: CGRect(x: 8, y: 0, width: skillCard.frame.width - 16, height: 20))
+                let expBarEmpty = ExpBarEmpty(frame: CGRect(x: 8, y: 0, width: skillCard.frame.width - 16, height: 20))
                 expBarEmpty.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
                 expBarEmpty.layer.borderColor = skillsColor.CGColor
                 expBarEmpty.layer.borderWidth = 2.0
                 expBarEmpty.layer.cornerRadius = 10.0
                 
                 //Animation Testing
-                let expBarFull = UIView(frame: CGRect(x: 8, y: 0, width: 0, height: 20))
+                let expBarFull = ExpBarFull(frame: CGRect(x: 8, y: 0, width: 0, height: 20))
                 expBarFull.backgroundColor = skillsColor
                 if skillCard.skill.expCurrent != 0 {
                     UIView.animateWithDuration(2.0, animations: {
@@ -715,18 +715,18 @@ class HomeViewController : UIViewController {
                     //expBarFull.layer.borderColor = skillsColor.CGColor
                     //expBarFull.layer.borderWidth = 2.0
                     expBarFull.layer.cornerRadius = 10.0
-                    let topExpBorder = CALayer()
-                    topExpBorder.frame = CGRectMake(0, 0, expBarFull.frame.width, 2.0)
-                    topExpBorder.backgroundColor = skillsColor.CGColor
-                    let leftExpBorder = CALayer()
-                    leftExpBorder.frame = CGRectMake(0, 0, 2.0, expBarFull.frame.height)
-                    leftExpBorder.backgroundColor = skillsColor.CGColor
-                    let bottomExpBorder = CALayer()
-                    bottomExpBorder.frame = CGRectMake(0, expBarFull.frame.height - 2.0, expBarFull.frame.width, 2.0)
-                    bottomExpBorder.backgroundColor = skillsColor.CGColor
-                    expBarFull.layer.addSublayer(topExpBorder)
-                    expBarFull.layer.addSublayer(leftExpBorder)
-                    expBarFull.layer.addSublayer(bottomExpBorder)
+//                    let topExpBorder = CALayer()
+//                    topExpBorder.frame = CGRectMake(0, 0, expBarFull.frame.width, 2.0)
+//                    topExpBorder.backgroundColor = skillsColor.CGColor
+//                    let leftExpBorder = CALayer()
+//                    leftExpBorder.frame = CGRectMake(0, 0, 2.0, expBarFull.frame.height)
+//                    leftExpBorder.backgroundColor = skillsColor.CGColor
+//                    let bottomExpBorder = CALayer()
+//                    bottomExpBorder.frame = CGRectMake(0, expBarFull.frame.height - 2.0, expBarFull.frame.width, 2.0)
+//                    bottomExpBorder.backgroundColor = skillsColor.CGColor
+//                    expBarFull.layer.addSublayer(topExpBorder)
+//                    expBarFull.layer.addSublayer(leftExpBorder)
+//                    expBarFull.layer.addSublayer(bottomExpBorder)
                 }
                 
                 
@@ -760,16 +760,16 @@ class HomeViewController : UIViewController {
                 levelText.selectable = false
                 levelText.editable = false
                 levelText.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
-                let expBarContainer = UIView(frame: CGRect(x: 0, y: 88, width: skillCard.frame.width, height: 40))
+                let expBarContainer = ExpBarContainer(frame: CGRect(x: 0, y: 88, width: skillCard.frame.width, height: 40))
                 expBarContainer.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
                 expBarContainer.layer.cornerRadius = 5.0
-                let expBarEmpty = UIView(frame: CGRect(x: 8, y: 0, width: skillCard.frame.width - 16, height: 20))
+                let expBarEmpty = ExpBarEmpty(frame: CGRect(x: 8, y: 0, width: skillCard.frame.width - 16, height: 20))
                 expBarEmpty.backgroundColor = UIColor(white: 1.0, alpha: 1.0)
                 expBarEmpty.layer.borderColor = skillsColor.CGColor
                 expBarEmpty.layer.borderWidth = 2.0
                 expBarEmpty.layer.cornerRadius = 10.0
                 //Animation Testing
-                let expBarFull = UIView(frame: CGRect(x: 8, y: 0, width: 0, height: 20))
+                let expBarFull = ExpBarFull(frame: CGRect(x: 8, y: 0, width: 0, height: 20))
                 expBarFull.backgroundColor = skillsColor
                 if skillCard.skill.expCurrent != 0 {
                     UIView.animateWithDuration(2.0, animations: {
@@ -782,18 +782,18 @@ class HomeViewController : UIViewController {
                     //expBarFull.layer.borderColor = skillsColor.CGColor
                     //expBarFull.layer.borderWidth = 2.0
                     expBarFull.layer.cornerRadius = 10.0
-                    let topExpBorder = CALayer()
-                    topExpBorder.frame = CGRectMake(0, 0, expBarFull.frame.width, 2.0)
-                    topExpBorder.backgroundColor = skillsColor.CGColor
-                    let leftExpBorder = CALayer()
-                    leftExpBorder.frame = CGRectMake(0, 0, 2.0, expBarFull.frame.height)
-                    leftExpBorder.backgroundColor = skillsColor.CGColor
-                    let bottomExpBorder = CALayer()
-                    bottomExpBorder.frame = CGRectMake(0, expBarFull.frame.height - 2.0, expBarFull.frame.width, 2.0)
-                    bottomExpBorder.backgroundColor = skillsColor.CGColor
-                    expBarFull.layer.addSublayer(topExpBorder)
-                    expBarFull.layer.addSublayer(leftExpBorder)
-                    expBarFull.layer.addSublayer(bottomExpBorder)
+//                    let topExpBorder = CALayer()
+//                    topExpBorder.frame = CGRectMake(0, 0, expBarFull.frame.width, 2.0)
+//                    topExpBorder.backgroundColor = skillsColor.CGColor
+//                    let leftExpBorder = CALayer()
+//                    leftExpBorder.frame = CGRectMake(0, 0, 2.0, expBarFull.frame.height)
+//                    leftExpBorder.backgroundColor = skillsColor.CGColor
+//                    let bottomExpBorder = CALayer()
+//                    bottomExpBorder.frame = CGRectMake(0, expBarFull.frame.height - 2.0, expBarFull.frame.width, 2.0)
+//                    bottomExpBorder.backgroundColor = skillsColor.CGColor
+//                    expBarFull.layer.addSublayer(topExpBorder)
+//                    expBarFull.layer.addSublayer(leftExpBorder)
+//                    expBarFull.layer.addSublayer(bottomExpBorder)
                 }
                 
                 expBarContainer.addSubview(expBarEmpty)
@@ -811,7 +811,7 @@ class HomeViewController : UIViewController {
         /////////// Add a new Skill, last card /////////////
         if columnOne {
             row = position / 2
-            let newSkillCard = UIView(frame: CGRect(x: 8, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128))
+            let newSkillCard = SkillCard(frame: CGRect(x: 8, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), color: skillsColor)
             let skillNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: newSkillCard.frame.width, height: newSkillCard.frame.height))
             newSkillCard.layer.cornerRadius = 5.0
             newSkillCard.layer.borderWidth = 2.0
@@ -827,7 +827,7 @@ class HomeViewController : UIViewController {
             newSkillCard.addGestureRecognizer(tapNewSkill)
         } else {
             row = position / 2
-            let newSkillCard = UIView(frame: CGRect(x: skillsContainer.frame.width / 2 + 4, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128))
+            let newSkillCard = SkillCard(frame: CGRect(x: skillsContainer.frame.width / 2 + 4, y: CGFloat(row * 136) + 8, width: skillsContainer.frame.width / 2 - 12, height: 128), color: skillsColor)
             let skillNameLabel = UILabel(frame: CGRect(x: 0, y: 0, width: newSkillCard.frame.width, height: newSkillCard.frame.height))
             newSkillCard.layer.cornerRadius = 5.0
             newSkillCard.layer.borderWidth = 2.0
@@ -882,7 +882,7 @@ class HomeViewController : UIViewController {
         
         row = 0
         for task in currentTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCurrentContainer.frame.width - 8), height: 72), task: task as! Task, color: tasksColor)
             taskCard.backgroundColor = tasksColor
             tasksCurrentContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -942,7 +942,7 @@ class HomeViewController : UIViewController {
         //Display Completed Tasks
         row = 0
         for task in completedTasks {
-            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as! Task)
+            let taskCard = TaskCard(frame: CGRect(x: 4, y: CGFloat(row * 76) + 4, width: CGFloat(tasksCompletedContainer.frame.width - 8), height: 72), task: task as! Task, color: tasksColor)
             taskCard.backgroundColor = tasksColor
             tasksCompletedContainer.addSubview(taskCard)
             let taskNameLabel = UILabel(frame: CGRect(x: CGFloat(taskCard.frame.width * 0.20), y: 0, width: CGFloat(taskCard.frame.width * 0.65), height: taskCard.frame.height / 2))
@@ -1188,8 +1188,8 @@ class HomeViewController : UIViewController {
             
             //Options are Now Visible
             if !optionBool {
-                println("OptionAreOpen : \(optionsAreOpen)")
-                println("Spin 90 Deg")
+//                println("OptionAreOpen : \(optionsAreOpen)")
+//                println("Spin 90 Deg")
                 UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
                     self.optionsButton.transform = CGAffineTransformMakeRotation(-90.0)
                     self.view.bringSubviewToFront(self.optionsView)
@@ -1214,8 +1214,8 @@ class HomeViewController : UIViewController {
                 }, completion: nil)
 
             } else { // Options are now hidden
-                println("OptionAreOpen : \(optionsAreOpen)")
-                println("Spin -90 Deg")
+//                println("OptionAreOpen : \(optionsAreOpen)")
+//                println("Spin -90 Deg")
                 //VoicePack Scroll View
                 UIView.animateWithDuration(0.4, delay: 0.1, options: .CurveEaseOut, animations: {
                     self.optionsVoicePackScrollView.alpha = 0.0
@@ -1248,7 +1248,8 @@ class HomeViewController : UIViewController {
     }
     
     func colorSchemeTapped(gr: UITapGestureRecognizer) {
-        let schemeNum = (gr.view! as! ColorSchemeView).schemeNumber
+        let thisScheme = gr.view! as! ColorSchemeView
+        let schemeNum = thisScheme.schemeNumber
         user.colorScheme = schemeNum
         skillsColor = (colorSchemes.objectAtIndex(schemeNum) as! ColorScheme).skills
         tasksColor = (colorSchemes.objectAtIndex(schemeNum) as! ColorScheme).tasks
@@ -1259,6 +1260,104 @@ class HomeViewController : UIViewController {
         } else {
             println("Error Saving")
         }
+        let currentFrame = thisScheme.frame
+        
+        UIView.animateWithDuration(0.1, delay: 0.0, options: .CurveLinear, animations: {
+            thisScheme.frame = CGRect(x: thisScheme.frame.minX - 8, y: thisScheme.frame.minY - 8, width: thisScheme.frame.width + 16, height: thisScheme.frame.height + 16)
+            }, completion: {
+                (value: Bool) in
+                UIView.animateWithDuration(0.5, delay: 0.0, usingSpringWithDamping: 0.25, initialSpringVelocity: 0.75, options: .CurveEaseInOut, animations: {
+                    thisScheme.frame = currentFrame
+                    }, completion: nil)
+        })
+        
+        refreshHomeColors()
+    }
+    
+    func refreshHomeColors() {
+        ///// Skills /////
+        skillsTab.backgroundColor = skillsColor
+        skillsContainer.layer.borderColor = skillsColor.CGColor
+        for skillCard in skillsContainer.subviews {
+            if skillCard.isKindOfClass(SkillCard) {
+                (skillCard as! SkillCard).layer.borderColor = skillsColor.CGColor
+                var fill = false
+                for expBar in skillCard.subviews {
+                    if expBar.isKindOfClass(ExpBarContainer) {
+                        (expBar as! ExpBarContainer).layer.borderColor = skillsColor.CGColor
+                        for childBar in expBar.subviews {
+                            if childBar.isKindOfClass(ExpBarEmpty) {
+                                (childBar as! ExpBarEmpty).layer.borderColor = skillsColor.CGColor
+                            }
+                            if childBar.isKindOfClass(ExpBarFull) {
+                                (childBar as! ExpBarFull).backgroundColor = skillsColor
+                            }
+                            
+                        }
+                    }
+                }
+            }
+        }
+        
+        ///// Tasks //////
+        tasksTab.backgroundColor = tasksColor
+        tasksContainer.layer.borderColor = tasksColor.CGColor
+        for taskCard in tasksCurrentContainer.subviews {
+            if taskCard.isKindOfClass(TaskCard) {
+                (taskCard as! TaskCard).layer.borderColor = tasksColor.CGColor
+                (taskCard as! TaskCard).mainColor = tasksColor
+                (taskCard as! TaskCard).backgroundColor = tasksColor
+                for label in taskCard.subviews {
+                    (label as! UILabel).layer.borderColor = tasksColor.CGColor
+                }
+            }
+        }
+        for taskCard in tasksCompletedContainer.subviews {
+            if taskCard.isKindOfClass(TaskCard) {
+                (taskCard as! TaskCard).layer.borderColor = tasksColor.CGColor
+                (taskCard as! TaskCard).mainColor = tasksColor
+                (taskCard as! TaskCard).backgroundColor = tasksColor
+                for label in taskCard.subviews {
+                    (label as! UILabel).layer.borderColor = tasksColor.CGColor
+                }
+
+            }
+        }
+        tasksCurrent.backgroundColor = tasksColor
+        tasksCompleted.backgroundColor = tasksColor
+        tasksSort.backgroundColor = tasksColor
+        tasksSearch.backgroundColor = tasksColor
+        tasksSelectedButton.backgroundColor = whiteColor
+        tasksSelectedButton.setTitleColor(tasksColor, forState: .Normal)
+        
+        
+        ///// Goals //////
+        goalsTab.backgroundColor = goalsColor
+        goalsContainer.layer.borderColor = goalsColor.CGColor
+        /// Will need to go through goal cards
+        for goalCard in goalsCurrent.subviews {
+            if goalCard.isKindOfClass(GoalCard) {
+                (goalCard as! GoalCard).layer.borderColor = goalsColor.CGColor
+            }
+        }
+        goalsCurrent.backgroundColor = goalsColor
+        goalsCompleted.backgroundColor = goalsColor
+        goalsSort.backgroundColor = goalsColor
+        goalsSearch.backgroundColor = goalsColor
+        goalsSelectedButton.backgroundColor = whiteColor
+        goalsSelectedButton.setTitleColor(goalsColor, forState: .Normal)
+        
+        //// Achievements /////
+        achievementsTab.backgroundColor = achievementsColor
+        achievementsContainer.layer.borderColor = achievementsColor.CGColor
+        // Will need to go through achs cards
+        achievementsCurrent.backgroundColor = achievementsColor
+        achievementsCompleted.backgroundColor = achievementsColor
+        achievementsSort.backgroundColor = achievementsColor
+        achievementsSearch.backgroundColor = achievementsColor
+        achievementsSelectedButton.backgroundColor = whiteColor
+        achievementsSelectedButton.setTitleColor(achievementsColor, forState: .Normal)
+        
     }
     
     func skillCardTapped(gr: UITapGestureRecognizer) {
@@ -1267,6 +1366,8 @@ class HomeViewController : UIViewController {
         let skillsVC = SkillsViewController()
         skillsVC.user = user
         skillsVC.skill = skillTapped
+        skillsVC.skillsColor = skillsColor
+        skillsVC.tasksColor = tasksColor
         transitionCameFrom = skillsVC
         
         //////////* Animate */////////

@@ -20,9 +20,9 @@ class CreateTaskViewController : UIViewController, UIViewControllerTransitioning
     
     var taskNameTF: UITextField!
     var taskExpTF: UITextField!
-var taskDifficultyTF: UITextField!
+    var taskDifficultyTF: UITextField!
     
-    let tasksColor = UIColor(red: 51/255, green: 204/255, blue: 255/255, alpha: 1.0)
+    var tasksColor: UIColor!
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
     
     required init(coder aDecoder: NSCoder) {
