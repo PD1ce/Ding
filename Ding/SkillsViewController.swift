@@ -390,8 +390,7 @@ class SkillsViewController : UIViewController {
     override func viewDidAppear(animated: Bool) {
         currentExp = Float(skill.expCurrent)
         realWidth = currentExp / Float(skill.expTotal) * Float(expBarEmpty.frame.width)
-        self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1.0)
-        
+        self.expBarFull.backgroundColor = skillsColor
         
         // Skill Container Background Color
         UIView.animateWithDuration(1.0, delay: 0.0, options: .CurveEaseInOut, animations: {
@@ -412,7 +411,7 @@ class SkillsViewController : UIViewController {
                 (value: Bool) in
                 UIView.animateWithDuration(2.0, animations: {
                     self.expBarFull.frame = CGRect(x: self.expBarEmpty.frame.minX, y: self.expBarEmpty.frame.minY, width: CGFloat(self.realWidth), height: self.expBarEmpty.frame.height)
-                    self.expBarFull.backgroundColor = UIColor(red: 0.0, green: 0.8, blue: 0.0, alpha: 1)
+                    self.expBarFull.backgroundColor = self.skillsColor
                     }, completion: {
                         (value: Bool) in
                 })

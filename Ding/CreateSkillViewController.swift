@@ -28,7 +28,7 @@ class CreateSkillViewController : UIViewController {
     //Needed
     //var skillCategoryTextField: UITextField!
     
-    let skillsColor = UIColor(red: 51/255, green: 255/255, blue: 204/255, alpha: 1.0)
+    var skillsColor: UIColor!
     let whiteColor = UIColor(white: 1.0, alpha: 1.0)
     //var parentVC: HomeViewController!
     

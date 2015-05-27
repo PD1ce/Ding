@@ -1,18 +1,19 @@
 //
-//  AniView.swift
+//  GoalView.swift
 //  Ding
 //
-//  Created by Philip Deisinger on 3/30/15.
+//  Created by Philip Deisinger on 5/24/15.
 //  Copyright (c) 2015 PDice. All rights reserved.
 //
 
 import Foundation
 import UIKit
 
-class AniView : UIView {
+class GoalEdit: UIView {
     
     var originalFrame: CGRect!
     var originalOrigin: CGPoint!
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,15 +26,17 @@ class AniView : UIView {
     }
 }
 
-class AniScrollView : UIScrollView {
+class NewGoalCard: UIView {
     
     var originalFrame: CGRect!
     var originalOrigin: CGPoint!
+    var goalPos: Int!
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, goalPos: Int) {
         super.init(frame: frame)
         originalFrame = frame
         originalOrigin = frame.origin
+        self.goalPos = goalPos
     }
     
     required init(coder aDecoder: NSCoder) {

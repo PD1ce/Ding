@@ -1031,6 +1031,8 @@ class HomeViewController : UIViewController {
         newGoalCard.backgroundColor = whiteColor
         newGoalCard.layer.borderWidth = 2.0
         newGoalCard.layer.borderColor = goalsColor.CGColor
+        let goalCardGR = UITapGestureRecognizer(target: self, action: "newGoalTapped")
+        newGoalCard.addGestureRecognizer(goalCardGR)
         let newGoalLabel = UILabel(frame: CGRect(x: 4, y: 4, width: newGoalCard.frame.width - 8, height: newGoalCard.frame.height - 8))
         newGoalLabel.text = "New!"
         newGoalLabel.font = UIFont(name: "Helvetica", size: 36.0)
@@ -1452,6 +1454,7 @@ class HomeViewController : UIViewController {
     func newSkillTapped(gr: UITapGestureRecognizer) {
         let createSkillVC = storyboard?.instantiateViewControllerWithIdentifier("CreateSkillViewController") as! CreateSkillViewController
         createSkillVC.user = user
+        createSkillVC.skillsColor = skillsColor
         createSkillVC.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         transitionCameFrom = createSkillVC
         
@@ -1488,10 +1491,17 @@ class HomeViewController : UIViewController {
         //** Time to animate some shiiiiii **////
         
         
+    }
+    
+    func newGoalTapped() {
+        let createGoalVC = CreateGoalViewController()
+        createGoalVC.user = user
+        createGoalVC.skillsColor = skillsColor
+        createGoalVC.tasksColor = tasksColor
+        createGoalVC.goalsColor = goalsColor
         
-        
-        
-        
+        transitionCameFrom = createGoalVC
+        presentViewController(createGoalVC, animated: true, completion: nil)
     }
     
     //Go to ProfileVC After tapping User Image

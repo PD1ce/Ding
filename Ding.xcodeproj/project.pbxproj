@@ -44,6 +44,7 @@
 		4AC6A27E1AD45791000DF2C6 /* ColorSchemes.json in Resources */ = {isa = PBXBuildFile; fileRef = 4AC6A27D1AD45791000DF2C6 /* ColorSchemes.json */; };
 		4AE49E1D1B12541E00A1DBBE /* ExpBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE49E1C1B12541E00A1DBBE /* ExpBarView.swift */; };
 		4AE49E1F1B1268E900A1DBBE /* CreateGoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE49E1E1B1268E900A1DBBE /* CreateGoalViewController.swift */; };
+		4AE49E211B12BA1A00A1DBBE /* GoalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE49E201B12BA1900A1DBBE /* GoalView.swift */; };
 		4AE7F9111AC5C7E300CDC470 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */; };
 		4AF658B21AB93583004D94D2 /* SkillsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B11AB93583004D94D2 /* SkillsViewController.swift */; };
 		4AF658B41AB936B8004D94D2 /* CreateSkillViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */; };
@@ -102,6 +103,7 @@
 		4AC6A27D1AD45791000DF2C6 /* ColorSchemes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ColorSchemes.json; sourceTree = "<group>"; };
 		4AE49E1C1B12541E00A1DBBE /* ExpBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExpBarView.swift; sourceTree = "<group>"; };
 		4AE49E1E1B1268E900A1DBBE /* CreateGoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGoalViewController.swift; sourceTree = "<group>"; };
+		4AE49E201B12BA1900A1DBBE /* GoalView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalView.swift; sourceTree = "<group>"; };
 		4AE7F9101AC5C7E300CDC470 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		4AF658B11AB93583004D94D2 /* SkillsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SkillsViewController.swift; sourceTree = "<group>"; };
 		4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateSkillViewController.swift; sourceTree = "<group>"; };
@@ -233,6 +235,7 @@
 				4AC6A27B1AD45519000DF2C6 /* ColorScheme.swift */,
 				4A7B412E1AD474B90032095C /* ColorSchemeView.swift */,
 				4AE49E1C1B12541E00A1DBBE /* ExpBarView.swift */,
+				4AE49E201B12BA1900A1DBBE /* GoalView.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -241,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				4A3D9B591AB89F6000C9CF1D /* CreateAccountViewController.swift */,
+				4AE49E1E1B1268E900A1DBBE /* CreateGoalViewController.swift */,
 				4AF658B31AB936B8004D94D2 /* CreateSkillViewController.swift */,
 				4A5EB7431AC0A35300FD0709 /* CreateTaskViewController.swift */,
 				4A13A62B1AB75A40001B30B1 /* HomeViewController.swift */,
@@ -250,7 +254,6 @@
 				4A8959DC1ABA2A6000AB1812 /* SplashViewController.swift */,
 				4A5EB7451AC0AC3900FD0709 /* TaskPresentationAnimationController.swift */,
 				4A5EB7471AC0AC5300FD0709 /* TaskPresentationController.swift */,
-				4AE49E1E1B1268E900A1DBBE /* CreateGoalViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -442,6 +445,7 @@
 				4A711F951AC1E759003196F3 /* Task.swift in Sources */,
 				4A599A431AB92A5D00BA8951 /* Achievement.swift in Sources */,
 				4A8959DD1ABA2A6000AB1812 /* SplashViewController.swift in Sources */,
+				4AE49E211B12BA1A00A1DBBE /* GoalView.swift in Sources */,
 				4AE7F9111AC5C7E300CDC470 /* ProfileViewController.swift in Sources */,
 				4A14BEA11AB73DC400F4A659 /* LoginViewController.swift in Sources */,
 				4AE49E1F1B1268E900A1DBBE /* CreateGoalViewController.swift in Sources */,
