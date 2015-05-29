@@ -9,9 +9,12 @@
 import Foundation
 import UIKit
 
-class CreateGoalViewController: UIViewController {
+class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
     var user: User!
+    
+    var skills: NSMutableArray!
+    var currentTasks = NSMutableArray()
     
     var headerView: AniView!
     var backButton: UIButton!
@@ -33,6 +36,19 @@ class CreateGoalViewController: UIViewController {
     //Load AniViews in proper spot
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        skills = NSMutableArray(array: user.skills.allObjects)
+        for skill in skills {
+            let tasks = NSMutableArray(array: (skill as! Skill).tasks.allObjects)
+            for task in tasks {
+                if (task as! Task).completed == 0 {
+                    currentTasks.addObject(task as! Task)
+                    println("Taskname : \((task as! Task).taskName)")
+                }
+            }
+        }
+        
+        
         
         headerView = AniView(frame: CGRect(x: 0, y: 20, width: view.frame.width, height: 44))
         headerView.backgroundColor = goalsColor
@@ -127,6 +143,16 @@ class CreateGoalViewController: UIViewController {
         newSkillCard.layer.cornerRadius = 5.0
         newSkillCard.layer.borderColor = skillsColor.CGColor
         newSkillCard.alpha = 0.0
+        
+        let skillPicker = SkillPicker(frame: CGRect(x: 8, y: -40, width: newSkillCard.frame.width * 0.6, height: 162.0))
+        skillPicker.delegate = self
+        skillPicker.dataSource = self
+        
+        //skillPicker.backgroundColor = skillsColor
+        //skillPicker.
+        
+        newSkillCard.addSubview(skillPicker)
+        
         newGoalContainer.addSubview(newSkillCard)
         newGoalContainer.contentSize.height += (newSkillCard.frame.height + 12)
         
@@ -153,6 +179,16 @@ class CreateGoalViewController: UIViewController {
         newGoalContainer.addSubview(newTaskCard)
         newGoalContainer.contentSize.height += (newTaskCard.frame.height + 12)
         
+        let taskPicker = TaskPicker(frame: CGRect(x: 8, y: -40, width: newTaskCard.frame.width * 0.6, height: 162.0))
+        taskPicker.delegate = self
+        taskPicker.dataSource = self
+        
+        //skillPicker.backgroundColor = skillsColor
+        //skillPicker.
+        
+        newTaskCard.addSubview(taskPicker)
+
+        
         UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
             newTaskCard.alpha = 1.0
             }, completion: {
@@ -173,6 +209,36 @@ class CreateGoalViewController: UIViewController {
                 (value: Bool) in
                 
         })
+        
+    }
+    
+    
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if pickerView.isKindOfClass(SkillPicker) {
+            return skills.count
+        } else if pickerView.isKindOfClass(TaskPicker) {
+            return currentTasks.count
+        } else {
+            return 5
+        }
+    }
+    
+    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 64.0
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        if pickerView.isKindOfClass(SkillPicker) {
+            return (skills.objectAtIndex(row) as! Skill).skillName
+        } else if pickerView.isKindOfClass(TaskPicker) {
+            return (currentTasks.objectAtIndex(row) as! Task).taskName
+        } else {
+            return "Missing!"
+        }
         
     }
     

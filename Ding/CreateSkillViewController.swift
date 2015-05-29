@@ -18,6 +18,8 @@ class CreateSkillViewController : UIViewController {
     var newSkillOriginalButton: UIButton!
     var newSkillTemplateButton: UIButton!
     
+    var skillIcon: UIImageView!
+    
     var newSkillOriginalContainer: UIView!
     var newSkillTemplateContainer: UIScrollView!
     
@@ -69,7 +71,13 @@ class CreateSkillViewController : UIViewController {
         newSkillOriginalButton.layer.borderColor = skillsColor.CGColor
         // Original Container
         newSkillOriginalContainer = UIView(frame: CGRect(x: 13, y: newSkillOriginalButton.frame.height, width: newSkillContainer.frame.width - 10, height: newSkillContainer.frame.height - 49))
-        skillNameTextField = UITextField(frame: CGRect(x: newSkillContainer.frame.width / 4 - 10, y: 40, width: newSkillContainer.frame.width / 2, height: 40))
+        
+        skillIcon = UIImageView(frame: CGRect(x: 8, y: 20, width: 64, height: 64))
+        skillIcon.layer.borderWidth = 2
+        skillIcon.layer.borderColor = skillsColor.CGColor
+        skillIcon.layer.cornerRadius = 5.0
+        
+        skillNameTextField = UITextField(frame: CGRect(x: newSkillContainer.frame.width * 0.4, y: 40, width: newSkillContainer.frame.width / 2, height: 40))
         skillNameTextField.borderStyle = UITextBorderStyle.RoundedRect
         skillNameTextField.placeholder = "Skill Name"
         skillNameTextField.textAlignment = NSTextAlignment(rawValue: 1)!
@@ -89,6 +97,7 @@ class CreateSkillViewController : UIViewController {
         skillExpTextField.borderStyle = UITextBorderStyle.RoundedRect
         skillExpTextField.placeholder = "Skill Exp"
         skillExpTextField.textAlignment = NSTextAlignment(rawValue: 1)!
+        newSkillOriginalContainer.addSubview(skillIcon)
         newSkillOriginalContainer.addSubview(skillLevelTextField)
         newSkillOriginalContainer.addSubview(skillExpTextField)
         
