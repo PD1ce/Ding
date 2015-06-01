@@ -1353,7 +1353,7 @@ class HomeViewController : UIViewController {
         goalsTab.backgroundColor = goalsColor
         goalsContainer.layer.borderColor = goalsColor.CGColor
         /// Will need to go through goal cards
-        for goalCard in goalsCurrent.subviews {
+        for goalCard in goalsCurrentContainer.subviews {
             if goalCard.isKindOfClass(GoalCard) {
                 (goalCard as! GoalCard).layer.borderColor = goalsColor.CGColor
             }

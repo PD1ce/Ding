@@ -58,10 +58,10 @@ class CreateAccountViewController : UIViewController {
         createAccountButton.setTitleColor(goldColor, forState: .Normal)
         createAccountButton.setTitle("Create Account", forState: .Normal)
         createAccountButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        createAccountButton.layer.shadowOffset = CGSize(width: 0, height: 2)
-        createAccountButton.layer.shadowOpacity = 0.3
-        createAccountButton.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).CGColor
-        createAccountButton.layer.shadowRadius = 1.0
+        createAccountButton.layer.borderColor = goldColor.CGColor
+        createAccountButton.backgroundColor = UIColor.whiteColor()
+        createAccountButton.layer.borderWidth = 2.0
+        createAccountButton.layer.cornerRadius = 25.0
         createAccountButton.addTarget(self, action: "createAccountButtonTapped", forControlEvents: .TouchUpInside)
         
         backButton = UIButton(frame: CGRect(x: view.frame.width * 0.15, y: view.frame.height * 0.75, width: view.frame.width * 0.7, height: 50))
@@ -69,10 +69,10 @@ class CreateAccountViewController : UIViewController {
         backButton.setTitleColor(goldColor, forState: .Normal)
         backButton.setTitle("Back", forState: .Normal)
         backButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        backButton.layer.shadowOffset = CGSize(width: 0, height: 2)
-        backButton.layer.shadowOpacity = 0.3
-        backButton.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).CGColor
-        backButton.layer.shadowRadius = 1.0
+        backButton.layer.borderColor = goldColor.CGColor
+        backButton.backgroundColor = UIColor.whiteColor()
+        backButton.layer.borderWidth = 2.0
+        backButton.layer.cornerRadius = 25.0
         backButton.addTarget(self, action: "backButtonTapped", forControlEvents: .TouchUpInside)
         
         view.addSubview(titleLabel)

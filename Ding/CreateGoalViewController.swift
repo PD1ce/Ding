@@ -149,93 +149,97 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     // Create a new Skill Card
     func createNewSkillCard() {
-        let newSkillCard = NewSkillCard(frame: CGRect(x: 12, y: newGoalCard.frame.minY, width: newGoalContainer.frame.width - 24, height: 80), goalPos: goalPos)
-        newSkillCard.backgroundColor = whiteColor
-        newSkillCard.layer.borderWidth = 3
-        newSkillCard.layer.cornerRadius = 5.0
-        newSkillCard.layer.borderColor = skillsColor.CGColor
-        newSkillCard.alpha = 0.0
+        if skills.count != 0 {
+            let newSkillCard = NewSkillCard(frame: CGRect(x: 12, y: newGoalCard.frame.minY, width: newGoalContainer.frame.width - 24, height: 80), goalPos: goalPos)
+            newSkillCard.backgroundColor = whiteColor
+            newSkillCard.layer.borderWidth = 3
+            newSkillCard.layer.cornerRadius = 5.0
+            newSkillCard.layer.borderColor = skillsColor.CGColor
+            newSkillCard.alpha = 0.0
+            
+            let skillPicker = SkillPicker(frame: CGRect(x: 8, y: -40, width: newSkillCard.frame.width * 0.5, height: 162.0))
+            skillPicker.delegate = self
+            skillPicker.dataSource = self
+            
+            //skillPicker.backgroundColor = skillsColor
+            //skillPicker.
+            
+            newSkillCard.addSubview(skillPicker)
+            
+            let removeButton = AniButton(frame: CGRect(x: newSkillCard.frame.width * 0.8, y: 8, width: newSkillCard.frame.width * 0.15, height: newSkillCard.frame.height - 16))
+            removeButton.setTitleColor(whiteColor, forState: .Normal)
+            removeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 36.0)
+            removeButton.setTitle("X", forState: .Normal)
+            removeButton.backgroundColor = skillsColor
+            removeButton.layer.cornerRadius = 10.0
+            removeButton.addTarget(self, action: "removeGoalTapped:", forControlEvents: .TouchUpInside)
+            
+            newSkillCard.addSubview(removeButton)
+            
+            newGoalContainer.addSubview(newSkillCard)
+            newGoalContainer.contentSize.height += (newSkillCard.frame.height + 12)
+            
+            UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
+                newSkillCard.alpha = 1.0
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+            
+            newSkillCard.skill = skills.objectAtIndex(0) as! Skill
+            goalCards.addObject(newSkillCard)
+            moveNewCardDown()
+            
+            goalPos++
+        }
         
-        let skillPicker = SkillPicker(frame: CGRect(x: 8, y: -40, width: newSkillCard.frame.width * 0.5, height: 162.0))
-        skillPicker.delegate = self
-        skillPicker.dataSource = self
-        
-        //skillPicker.backgroundColor = skillsColor
-        //skillPicker.
-        
-        newSkillCard.addSubview(skillPicker)
-        
-        let removeButton = AniButton(frame: CGRect(x: newSkillCard.frame.width * 0.8, y: 8, width: newSkillCard.frame.width * 0.15, height: newSkillCard.frame.height - 16))
-        removeButton.setTitleColor(whiteColor, forState: .Normal)
-        removeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 36.0)
-        removeButton.setTitle("X", forState: .Normal)
-        removeButton.backgroundColor = skillsColor
-        removeButton.layer.cornerRadius = 10.0
-        removeButton.addTarget(self, action: "removeGoalTapped:", forControlEvents: .TouchUpInside)
-        
-        newSkillCard.addSubview(removeButton)
-        
-        newGoalContainer.addSubview(newSkillCard)
-        newGoalContainer.contentSize.height += (newSkillCard.frame.height + 12)
-        
-        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
-            newSkillCard.alpha = 1.0
-            }, completion: {
-                (value: Bool) in
-                
-        })
-        
-        newSkillCard.skill = skills.objectAtIndex(0) as! Skill
-        goalCards.addObject(newSkillCard)
-        moveNewCardDown()
-        
-        goalPos++
     }
     
     // Create a new Task Card
     func createNewTaskCard() {
-        let newTaskCard = NewTaskCard(frame: CGRect(x: 12, y: newGoalCard.frame.minY, width: newGoalContainer.frame.width - 24, height: 80), goalPos: goalPos)
-        newTaskCard.backgroundColor = whiteColor
-        newTaskCard.layer.borderWidth = 3
-        newTaskCard.layer.cornerRadius = 5.0
-        newTaskCard.layer.borderColor = tasksColor.CGColor
-        newTaskCard.alpha = 0.0
-        newGoalContainer.addSubview(newTaskCard)
-        newGoalContainer.contentSize.height += (newTaskCard.frame.height + 12)
-        
-        let taskPicker = TaskPicker(frame: CGRect(x: 8, y: -40, width: newTaskCard.frame.width * 0.5, height: 162.0))
-        taskPicker.delegate = self
-        taskPicker.dataSource = self
-        
-        //skillPicker.backgroundColor = skillsColor
-        //skillPicker.
-        
-        newTaskCard.addSubview(taskPicker)
-
-        let removeTaskButton = AniButton(frame: CGRect(x: newTaskCard.frame.width * 0.8, y: 8, width: newTaskCard.frame.width * 0.15, height: newTaskCard.frame.height - 16))
-        removeTaskButton.setTitleColor(whiteColor, forState: .Normal)
-        removeTaskButton.titleLabel?.font = UIFont(name: "Helvetica", size: 36.0)
-        removeTaskButton.setTitle("X", forState: .Normal)
-        removeTaskButton.backgroundColor = tasksColor
-        removeTaskButton.layer.cornerRadius = 10.0
-        removeTaskButton.addTarget(self, action: "removeGoalTapped:", forControlEvents: .TouchUpInside)
-        
-        newTaskCard.addSubview(removeTaskButton)
-        
-        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
-            newTaskCard.alpha = 1.0
-            }, completion: {
-                (value: Bool) in
-                
-        })
-        
-        newTaskCard.task = currentTasks.objectAtIndex(0) as! Task
-        
-        goalCards.addObject(newTaskCard)
-        moveNewCardDown()
-        
-        goalPos++
-
+        if currentTasks.count != 0 {
+            let newTaskCard = NewTaskCard(frame: CGRect(x: 12, y: newGoalCard.frame.minY, width: newGoalContainer.frame.width - 24, height: 80), goalPos: goalPos)
+            newTaskCard.backgroundColor = whiteColor
+            newTaskCard.layer.borderWidth = 3
+            newTaskCard.layer.cornerRadius = 5.0
+            newTaskCard.layer.borderColor = tasksColor.CGColor
+            newTaskCard.alpha = 0.0
+            newGoalContainer.addSubview(newTaskCard)
+            newGoalContainer.contentSize.height += (newTaskCard.frame.height + 12)
+            
+            let taskPicker = TaskPicker(frame: CGRect(x: 8, y: -40, width: newTaskCard.frame.width * 0.5, height: 162.0))
+            taskPicker.delegate = self
+            taskPicker.dataSource = self
+            
+            //skillPicker.backgroundColor = skillsColor
+            //skillPicker.
+            
+            newTaskCard.addSubview(taskPicker)
+            
+            let removeTaskButton = AniButton(frame: CGRect(x: newTaskCard.frame.width * 0.8, y: 8, width: newTaskCard.frame.width * 0.15, height: newTaskCard.frame.height - 16))
+            removeTaskButton.setTitleColor(whiteColor, forState: .Normal)
+            removeTaskButton.titleLabel?.font = UIFont(name: "Helvetica", size: 36.0)
+            removeTaskButton.setTitle("X", forState: .Normal)
+            removeTaskButton.backgroundColor = tasksColor
+            removeTaskButton.layer.cornerRadius = 10.0
+            removeTaskButton.addTarget(self, action: "removeGoalTapped:", forControlEvents: .TouchUpInside)
+            
+            newTaskCard.addSubview(removeTaskButton)
+            
+            UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
+                newTaskCard.alpha = 1.0
+                }, completion: {
+                    (value: Bool) in
+                    
+            })
+            
+            newTaskCard.task = currentTasks.objectAtIndex(0) as! Task
+            
+            goalCards.addObject(newTaskCard)
+            moveNewCardDown()
+            
+            goalPos++
+        }
     }
     
     func moveNewCardDown() {
