@@ -1022,9 +1022,24 @@ class HomeViewController : UIViewController {
         row = 0
         for goal in currentGoals {
             let goalCard = GoalCard(frame: CGRect(x: 4, y: CGFloat(row * 136) + 8, width: goalsCurrentContainer.frame.width - 8, height: 128), goal: goal as! Goal)
+            goalCard.backgroundColor = whiteColor
+            goalCard.layer.borderWidth = 2
+            goalCard.layer.borderColor = goalsColor.CGColor
+            goalsCurrentContainer.addSubview(goalCard)
+            
             row++
+            
+            //Testing Goal Outputs
+            for skillGoal in goalCard.goal.skillGoals {
+                println("\((skillGoal as! SkillGoal).skill.skillName)")
+            }
+            for taskGoal in goalCard.goal.taskGoals {
+                println("\((taskGoal as! TaskGoal).task.taskName)")
+            }
+            
+            println("===========================================")
         }
-        goalsCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: CGFloat(row * 136) + 8)
+        goalsCurrentContainer.contentSize = CGSize(width: tasksCurrentContainer.frame.width, height: CGFloat(row * 136))
         
         //// New Goal Card /////
         let newGoalCard = GoalCard(frame: CGRect(x: 4, y: CGFloat(row * 136) + 8, width: goalsCurrentContainer.frame.width - 8, height: 128))
@@ -1039,6 +1054,7 @@ class HomeViewController : UIViewController {
         newGoalLabel.textColor = blackColor
         newGoalLabel.textAlignment = NSTextAlignment.Center
         newGoalCard.addSubview(newGoalLabel)
+        goalsCurrentContainer.contentSize.height += 136 + 8
         goalsCurrentContainer.addSubview(newGoalCard)
         
         
@@ -1445,9 +1461,7 @@ class HomeViewController : UIViewController {
                     skillHeaderView.removeFromSuperview()
                 })
         })
-
-        
-        
+   
         
     }
     

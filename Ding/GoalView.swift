@@ -42,4 +42,23 @@ class NewGoalCard: UIView {
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
+    func moveUp() {
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
+            self.frame.origin.y -= (80 + 12)
+            }, completion: {
+                (value: Bool) in
+                
+        })
+        
+    }
+}
+
+class NewSkillCard: NewGoalCard {
+    var skill: Skill!
+    
+}
+
+class NewTaskCard: NewGoalCard {
+    var task: Task!
 }

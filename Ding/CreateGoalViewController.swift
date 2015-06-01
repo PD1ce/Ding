@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreData
 
 class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     
@@ -24,6 +25,8 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     var newGoalContainer: AniScrollView!
     var newGoalCard: NewGoalCard!
+    
+    var createGoalButton: AniButton!
     
     var skillsColor: UIColor!
     var tasksColor: UIColor!
@@ -65,14 +68,22 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
         headerView.addSubview(backButton)
         headerView.addSubview(headerLabel)
         
-        newGoalContainer = AniScrollView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: view.frame.height - 80))
+        newGoalContainer = AniScrollView(frame: CGRect(x: 8, y: 72, width: view.frame.width - 16, height: view.frame.height - view.frame.height * 0.2 - 80))
         newGoalContainer.layer.borderWidth = 5.0
         newGoalContainer.layer.borderColor = goalsColor.CGColor
         newGoalContainer.backgroundColor = UIColor(white: 0.95, alpha: 1.0)
         newGoalContainer.contentSize = CGSize(width: newGoalContainer.frame.width, height: 12 + 80 + 12) //Extra padding + Card + Padding
         view.backgroundColor = UIColor(white: 0.9, alpha: 1.0)
         
-        
+        createGoalButton = AniButton(frame: CGRect(x: view.frame.width * 0.25, y: view.frame.height * 0.85, width: view.frame.width * 0.5, height: view.frame.height * 0.1))
+        createGoalButton.setTitle("Create!", forState: .Normal)
+        createGoalButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
+        createGoalButton.setTitleColor(goalsColor, forState: .Normal)
+        createGoalButton.backgroundColor = whiteColor
+        createGoalButton.layer.borderWidth = 2
+        createGoalButton.layer.borderColor = goalsColor.CGColor
+        createGoalButton.layer.cornerRadius = 25.0
+        createGoalButton.addTarget(self, action: "createGoal", forControlEvents: .TouchUpInside)
         
         newGoalCard = NewGoalCard(frame: CGRect(x: 12, y: 12, width: newGoalContainer.frame.width - 24, height: 80), goalPos: 0)
         newGoalCard.backgroundColor = whiteColor
@@ -105,12 +116,13 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
         newGoalCard.addSubview(newSkillCardButton)
         newGoalCard.addSubview(newTaskCardButton)
         
+        
         newGoalContainer.addSubview(newGoalCard)
         goalPos = 1
         
         view.addSubview(headerView)
         view.addSubview(newGoalContainer)
-        
+        view.addSubview(createGoalButton)
     }
     
     //Move AniViews to off screen
@@ -137,14 +149,14 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     // Create a new Skill Card
     func createNewSkillCard() {
-        let newSkillCard = NewGoalCard(frame: CGRect(x: 12, y: newGoalCard.frame.minY, width: newGoalContainer.frame.width - 24, height: 80), goalPos: goalPos)
+        let newSkillCard = NewSkillCard(frame: CGRect(x: 12, y: newGoalCard.frame.minY, width: newGoalContainer.frame.width - 24, height: 80), goalPos: goalPos)
         newSkillCard.backgroundColor = whiteColor
         newSkillCard.layer.borderWidth = 3
         newSkillCard.layer.cornerRadius = 5.0
         newSkillCard.layer.borderColor = skillsColor.CGColor
         newSkillCard.alpha = 0.0
         
-        let skillPicker = SkillPicker(frame: CGRect(x: 8, y: -40, width: newSkillCard.frame.width * 0.6, height: 162.0))
+        let skillPicker = SkillPicker(frame: CGRect(x: 8, y: -40, width: newSkillCard.frame.width * 0.5, height: 162.0))
         skillPicker.delegate = self
         skillPicker.dataSource = self
         
@@ -152,6 +164,16 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
         //skillPicker.
         
         newSkillCard.addSubview(skillPicker)
+        
+        let removeButton = AniButton(frame: CGRect(x: newSkillCard.frame.width * 0.8, y: 8, width: newSkillCard.frame.width * 0.15, height: newSkillCard.frame.height - 16))
+        removeButton.setTitleColor(whiteColor, forState: .Normal)
+        removeButton.titleLabel?.font = UIFont(name: "Helvetica", size: 36.0)
+        removeButton.setTitle("X", forState: .Normal)
+        removeButton.backgroundColor = skillsColor
+        removeButton.layer.cornerRadius = 10.0
+        removeButton.addTarget(self, action: "removeGoalTapped:", forControlEvents: .TouchUpInside)
+        
+        newSkillCard.addSubview(removeButton)
         
         newGoalContainer.addSubview(newSkillCard)
         newGoalContainer.contentSize.height += (newSkillCard.frame.height + 12)
@@ -162,6 +184,8 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
                 (value: Bool) in
                 
         })
+        
+        newSkillCard.skill = skills.objectAtIndex(0) as! Skill
         goalCards.addObject(newSkillCard)
         moveNewCardDown()
         
@@ -170,7 +194,7 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
     
     // Create a new Task Card
     func createNewTaskCard() {
-        let newTaskCard = NewGoalCard(frame: CGRect(x: 12, y: newGoalCard.frame.minY, width: newGoalContainer.frame.width - 24, height: 80), goalPos: goalPos)
+        let newTaskCard = NewTaskCard(frame: CGRect(x: 12, y: newGoalCard.frame.minY, width: newGoalContainer.frame.width - 24, height: 80), goalPos: goalPos)
         newTaskCard.backgroundColor = whiteColor
         newTaskCard.layer.borderWidth = 3
         newTaskCard.layer.cornerRadius = 5.0
@@ -179,7 +203,7 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
         newGoalContainer.addSubview(newTaskCard)
         newGoalContainer.contentSize.height += (newTaskCard.frame.height + 12)
         
-        let taskPicker = TaskPicker(frame: CGRect(x: 8, y: -40, width: newTaskCard.frame.width * 0.6, height: 162.0))
+        let taskPicker = TaskPicker(frame: CGRect(x: 8, y: -40, width: newTaskCard.frame.width * 0.5, height: 162.0))
         taskPicker.delegate = self
         taskPicker.dataSource = self
         
@@ -188,6 +212,15 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
         
         newTaskCard.addSubview(taskPicker)
 
+        let removeTaskButton = AniButton(frame: CGRect(x: newTaskCard.frame.width * 0.8, y: 8, width: newTaskCard.frame.width * 0.15, height: newTaskCard.frame.height - 16))
+        removeTaskButton.setTitleColor(whiteColor, forState: .Normal)
+        removeTaskButton.titleLabel?.font = UIFont(name: "Helvetica", size: 36.0)
+        removeTaskButton.setTitle("X", forState: .Normal)
+        removeTaskButton.backgroundColor = tasksColor
+        removeTaskButton.layer.cornerRadius = 10.0
+        removeTaskButton.addTarget(self, action: "removeGoalTapped:", forControlEvents: .TouchUpInside)
+        
+        newTaskCard.addSubview(removeTaskButton)
         
         UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
             newTaskCard.alpha = 1.0
@@ -195,6 +228,9 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
                 (value: Bool) in
                 
         })
+        
+        newTaskCard.task = currentTasks.objectAtIndex(0) as! Task
+        
         goalCards.addObject(newTaskCard)
         moveNewCardDown()
         
@@ -209,6 +245,92 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
                 (value: Bool) in
                 
         })
+        
+    }
+    
+    // Create a new goal object, assign all skills and tasks objects to it, an id, and assign it to the user/vice versa, then save
+    // Need some way to check for duplicates
+    func createGoal() {
+        let managedContext = user.managedObjectContext!
+        let newGoal = NSEntityDescription.insertNewObjectForEntityForName("Goal", inManagedObjectContext: managedContext) as! Goal
+        newGoal.startDate = NSDate()
+        //goal name
+        //newGoal.goalName = ""
+        newGoal.user = user
+        
+        var skillGoals = NSMutableSet()
+        var taskGoals = NSMutableSet()
+        
+        for goalCard in goalCards {
+            if goalCard.isKindOfClass(NewSkillCard) {
+                let newSkillGoal = NSEntityDescription.insertNewObjectForEntityForName("SkillGoal", inManagedObjectContext: managedContext) as! SkillGoal
+                newSkillGoal.skill = (goalCard as! NewSkillCard).skill
+                println("\(newSkillGoal.skill.skillName)")
+                //newSkillGoal PDAlert:  Need to get the target level
+                // Assign id
+                skillGoals.addObject(newSkillGoal)
+            }
+            if goalCard.isKindOfClass(NewTaskCard) {
+                let newTaskGoal = NSEntityDescription.insertNewObjectForEntityForName("TaskGoal", inManagedObjectContext: managedContext) as! TaskGoal
+                newTaskGoal.task = (goalCard as! NewTaskCard).task
+                taskGoals.addObject(newTaskGoal)
+            }
+        }
+        
+        //Add goal to user
+        
+        //Save
+        newGoal.skillGoals = skillGoals
+        newGoal.taskGoals = taskGoals
+        
+        let userGoals = user.goals.mutableCopy() as! NSMutableSet
+        userGoals.addObject(newGoal)
+        user.goals = userGoals
+        
+        if saveContext() {
+            println("Goal Created")
+            for skillGoal in newGoal.skillGoals {
+                println("\((skillGoal as! SkillGoal).skill.skillName) - \((skillGoal as! SkillGoal).skill.level)")
+            }
+            for taskGoal in newGoal.taskGoals {
+                println("\((taskGoal as! TaskGoal).task.taskName)")
+            }
+            dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            println("Error Saving!")
+        }
+
+    }
+    
+    func saveContext() -> Bool {
+        var error: NSError?
+        if !user.managedObjectContext!.save(&error) {
+            println("Could not save \(error), \(error?.userInfo)")
+            return false
+        }
+        return true
+    }
+    
+    func removeGoalTapped(button: AniButton) {
+        let thisCard  = button.superview as! NewGoalCard
+        let thisGoalPos = thisCard.goalPos
+        for goal in goalCards {
+            let goalCard = (goal as! NewGoalCard)
+            if goalCard.goalPos > thisGoalPos {
+                goalCard.moveUp()
+            }
+        }
+        newGoalCard.moveUp()
+        UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseInOut, animations: {
+            thisCard.alpha = 0
+        }, completion: {
+            (value: Bool) in
+                self.newGoalContainer.contentSize.height -= (thisCard.frame.height + 12)
+                thisCard.removeFromSuperview()
+                self.goalCards.removeObject(thisCard)
+        })
+        
+
         
     }
     
@@ -228,18 +350,31 @@ class CreateGoalViewController: UIViewController, UIPickerViewDataSource, UIPick
     }
     
     func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
-        return 64.0
+        return 50.0
     }
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
         if pickerView.isKindOfClass(SkillPicker) {
-            return (skills.objectAtIndex(row) as! Skill).skillName
+            
+            return (skills.objectAtIndex(row) as! Skill).skillName + " - " + (skills.objectAtIndex(row) as! Skill).level.stringValue
         } else if pickerView.isKindOfClass(TaskPicker) {
             return (currentTasks.objectAtIndex(row) as! Task).taskName
         } else {
             return "Missing!"
         }
         
+    }
+    
+    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if pickerView.isKindOfClass(SkillPicker) {
+            (pickerView.superview as! NewSkillCard).skill = (skills.objectAtIndex(row) as! Skill)
+            println("\((pickerView.superview as! NewSkillCard).skill.skillName)")
+        } else if pickerView.isKindOfClass(TaskPicker) {
+            (pickerView.superview as! NewTaskCard).task = (currentTasks.objectAtIndex(row) as! Task)
+            println("\((currentTasks.objectAtIndex(row) as! Task).taskName)")
+        } else {
+            println("nothing")
+        }
     }
     
 }

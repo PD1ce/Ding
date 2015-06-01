@@ -137,28 +137,32 @@ class LoginViewController: UIViewController {
         incorrectLabel.font = UIFont(name: "Helvetica", size: 16.0)
         incorrectLabel.textColor = goldColor
         
-        emptyLoadView = UIView(frame: CGRect(x: 16, y: view.frame.height * 0.5, width: view.frame.width - 32, height: 32))
+        emptyLoadView = UIView(frame: CGRect(x: 16, y: view.frame.height * 0.6, width: view.frame.width - 32, height: 32))
         emptyLoadView.layer.zPosition = 2
         emptyLoadView.layer.cornerRadius = 10.0
         emptyLoadView.backgroundColor = whiteColor
         fullLoadView = UIView(frame: CGRect(x: self.emptyLoadView.frame.minX, y: emptyLoadView.frame.minY, width: 0.0, height: emptyLoadView.frame.height))
         
-        loginButton = UIButton(frame: CGRect(x: 155, y: view.frame.height * 0.425, width: 64, height: 36))
-        loginButton.titleLabel?.font = UIFont(name: "Helvetica", size: 24.0)
+        loginButton = UIButton(frame: CGRect(x: view.frame.width * 0.333, y: view.frame.height * 0.425, width: view.frame.width * 0.333, height: 36))
+        loginButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
         loginButton.setTitleColor(goldColor, forState: .Normal)
         loginButton.setTitle("Login", forState: .Normal)
         loginButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        loginButton.layer.shadowOffset = CGSize(width: 0, height: 2)
-        loginButton.layer.shadowOpacity = 0.3
-        loginButton.layer.shadowColor = UIColor(white: 0.0, alpha: 1.0).CGColor
-        loginButton.layer.shadowRadius = 1.0
+        loginButton.backgroundColor = UIColor.whiteColor()
+        loginButton.layer.borderColor = goldColor.CGColor
+        loginButton.layer.borderWidth = 2
+        loginButton.layer.cornerRadius = 10.0
         loginButton.addTarget(self, action: "loginButtonTapped", forControlEvents: .TouchUpInside)
         
         createAccountButton = UIButton(frame: CGRect(x: view.frame.width * 0.1, y: view.frame.height * 0.75, width: view.frame.width * 0.8, height: 36))
-        createAccountButton.titleLabel?.font = UIFont(name: "Helvetica", size: 24.0)
+        createAccountButton.titleLabel?.font = UIFont(name: "Helvetica", size: 20.0)
         createAccountButton.setTitleColor(goldColor, forState: .Normal)
         createAccountButton.setTitle("Create Account", forState: .Normal)
         createAccountButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        createAccountButton.backgroundColor = UIColor.whiteColor()
+        createAccountButton.layer.borderColor = goldColor.CGColor
+        createAccountButton.layer.borderWidth = 2
+        createAccountButton.layer.cornerRadius = 10.0
         createAccountButton.addTarget(self, action: "createAccountButtonTapped", forControlEvents: .TouchUpInside)
 
         view.addSubview(titleLabel)
